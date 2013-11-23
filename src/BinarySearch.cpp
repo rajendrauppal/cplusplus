@@ -41,7 +41,7 @@ int BinarySearch(int * items, cuint size, int key)
 void Usage()
 {
 	cout << "Usage:" << endl;
-	cout << "BinarySearch.exe <Array> <SearchItem>" << endl;
+	cout << "BinarySearch.exe" << endl;
 }
 
 void PrintArray(int * items, cuint size)
@@ -56,7 +56,7 @@ void PrintArray(int * items, cuint size)
 
 int main(int argc, char *argv[])
 {
-	if ( argc != 2 ) 
+	if ( argc != 1 ) 
 	{
 		Usage();
 		exit(1);
