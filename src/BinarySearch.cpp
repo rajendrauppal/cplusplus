@@ -42,45 +42,57 @@ int BinarySearch(int * items, cuint size, int key)
 	uint start = 0;
 	uint end = size - 1;
 
-	while ( start <= end ) {
-		uint mid = ( size + end ) >> 1;
-		
+	while ( start < end ) {
+		uint mid = ( start + end ) >> 1;
+		int miditem = items[mid];
+		if ( key == miditem ) {
+			return mid;
+		} else if ( key < miditem ) {
+			end = mid - 1;
+		} else {
+			start = mid + 1;
+		}
 	}
 
-	return 0;
+	return -1;
 }
 
 void Usage()
 {
 	cout << "Usage:" << endl;
-	cout << "BinarySearch.exe" << endl;
+	cout << "BinarySearch.exe <key>" << endl;
+	cout << "Example: BinarySearch.exe 5" << endl;
 }
 
 void PrintArray(int * items, cuint size)
 {
 	cout << "[ ";
 	for (int i = 0; i < (size - 1); ++i)
-	{
 		cout << items[i] << ", ";
-	}
 	cout << items[size - 1] << " ]\n";
 }
 
 int main(int argc, char *argv[])
 {
-	if ( argc != 1 ) 
-	{
+	if ( argc != 2 ) {
 		Usage();
 		exit(1);
 	}
 
 	int * items = new int[MAX_SIZE];
 	for ( uint i = 0; i < MAX_SIZE; ++i )
-	{
 		items[i] = rand() % 100;
-	}
 
 	PrintArray(items, MAX_SIZE);
+
+	int key = atoi(argv[1]);
+	cout << "Looking for... " << key << endl;
+	int found_index = BinarySearch( items, MAX_SIZE, key );
+	if ( found_index != -1 ) {
+		cout << "Found " << key << " at index " << found_index << endl;
+	} else {
+		cout << "Not found " << key << endl;
+	}
 
 	return 0;
 }
