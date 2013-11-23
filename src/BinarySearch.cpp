@@ -22,28 +22,53 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #include <iostream>
+#include <time.h>
 
 using std::cout;
 using std::cin;
 using std::endl;
 
-int BinarySearch()
+#define uint unsigned int
+#define cuint const unsigned int
+
+cuint MAX_SIZE = 10;
+
+int BinarySearch(int * items, cuint size, int key)
 {
 	return 0;
 }
 
-void usage()
+void Usage()
 {
 	cout << "Usage:" << endl;
 	cout << "BinarySearch.exe <Array> <SearchItem>" << endl;
+}
+
+void PrintArray(int * items, cuint size)
+{
+	cout << "[ ";
+	for (int i = 0; i < (size - 1); ++i)
+	{
+		cout << items[i] << ", ";
+	}
+	cout << items[size - 1] << " ]\n";
 }
 
 int main(int argc, char *argv[])
 {
 	if ( argc != 2 ) 
 	{
-		usage();
+		Usage();
 		exit(1);
 	}
+
+	int * items = new int[MAX_SIZE];
+	for ( uint i = 0; i < MAX_SIZE; ++i )
+	{
+		items[i] = rand() % 100;
+	}
+
+	PrintArray(items, MAX_SIZE);
+
 	return 0;
 }
