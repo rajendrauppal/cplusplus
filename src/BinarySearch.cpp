@@ -41,8 +41,7 @@ cuint MAX_SIZE = 10;
 * Output: returns 0-based index of the integer found, -1 if not found
 
 * Throws InvalidArrayException (defined in BinarySearch.h) in case NULL is passed
-* Throws InvalidSizeException (defined in BinarySearch.h) in case size <= 0 OR
-* size > MAX_SIZE
+* Throws InvalidSizeException (defined in BinarySearch.h) in case size <= 0 OR size > MAX_SIZE
 */
 int BinarySearch_Iterative(int * items, cuint size, int key)
 {
@@ -70,12 +69,11 @@ int BinarySearch_Iterative(int * items, cuint size, int key)
 /*
 * Recursive binary search function
 
-* Input: integer array, items, size of the array, size, key to search, key
+* Input: integer array, items, start index, end index, key to search, key
 * Output: returns 0-based index of the integer found, -1 if not found
 
 * Throws InvalidArrayException (defined in BinarySearch.h) in case NULL is passed
-* Throws InvalidSizeException (defined in BinarySearch.h) in case size <= 0 OR
-* size > MAX_SIZE
+* Throws InvalidSizeException (defined in BinarySearch.h) in case start < 0 OR (end + 1) > MAX_SIZE
 */
 int BinarySearch_Recursive(int * items, cuint start, cuint end, int key)
 {
@@ -114,6 +112,36 @@ int compare(const void * first, const void * second)
 	return ( *(const int*)first - *(const int *)second );
 }
 
+void Test_BinarySearch_Iterative(int * items)
+{
+	// Iterative binary search tests
+	for ( uint i = 0; i < MAX_SIZE; ++i ) {
+		int key = items[i];
+		cout << "Looking for... " << key;
+		int found_index = BinarySearch_Iterative( items, MAX_SIZE, key );
+		if ( found_index != -1 ) {
+			cout << "\tFound " << key << " at index " << found_index << endl;
+		} else {
+			cout << "\tNot found " << key << endl;
+		}
+	}
+}
+
+void Test_BinarySearch_Recursive(int * items)
+{
+	// Recursive binary search tests
+	for ( uint i = 0; i < MAX_SIZE; ++i ) {
+		int key = items[i];
+		cout << "Looking for... " << key;
+		int found_index = BinarySearch_Recursive( items, 0, MAX_SIZE - 1, key );
+		if ( found_index != -1 ) {
+			cout << "\tFound " << key << " at index " << found_index << endl;
+		} else {
+			cout << "\tNot found " << key << endl;
+		}
+	}
+}
+
 int main(int argc, char *argv[])
 {
 	if ( argc != 1 ) {
@@ -128,29 +156,8 @@ int main(int argc, char *argv[])
 	std::qsort(items, MAX_SIZE, sizeof(int), compare);
 	PrintArray(items, MAX_SIZE);
 
-	// Iterative binary search tests
-	for ( uint i = 0; i < MAX_SIZE; ++i ) {
-		int key = items[i];
-		cout << "Looking for... " << key;
-		int found_index = BinarySearch_Iterative( items, MAX_SIZE, key );
-		if ( found_index != -1 ) {
-			cout << "\tFound " << key << " at index " << found_index << endl;
-		} else {
-			cout << "\tNot found " << key << endl;
-		}
-	}
-
-	// Recursive binary search tests
-	for ( uint i = 0; i < MAX_SIZE; ++i ) {
-		int key = items[i];
-		cout << "Looking for... " << key;
-		int found_index = BinarySearch_Recursive( items, 0, MAX_SIZE - 1, key );
-		if ( found_index != -1 ) {
-			cout << "\tFound " << key << " at index " << found_index << endl;
-		} else {
-			cout << "\tNot found " << key << endl;
-		}
-	}
+	Test_BinarySearch_Iterative(items);
+	Test_BinarySearch_Recursive(items);
 
 	cout << "Press Enter to continue..." << endl;
 	cin.get();
