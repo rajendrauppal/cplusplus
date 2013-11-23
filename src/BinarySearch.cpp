@@ -22,7 +22,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #include <iostream>
-#include <time.h>
+
 #include "BinarySearch.h"
 
 using std::cout;
@@ -37,12 +37,12 @@ cuint MAX_SIZE = 10;
 int BinarySearch(int * items, cuint size, int key)
 {
 	if ( !items ) throw InvalidArrayException();
-	if ( (size <= 0) && (size > MAX_SIZE) ) throw InvalidSizeException();
+	if ( (size <= 0) || (size > MAX_SIZE) ) throw InvalidSizeException();
 
 	uint start = 0;
 	uint end = size - 1;
 
-	while ( start < end ) {
+	while ( start <= end ) {
 		uint mid = ( start + end ) >> 1;
 		int miditem = items[mid];
 		if ( key == miditem ) {
@@ -67,14 +67,19 @@ void Usage()
 void PrintArray(int * items, cuint size)
 {
 	cout << "[ ";
-	for (int i = 0; i < (size - 1); ++i)
+	for (uint i = 0; i < (size - 1); ++i)
 		cout << items[i] << ", ";
 	cout << items[size - 1] << " ]\n";
 }
 
+int compare(const void * first, const void * second)
+{
+	return ( *(const int*)first - *(const int *)second );
+}
+
 int main(int argc, char *argv[])
 {
-	if ( argc != 2 ) {
+	if ( argc != 1 ) {
 		Usage();
 		exit(1);
 	}
@@ -83,9 +88,10 @@ int main(int argc, char *argv[])
 	for ( uint i = 0; i < MAX_SIZE; ++i )
 		items[i] = rand() % 100;
 
+	std::qsort(items, MAX_SIZE, sizeof(int), compare);
 	PrintArray(items, MAX_SIZE);
 
-	int key = atoi(argv[1]);
+	int key = 79;
 	cout << "Looking for... " << key << endl;
 	int found_index = BinarySearch( items, MAX_SIZE, key );
 	if ( found_index != -1 ) {
@@ -94,5 +100,6 @@ int main(int argc, char *argv[])
 		cout << "Not found " << key << endl;
 	}
 
+	cin.get();
 	return 0;
 }
