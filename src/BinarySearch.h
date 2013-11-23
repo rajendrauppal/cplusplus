@@ -21,66 +21,23 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <iostream>
-#include <time.h>
-#include "BinarySearch.h"
+#ifndef _BINARY_SEARCH_H_
+#define _BINARY_SEARCH_H_
 
-using std::cout;
-using std::cin;
-using std::endl;
+#include <string>
 
-#define uint unsigned int
-#define cuint const unsigned int
+using std::string;
 
-cuint MAX_SIZE = 10;
-
-int BinarySearch(int * items, cuint size, int key)
+class InvalidArrayException
 {
-	if ( !items ) throw InvalidArrayException();
-	if ( (size <= 0) && (size > MAX_SIZE) ) throw InvalidSizeException();
+public:
+	const string message() { return "Invalid Array!"; }
+};
 
-	uint start = 0;
-	uint end = size - 1;
-
-	while ( start <= end ) {
-		uint mid = ( size + end ) >> 1;
-		
-	}
-
-	return 0;
-}
-
-void Usage()
+class InvalidSizeException
 {
-	cout << "Usage:" << endl;
-	cout << "BinarySearch.exe" << endl;
-}
+public:
+	const string message() { return "Invalid Size!"; }
+};
 
-void PrintArray(int * items, cuint size)
-{
-	cout << "[ ";
-	for (int i = 0; i < (size - 1); ++i)
-	{
-		cout << items[i] << ", ";
-	}
-	cout << items[size - 1] << " ]\n";
-}
-
-int main(int argc, char *argv[])
-{
-	if ( argc != 1 ) 
-	{
-		Usage();
-		exit(1);
-	}
-
-	int * items = new int[MAX_SIZE];
-	for ( uint i = 0; i < MAX_SIZE; ++i )
-	{
-		items[i] = rand() % 100;
-	}
-
-	PrintArray(items, MAX_SIZE);
-
-	return 0;
-}
+#endif
