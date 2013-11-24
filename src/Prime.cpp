@@ -33,7 +33,7 @@ using std::endl;
 using std::vector;
 using std::sort;
 
-#include "Prime.h"
+#include "Exceptions.h"
 
 #define uint unsigned int
 
