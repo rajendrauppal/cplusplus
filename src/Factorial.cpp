@@ -83,6 +83,7 @@ int main()
 			cout << e.message() << endl;
 		}
 	}
+
 	cout << endl;
 
 	cout << "Please press Enter to continue..." << endl;
