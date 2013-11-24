@@ -22,13 +22,58 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #include <iostream>
+#include "Exceptions.h"
 
-bool LinearSearch(int n)
+using std::cout;
+using std::cin;
+using std::endl;
+
+const int MAX_SIZE = 100;
+
+bool LinearSearch(int * items, int size, int key)
 {
-	return true;
+	if ( !items ) throw InvalidArrayException();
+	if ( (size < 0) || (size > MAX_SIZE) ) throw InvalidSizeException();
+
+	bool result = false;
+	for ( int i = 0; i < size; ++i ) {
+		if ( key == items[i] ) result = true;
+	}
+	return result;
+}
+
+void PrintArray(int * items, int size)
+{
+	cout << "[ ";
+	for ( int i = 0; i < size-1; ++i ) {
+		cout << items[i] << ", ";
+	}
+	cout << items[size-1] << " ]" << endl;
+}
+
+// Tests - LinearSearch
+void Test_LinearSearch()
+{
+	int * items = new int[MAX_SIZE];
+	for ( int i = 0; i < MAX_SIZE; ++i ) {
+		items[i] = rand() % 100;
+	}
+	PrintArray(items, MAX_SIZE);
+
+	for ( int i = 0; i < MAX_SIZE; ++i ) {
+		if ( LinearSearch(items, MAX_SIZE, i) )
+			cout << i << " found!" << endl;
+		else
+			cout << i << " not found!" << endl;
+	}
+	delete [] items;
 }
 
 int main()
 {
+	Test_LinearSearch();
+
+	cout << "Press Enter to continue..." << endl;
+	cin.get();
 	return 0;
 }

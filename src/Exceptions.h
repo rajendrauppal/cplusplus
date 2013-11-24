@@ -34,4 +34,16 @@ public:
 	string message() { return "Undefined"; }
 };
 
+class InvalidArrayException
+{
+public:
+	string message() { return "Invalid Array!"; }
+};
+
+class InvalidSizeException
+{
+public:
+	string message() { return "Invalid Size!"; }
+};
+
 #endif
