@@ -28,22 +28,34 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 using std::string;
 
-class InvalidInputException
+class CPPExceptions
+{
+public:
+	virtual string message() = 0;
+};
+
+class InvalidInputException : public CPPExceptions
 {
 public:
 	string message() { return "Undefined"; }
 };
 
-class InvalidArrayException
+class InvalidArrayException : public CPPExceptions
 {
 public:
 	string message() { return "Invalid Array!"; }
 };
 
-class InvalidSizeException
+class InvalidSizeException : public CPPExceptions
 {
 public:
 	string message() { return "Invalid Size!"; }
+};
+
+class InvalidInputExceptionFibonacci : public CPPExceptions
+{
+public:
+	string message() { return "Factorial of negative number is undefined!"; }
 };
 
 #endif
