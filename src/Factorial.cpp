@@ -25,7 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "Factorial.h"
 
-#define LLONG long long
+#define ULLONG unsigned long long
 
 using std::cout;
 using std::cin;
@@ -34,14 +34,15 @@ using std::endl;
 /*
 * Iterative implementation of factorial finding function
 */
-LLONG Factorial_Iterative(LLONG n)
+ULLONG Factorial_Iterative(int n)
 {
 	if ( n < 0 ) throw InvalidInputException();
 	if ( n <= 1 ) return 1;
-	LLONG f = 1;
-	while ( n != 1 ) {
-		f *= n;
-		n -= 1;
+	ULLONG f = 1;
+	ULLONG num = n;
+	while ( num != 1 ) {
+		f *= num;
+		num -= 1;
 	}
 	return f;
 }
@@ -49,7 +50,7 @@ LLONG Factorial_Iterative(LLONG n)
 /*
 * Recursive implementation of factorial finding function
 */
-LLONG Factorial_Recursive(LLONG n)
+ULLONG Factorial_Recursive(int n)
 {
 	if ( n < 0 ) throw InvalidInputException();
 	if ( n <= 1 ) return 1;
@@ -60,11 +61,12 @@ LLONG Factorial_Recursive(LLONG n)
 
 int main()
 {
-	int numbers[6] = {-1, 0, 5, 10, 47, 50};
+	const int SIZE = 20;
+
 	// Iterative factorial function tests
-	for ( unsigned int i = 0; i < 6; ++i ) {
+	for ( int i = -1; i <= SIZE; ++i ) {
 		try {
-			cout << Factorial_Iterative(numbers[i]) << endl;
+			cout << "num = " << i << " " << Factorial_Iterative(i) << endl;
 		} 
 		catch (InvalidInputException e) {
 			cout << e.message() << endl;
@@ -73,9 +75,9 @@ int main()
 	cout << endl;
 
 	// Recursive factorial function tests
-	for ( unsigned int i = 0; i < 6; ++i ) {
+	for ( int i = -1; i <= SIZE; ++i ) {
 		try {
-			cout << Factorial_Recursive(numbers[i]) << endl;
+			cout << "num = " << i << " " << Factorial_Recursive(i) << endl;
 		}
 		catch (InvalidInputException e) {
 			cout << e.message() << endl;
