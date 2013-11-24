@@ -86,7 +86,7 @@ int main()
 
 	cout << endl;
 
-	cout << "Please press Enter to continue..." << endl;
+	cout << "Press Enter to continue..." << endl;
 	cin.get();
 	return 0;
 }

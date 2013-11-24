@@ -21,46 +21,12 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <iostream>
-#include <math.h>
+#include <string>
 
-using std::sqrt;
-using std::cout;
-using std::cin;
-using std::endl;
+using std::string;
 
-#include "Prime.h"
-
-#define uint unsigned int
-
-bool Prime(int n)
+class InvalidInputException
 {
-	if ( n <= 1 ) throw InvalidInputException();
-
-	double limit = uint( sqrt((double)n) );
-	for ( uint i = 2; i <= limit; ++i ) {
-		if ( n % i == 0 ) return false;
-	}
-	return true;
-}
-
-int main()
-{
-	const int MAX = 1000;
-
-	// Find prime numbers among 2-1000
-	for ( int i = -1; i <= MAX; ++i ) {
-		try {
-			if ( Prime(i) ) {
-				cout << i << endl;
-			}
-		}
-		catch (InvalidInputException e) {
-			cout << e.message() << endl;
-		}
-	}
-
-	cout << "Press Enter to continue..." << endl;
-	cin.get();
-	return 0;
-}
+public:
+	string message() { return "Undefined"; }
+};

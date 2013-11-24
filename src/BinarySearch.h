@@ -31,13 +31,13 @@ using std::string;
 class InvalidArrayException
 {
 public:
-	const string message() { return "Invalid Array!"; }
+	string message() { return "Invalid Array!"; }
 };
 
 class InvalidSizeException
 {
 public:
-	const string message() { return "Invalid Size!"; }
+	string message() { return "Invalid Size!"; }
 };
 
 #endif
