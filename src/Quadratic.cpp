@@ -46,8 +46,10 @@ Roots Quadratic(double a, double b, double c)
 {
 	Roots roots;
 	double d = sqrt(pow(b, 2) - 4 * a * c);
-	roots.alpha = ( -b + d ) / ( 2 * a );
-	roots.beta = ( -b - d ) / ( 2 * a );
+	if ( d >= 0 ) { // Real roots
+		roots.alpha = ( -b + d ) / ( 2 * a );
+		roots.beta = ( -b - d ) / ( 2 * a );
+	}
 	return roots;
 }
 
