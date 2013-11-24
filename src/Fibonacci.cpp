@@ -37,25 +37,9 @@ using std::sort;
 #define LONGLONG long long
 
 /*
-* Finds nth Fibonacci number
-*/
-int Fibonacci(int n)
-{
-	return 0;
-}
-
-/*
-* Determines if a given number is Fibonacci or not
-*/
-bool IsFibonacci(int n)
-{
-	return true;
-}
-
-/*
 * Generated Fibonacci series up to n
 */
-vector<LONGLONG> FibonacciSeries(LONGLONG n)
+vector<LONGLONG> FibonacciSeries(int n)
 {
 	if ( n <= 0 ) throw InvalidInputException();
 	
@@ -80,11 +64,29 @@ vector<LONGLONG> FibonacciSeries(LONGLONG n)
 	return result;
 }
 
+/*
+* Finds nth Fibonacci number
+* Uses Fibonacci series function
+*/
+LONGLONG NthFibonacci(int n)
+{
+	vector<LONGLONG> series = FibonacciSeries(n);
+	return series[series.size() - 1];
+}
+
+/*
+* Determines if a given number is Fibonacci or not
+*/
+bool IsFibonacci(int n)
+{
+	return true;
+}
+
 int main()
 {
 	// Tests - generating Fibonacci series up to number n
-	int MAX_INT = 46; // maximum 46 Fibonacci numbers with int
-	LONGLONG MAX_LONGLONG = 92; // maximum 92 Fibonacci numbers with long long
+	int MAX_INT = 46;		// maximum 46 Fibonacci numbers with int
+	int MAX_LONGLONG = 92;	// maximum 92 Fibonacci numbers with long long
 	try {
 		vector<LONGLONG> result = FibonacciSeries(MAX_LONGLONG);
 		for ( auto start = result.begin(); start != result.end(); ++start ) {
@@ -94,6 +96,12 @@ int main()
 	}
 	catch (InvalidInputException e) {
 		cout << e.message() << endl;
+	}
+
+	// Tests - Find Nth Fibonacci number
+	for (int i = 1; i <= MAX_LONGLONG; ++i ) {
+		LONGLONG nthFibonacci = NthFibonacci(i);
+		cout << i << "th Fibonacci number is " << nthFibonacci << endl;
 	}
 
 	cout << "Press Enter to continue..." << endl;
