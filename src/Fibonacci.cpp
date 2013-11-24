@@ -24,12 +24,15 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <math.h>
 
 using std::vector;
 using std::cout;
 using std::cin;
 using std::endl;
 using std::sort;
+using std::sqrt;
+using std::pow;
 
 #include "Exceptions.h"
 
@@ -76,15 +79,27 @@ LONGLONG NthFibonacci(int n)
 
 /*
 * Determines if a given number is Fibonacci or not
+* Test:
+* A positive number n is Fibonacci iff
+* (5*n^2 + 4) or (5*n^2 - 4)
 */
-bool IsFibonacci(int n)
+bool IsFibonacci(double n)
 {
-	return true;
+	if ( n <= 0 ) throw InvalidInputException();
+	double criteria[2] = {5 * pow(n, 2) + 4, 5 * pow(n, 2) - 4};	
+	for ( int i = 0; i < 2; ++i ) {
+		if ( criteria[i] > 0 ) {
+			double root = sqrt(criteria[i]);
+			double diff = root - int(root);
+			if ( diff == 0.0 ) return true;
+		}
+	}
+	return false;
 }
 
-int main()
+// Tests - generating Fibonacci series up to number n
+void Test_FibonacciSeries()
 {
-	// Tests - generating Fibonacci series up to number n
 	int MAX_INT = 46;		// maximum 46 Fibonacci numbers with int
 	int MAX_LONGLONG = 92;	// maximum 92 Fibonacci numbers with long long
 	try {
@@ -97,12 +112,34 @@ int main()
 	catch (InvalidInputException e) {
 		cout << e.message() << endl;
 	}
+}
 
-	// Tests - Find Nth Fibonacci number
+// Tests - Find Nth Fibonacci number
+void Test_NthFibonacci()
+{
+	int MAX_LONGLONG = 92;	// maximum 92 Fibonacci numbers with long long
 	for (int i = 1; i <= MAX_LONGLONG; ++i ) {
 		LONGLONG nthFibonacci = NthFibonacci(i);
 		cout << i << "th Fibonacci number is " << nthFibonacci << endl;
 	}
+}
+
+// Tests - Is given number Fibonacci?
+void Test_IsFibonacci()
+{
+	for (int i = 1; i <= NthFibonacci(10); ++i ) {
+		if ( IsFibonacci(i) )
+			cout << i << "th number is Fibonacci!" << endl;
+		else
+			cout << i << "th number is not Fibonacci!" << endl;
+	}
+}
+
+int main()
+{
+	Test_FibonacciSeries();
+	Test_NthFibonacci();
+	Test_IsFibonacci();
 
 	cout << "Press Enter to continue..." << endl;
 	cin.get();
