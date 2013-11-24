@@ -44,7 +44,7 @@ using std::pow;
 */
 vector<LONGLONG> FibonacciSeries(int n)
 {
-	if ( n <= 0 ) throw InvalidInputException();
+	if ( n <= 0 ) throw InvalidInputExceptionFibonacci();
 	
 	vector<LONGLONG> result;
 
@@ -85,7 +85,7 @@ LONGLONG NthFibonacci(int n)
 */
 bool IsFibonacci(double n)
 {
-	if ( n <= 0 ) throw InvalidInputException();
+	if ( n <= 0 ) throw InvalidInputExceptionFibonacci();
 	double criteria[2] = {5 * pow(n, 2) + 4, 5 * pow(n, 2) - 4};	
 	for ( int i = 0; i < 2; ++i ) {
 		if ( criteria[i] > 0 ) {
@@ -109,7 +109,7 @@ void Test_FibonacciSeries()
 		}
 		cout << endl;
 	}
-	catch (InvalidInputException e) {
+	catch (InvalidInputExceptionFibonacci e) {
 		cout << e.message() << endl;
 	}
 }
