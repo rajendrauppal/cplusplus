@@ -159,6 +159,8 @@ int main(int argc, char *argv[])
 	Test_BinarySearch_Iterative(items);
 	Test_BinarySearch_Recursive(items);
 
+	delete [] items;
+
 	cout << "Press Enter to continue..." << endl;
 	cin.get();
 	return 0;
