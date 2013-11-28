@@ -27,6 +27,11 @@ using std::cout;
 using std::cin;
 using std::endl;
 
+int GCD( int m, int n )
+{
+	return 0;
+}
+
 int main()
 {
 	cout << "Press Enter to continue..." << endl;
