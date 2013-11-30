@@ -94,7 +94,7 @@ int GcdLcm::GCD_Binary_Iterative(int m, int n)
 
 /* Binary GCD algorithm (Credit: en.wikipedia.org/wiki/Binary_GCD_algorithm)
 -----------------------------------------------
-m		n		gcd
+m       n       gcd
 -----------------------------------------------
 even    even    2 * gcd( m/2, n/2 )
 even    odd     gcd( m/2, n )
