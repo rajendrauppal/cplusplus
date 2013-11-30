@@ -97,10 +97,10 @@ int GcdLcm::GCD_Binary_Iterative(int m, int n)
 m		n		gcd
 -----------------------------------------------
 even	even	2 * gcd( m/2, n/2 )
-even	odd     gcd( m/2, n )
-odd     even    gcd( m, n/2 )
-odd     odd     m >= n then gcd( (m - n)/2, n )
-                m < n  then gcd( (n - m)/2, m )
+even	odd      gcd( m/2, n )
+odd      even     gcd( m, n/2 )
+odd      odd      m >= n then gcd( (m - n)/2, n )
+                  m < n  then gcd( (n - m)/2, m )
 -----------------------------------------------
 */
 int GcdLcm::GCD_Binary_Recursive(int m, int n)
