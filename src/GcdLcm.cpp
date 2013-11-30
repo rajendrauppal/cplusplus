@@ -23,17 +23,115 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <iostream>
 
+#include "Exceptions.h"
+#include "GcdLcm.h"
+
 using std::cout;
 using std::cin;
 using std::endl;
 
-int GCD( int m, int n )
+int GcdLcm::GCD_Euclidean_Iterative(int m, int n)
+{
+	if ( (m < 0) || (n < 0) ) throw InvalidInputException();
+	if ( !m && !n ) throw InvalidInputException();
+	if ( m && !n ) return m;
+	if ( !m && n ) return n;	
+
+	while ( n ) {
+		int temp = n;
+		n = m % n;
+		m = temp;
+	}
+
+	return m;
+}
+
+int GcdLcm::GCD_Euclidean_Recursive(int m, int n)
+{
+	if ( (m < 0) || (n < 0) ) throw InvalidInputException();
+	if ( !m && !n ) throw InvalidInputException();
+	if ( m && !n ) return m;
+	if ( !m && n ) return n;	
+
+	return GCD_Euclidean_Recursive(n, m % n);
+}
+
+int GcdLcm::GCD_AlternateEuclidean_Iterative(int m, int n)
+{
+	if ( (m < 0) || (n < 0) ) throw InvalidInputException();
+	if ( !m && !n ) throw InvalidInputException();
+	if ( m && !n ) return m;
+	if ( !m && n ) return n;	
+
+	while ( m != n ) {
+		if ( m > n )
+			m = m - n;
+		else
+			n = n - m;
+	}
+
+	return m;
+}
+
+int GcdLcm::GCD_AlternateEuclidean_Recursive(int m, int n)
+{
+	if ( (m < 0) || (n < 0) ) throw InvalidInputException();
+	if ( !m && !n ) throw InvalidInputException();
+	if ( m && !n ) return m;
+	if ( !m && n ) return n;	
+
+	if ( m == n ) return m;
+	if ( m > n )
+		return GCD_AlternateEuclidean_Recursive(m - n, n);
+	else
+		return GCD_AlternateEuclidean_Recursive(m, n - m);
+}
+
+int GcdLcm::GCD_Binary_Iterative(int m, int n)
 {
 	return 0;
 }
 
+int GcdLcm::GCD_Binary_Recursive(int m, int n)
+{
+	return 0;
+}
+
+int GcdLcm::LCM_Iterative(int m, int n)
+{
+	return 0;
+}
+
+int GcdLcm::LCM_Recursive(int m, int n)
+{
+	return 0;
+}
+
+int GcdLcm::GCD_UsingLCM(int m, int n)
+{
+	return 0;
+}
+
+
 int main()
 {
+	GcdLcm gcdlcm;
+	int nums[13][2] = {{0,1}, {1,0}, {0,0}, {1,1}, {-1,1}, {1,-1}, {-1,-1}, {1,1}, {2,3}, {10,10}, {121,11}, {24,60}, {36253652,183728732}};
+	for ( size_t i = 0; i < 13; ++i ) {
+		try 
+		{
+			cout << gcdlcm.GCD_Euclidean_Iterative(nums[i][0], nums[i][1]) << endl;
+			cout << gcdlcm.GCD_Euclidean_Recursive(nums[i][0], nums[i][1]) << endl;
+
+			cout << gcdlcm.GCD_AlternateEuclidean_Iterative(nums[i][0], nums[i][1]) << endl;
+			cout << gcdlcm.GCD_AlternateEuclidean_Recursive(nums[i][0], nums[i][1]) << endl<<endl;
+		} 
+		catch (CPPExceptions& e) 
+		{
+			cout << e.message() << endl;
+		}
+	}
+
 	cout << "Press Enter to continue..." << endl;
 	cin.get();
 	return 0;

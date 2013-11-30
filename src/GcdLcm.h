@@ -21,41 +21,29 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef _EXCEPTIONS_H_
-#define _EXCEPTIONS_H_
-
-#include <string>
-
-using std::string;
-
-class CPPExceptions
+/*
+ * GCD/LCM combined class responsible for calculating GCD/LCM of n >= 2 positive integers.
+ * Several algorithms of finding GCD are implemented in this class.
+ * Iterative and Recursive versions are also implemented of each algorithm.
+ */
+class GcdLcm
 {
 public:
-	virtual string message() { return ""; }
-};
+	int GCD_Euclidean_Iterative(int m, int n);
 
-class InvalidInputException : public CPPExceptions
-{
-public:
-	virtual string message() { return "Undefined"; }
-};
+	int GCD_Euclidean_Recursive(int m, int n);
 
-class InvalidArrayException : public CPPExceptions
-{
-public:
-	virtual string message() { return "Invalid Array!"; }
-};
+	int GCD_AlternateEuclidean_Iterative(int m, int n);
 
-class InvalidSizeException : public CPPExceptions
-{
-public:
-	virtual string message() { return "Invalid Size!"; }
-};
+	int GCD_AlternateEuclidean_Recursive(int m, int n);
 
-class InvalidInputExceptionFibonacci : public CPPExceptions
-{
-public:
-	virtual string message() { return "Factorial of negative number is undefined!"; }
-};
+	int GCD_Binary_Iterative(int m, int n);
 
-#endif
+	int GCD_Binary_Recursive(int m, int n);
+
+	int LCM_Iterative(int m, int n);
+
+	int LCM_Recursive(int m, int n);
+
+	int GCD_UsingLCM(int m, int n);
+};
