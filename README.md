@@ -31,4 +31,6 @@ This repo contains following programs:
 
 6. Quadratic: Implemented 2-dimensional quadratic equation solver function.
 
-7. GCD & LCM: Finding GCD and LCM of n numbers (n >= 2).
+7. GCD & LCM: 
+   - Finding GCD and LCM of n numbers (n >= 2)
+   - Binary GCD algorithm implementation
