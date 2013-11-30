@@ -92,9 +92,41 @@ int GcdLcm::GCD_Binary_Iterative(int m, int n)
 	return 0;
 }
 
+/* Binary GCD algorithm (Credit: en.wikipedia.org/wiki/Binary_GCD_algorithm)
+-----------------------------------------------
+m		n		gcd
+-----------------------------------------------
+even	even	2 * gcd( m/2, n/2 )
+even	odd		gcd( m/2, n )
+odd		even	gcd( m, n/2 )
+odd		odd		m >= n then gcd( (m - n)/2, n )
+				m < n  then gcd( (n - m)/2, m )
+-----------------------------------------------
+*/
 int GcdLcm::GCD_Binary_Recursive(int m, int n)
 {
-	return 0;
+	if ( (m < 0) || (n < 0) ) throw InvalidInputException();
+	if ( !m && !n ) throw InvalidInputException();
+	if ( m && !n ) return m;
+	if ( !m && n ) return n;
+	if ( m == n ) return m;
+
+	bool m_even = ~m & 1;
+	bool n_even = ~n & 1;
+	
+	if ( m_even && n_even ) 
+		return GCD_Binary_Recursive( m >> 1, n >> 1 ) << 1;
+
+	if ( m_even && !n_even ) 
+		return GCD_Binary_Recursive( m >> 1, n );
+
+	if ( !m_even && n_even ) 
+		return GCD_Binary_Recursive( m, n >> 1 );
+
+	if ( m >= n ) 
+		return GCD_Binary_Recursive( (m - n) >> 1, n );
+	else 
+		return GCD_Binary_Recursive( (n - m) >> 1, m );
 }
 
 int GcdLcm::LCM_Iterative(int m, int n)
@@ -124,7 +156,9 @@ int main()
 			cout << gcdlcm.GCD_Euclidean_Recursive(nums[i][0], nums[i][1]) << endl;
 
 			cout << gcdlcm.GCD_AlternateEuclidean_Iterative(nums[i][0], nums[i][1]) << endl;
-			cout << gcdlcm.GCD_AlternateEuclidean_Recursive(nums[i][0], nums[i][1]) << endl<<endl;
+			cout << gcdlcm.GCD_AlternateEuclidean_Recursive(nums[i][0], nums[i][1]) << endl;
+
+			cout << gcdlcm.GCD_Binary_Recursive(nums[i][0], nums[i][1]) << endl;
 		} 
 		catch (CPPExceptions& e) 
 		{
