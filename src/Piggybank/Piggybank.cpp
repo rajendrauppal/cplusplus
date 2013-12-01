@@ -25,6 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
+#include <numeric>
 
 #include "Piggybank.h"
 
@@ -50,13 +51,16 @@ Piggybank::~Piggybank()
 	
 }
 
+// Algorithm 1:
+// 1. Count number of coins of each denomination
+// 2. Find denomination sum and keep updating global sum
+// TC: O(n * d), d = #denominations, n = #coins
+// SC: O(1)
 int Piggybank::GetTotalAmount_A()
 {
-	std::sort(coins.begin(), coins.end());
-
 	int total = 0;
 	for ( auto start = denominations.begin(); start != denominations.end(); ++start ) {
-		int cnt = std::count( coins.begin(), coins.end(), *start );
+		int cnt = std::count( coins.begin(), coins.end(), *start ); // O(1) algorithm
 		int sum = cnt * (*start);
 		total += sum;
 	}
@@ -64,10 +68,20 @@ int Piggybank::GetTotalAmount_A()
 	return total;
 }
 
+// Algorithm 2:
+// 1. Simply add all of them
+int Piggybank::GetTotalAmount_B()
+{
+	return std::accumulate( coins.begin(), coins.end(), 0 );
+}
+
 int main()
 {
 	Piggybank pb;
 	int total = pb.GetTotalAmount_A();
+	cout << "Savings: " << total << " INR" << endl;
+
+	total = pb.GetTotalAmount_B();
 	cout << "Savings: " << total << " INR" << endl;
 
 	cout << "Press Enter to continue..." << endl;

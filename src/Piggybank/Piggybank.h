@@ -40,10 +40,8 @@ public:
 
 	vector<int> GetCoins() { return coins; }
 
-	// Algorithm 1: Sort and find sum
 	int GetTotalAmount_A();
 
-	// Algorithm 2: Keep 4 buckets
 	int GetTotalAmount_B();
 
 private:

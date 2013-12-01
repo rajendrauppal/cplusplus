@@ -15,3 +15,6 @@ Solution 2:
 
 TC: n + n, total n
 SC: constant
+
+Solution 3:
+1. Simply add all of them :-)
