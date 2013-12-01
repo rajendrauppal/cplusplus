@@ -1,3 +1,7 @@
+
+#ifndef _PIGGYBANK_H_
+#define _PIGGYBANK_H_
+
 /*
 The MIT License (MIT)
 
@@ -21,56 +25,31 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
-#include <algorithm>
+#include <vector>
 
-#include "Piggybank.h"
+using std::vector;
 
-using std::cout;
-using std::cin;
-using std::endl;
-
-Piggybank::Piggybank()
+class Piggybank
 {
-	int d[4] = {1, 2, 5, 10};
-	denominations.assign(d, d + 4);
+public:
+	Piggybank();
 
-	srand((unsigned int)time(NULL));
-	ncoins = rand();
-	for ( int i = 0; i < ncoins; ++i ) {
-		int rand_denom = denominations[rand() % 4];
-		coins.push_back(rand_denom);
-	}
-}
+	~Piggybank();
 
-Piggybank::~Piggybank()
-{
-	
-}
+	int GetCoinCount() { return ncoins; }
 
-int Piggybank::GetTotalAmount_A()
-{
-	std::sort(coins.begin(), coins.end());
+	vector<int> GetCoins() { return coins; }
 
-	int total = 0;
-	for ( auto start = denominations.begin(); start != denominations.end(); ++start ) {
-		int cnt = std::count( coins.begin(), coins.end(), *start );
-		int sum = cnt * (*start);
-		total += sum;
-	}
+	// Algorithm 1: Sort and find sum
+	int GetTotalAmount_A();
 
-	return total;
-}
+	// Algorithm 2: Keep 4 buckets
+	int GetTotalAmount_B();
 
-int main()
-{
-	Piggybank pb;
-	int total = pb.GetTotalAmount_A();
-	cout << "Savings: " << total << " INR" << endl;
+private:
+	vector<int> denominations;
+	vector<int> coins;
+	int ncoins;
+};
 
-	cout << "Press Enter to continue..." << endl;
-	cin.get();
-	return 0;
-}
+#endif
