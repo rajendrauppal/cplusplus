@@ -1,0 +1,7 @@
+Definition:
+You are given a piggybank containing n number of coins of denominations 1, 2, 5 and 10.
+Find total sum of money present in the piggybank.
+
+Note:
+1. You don't know in advance which denominations are present.
+2. You are getting coins one-by-one.

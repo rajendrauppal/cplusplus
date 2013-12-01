@@ -1,0 +1,17 @@
+Solution 1:
+1. Get all coins in an array
+2. Sort the array in increasing order of coin denominations
+3. Loop over the array:
+	- Find sum of money of each denomination
+	- Keep updating the global sum
+
+TC: n + nlogn + n, total nlogn
+SC: n
+
+Solution 2:
+1. Keep 4 buckets to store number of coins of each denomination
+2. Loop over the buckets array
+3. Find total sum
+
+TC: n + n, total n
+SC: constant
