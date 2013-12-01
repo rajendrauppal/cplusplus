@@ -168,19 +168,30 @@ int GcdLcm::GCD_Binary_Recursive(int m, int n)
 		return GCD_Binary_Recursive( (n - m) >> 1, m );
 }
 
-int GcdLcm::LCM_Iterative(int m, int n)
+int GcdLcm::LCM_UsingGCD(int m, int n)
 {
-	return 0;
-}
+	if ( (m < 0) || (n < 0) ) throw InvalidInputException();
+	if ( !m && !n ) return 0;
+	if ( m && !n ) return 0;
+	if ( !m && n ) return 0;
+	if ( m == n ) return m;
 
-int GcdLcm::LCM_Recursive(int m, int n)
-{
-	return 0;
+	return (m * n) / GCD_Euclidean_Iterative(m, n);
 }
 
 int GcdLcm::GCD_UsingLCM(int m, int n)
 {
-	return 0;
+	if ( (m < 0) || (n < 0) ) throw InvalidInputException();
+	if ( !m && !n ) throw InvalidInputException();
+	if ( m && !n ) return m;
+	if ( !m && n ) return n;
+	if ( m == n ) return m;
+
+	int lcm = LCM_UsingGCD(m, n);
+	if ( !lcm )
+		throw ZeroLCMException();
+	else
+		return (m * n) / lcm;
 }
 
 
@@ -202,6 +213,9 @@ int main()
 
 			cout << gcdlcm.GCD_Binary_Recursive(m, n) << endl;
 			cout << gcdlcm.GCD_Binary_Iterative(m, n) << endl;
+
+			cout << gcdlcm.GCD_UsingLCM(m, n) << endl;			
+			cout << gcdlcm.LCM_UsingGCD(m, n) << endl;
 		} 
 		catch (CPPExceptions& e) 
 		{

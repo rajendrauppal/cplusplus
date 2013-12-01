@@ -41,9 +41,7 @@ public:
 
 	int GCD_Binary_Recursive(int m, int n);
 
-	int LCM_Iterative(int m, int n);
-
-	int LCM_Recursive(int m, int n);
+	int LCM_UsingGCD(int m, int n);
 
 	int GCD_UsingLCM(int m, int n);
 };
