@@ -58,4 +58,10 @@ public:
 	virtual string message() { return "Factorial of negative number is undefined!"; }
 };
 
+class ZeroLCMException : public CPPExceptions
+{
+public:
+	virtual string message() { return "LCM was zero!"; }
+};
+
 #endif
