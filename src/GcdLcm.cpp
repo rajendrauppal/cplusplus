@@ -217,7 +217,7 @@ int GcdLcm::LCM_UsingGCD(int m, int n)
 }
 
 /* Credit: en.wikipedia.org/wiki/Least_common_multiple
-LCM(a, b) = |a . b| / GCD(a, b)
+GCD(a, b) = |a . b| / LCM(a, b)
 */
 int GcdLcm::GCD_UsingLCM(int m, int n)
 {
