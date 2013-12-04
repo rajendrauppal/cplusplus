@@ -1,4 +1,12 @@
 /*
+
+Exceptions.h
+
+$Id: ~/git/C++/src/Exceptions.h $
+
+Definition of the Exceptions class. Common exceptions class to be used by
+all other individual modules.
+
 The MIT License (MIT)
 
 Copyright (c) 2013 rajendrauppal
@@ -21,8 +29,8 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef _EXCEPTIONS_H_
-#define _EXCEPTIONS_H_
+#ifndef Exceptions_INCLUDED
+#define Exceptions_INCLUDED
 
 #include <string>
 
@@ -64,4 +72,4 @@ public:
 	virtual string message() { return "LCM was zero!"; }
 };
 
-#endif
+#endif // Exceptions_INCLUDED

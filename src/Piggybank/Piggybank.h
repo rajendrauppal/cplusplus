@@ -1,8 +1,12 @@
 
-#ifndef _PIGGYBANK_H_
-#define _PIGGYBANK_H_
-
 /*
+
+Piggybank.h
+
+$Id: ~/git/C++/src/Piggybank/Piggybank.h $
+
+Definition of the Piggybank class.
+
 The MIT License (MIT)
 
 Copyright (c) 2013 rajendrauppal
@@ -24,6 +28,9 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+
+#ifndef Piggybank_INCLUDED
+#define Piggybank_INCLUDED
 
 #include <vector>
 
@@ -50,4 +57,4 @@ private:
 	int ncoins;
 };
 
-#endif
+#endif // Piggybank_INCLUDED

@@ -1,4 +1,12 @@
+
 /*
+
+GcdLcm.h
+
+$Id: ~/git/C++/src/GcdLcm.h $
+
+Definition of the GcdLcm class.
+
 The MIT License (MIT)
 
 Copyright (c) 2013 rajendrauppal
@@ -20,6 +28,9 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+
+#ifndef GcdLcm_INCLUDED
+#define GcdLcm_INCLUDED
 
 /*
  * GCD/LCM combined class responsible for calculating GCD/LCM of n >= 2 positive integers.
@@ -45,3 +56,5 @@ public:
 
 	int GCD_UsingLCM(int m, int n);
 };
+
+#endif // GcdLcm_INCLUDED
