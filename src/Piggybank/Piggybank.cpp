@@ -75,14 +75,61 @@ int Piggybank::GetTotalAmount_B()
 	return std::accumulate( coins.begin(), coins.end(), 0 );
 }
 
-int main()
+void Test_ProgramDefined()
 {
 	Piggybank pb;
+	cout << "----------------------" << endl;
+	cout << "Program defined Input:" << endl;
+	cout << "----------------------" << endl;
+	cout << "Total number of coins: " << pb.GetCoinCount() << endl;
+	cout << "Coin denominations: ";
+	vector<int> d = pb.GetCoinDenominations();
+	for ( size_t i = 0; i < d.size() - 1; ++i ) {
+		cout << d[i] << ", ";
+	}
+	cout << d[d.size() - 1] << endl << endl;
+
 	int total = pb.GetTotalAmount_A();
-	cout << "Savings: " << total << " INR" << endl;
+	cout << "Applying Method A: " << endl;
+	cout << "Savings: " << total << " INR" << endl << endl;
 
 	total = pb.GetTotalAmount_B();
-	cout << "Savings: " << total << " INR" << endl;
+	cout << "Applying Method A: " << endl;
+	cout << "Savings: " << total << " INR" << endl << endl;
+}
+
+void Test_UserInput()
+{
+	Piggybank pb;
+	pb.SetCoinCount(rand() % 10000);
+	int d[3] = {5, 10, 20};
+	vector<int> denom( d, d + 3 );
+	pb.SetCoinDenominations( denom );
+
+	cout << "----------------------" << endl;
+	cout << "User Input:" << endl;
+	cout << "----------------------" << endl;
+	cout << "Total number of coins: " << pb.GetCoinCount() << endl;
+	cout << "Coin denominations: ";
+	vector<int> denominations = pb.GetCoinDenominations();
+	for ( size_t i = 0; i < denominations.size() - 1; ++i ) {
+		cout << d[i] << ", ";
+	}
+	cout << denominations[denominations.size() - 1] << endl << endl;
+
+	int total = pb.GetTotalAmount_A();
+	cout << "Applying Method A: " << endl;
+	cout << "Savings: " << total << " INR" << endl << endl;
+
+	total = pb.GetTotalAmount_B();
+	cout << "Applying Method A: " << endl;
+	cout << "Savings: " << total << " INR" << endl << endl;
+}
+
+int main()
+{
+	Test_ProgramDefined();
+	Test_UserInput();
 
 	cout << "Press Enter to continue..." << endl;
 	cin.get();

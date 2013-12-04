@@ -33,7 +33,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define Piggybank_INCLUDED
 
 #include <vector>
-
 using std::vector;
 
 class Piggybank
@@ -44,6 +43,12 @@ public:
 	~Piggybank();
 
 	int GetCoinCount() { return ncoins; }
+
+	void SetCoinCount(int n) { ncoins = n; }
+
+	void SetCoinDenominations(vector<int> d) { denominations = d; }
+
+	vector<int> GetCoinDenominations() { return denominations; }
 
 	vector<int> GetCoins() { return coins; }
 
