@@ -42,15 +42,17 @@ public:
 
 	~Piggybank();
 
-	int GetCoinCount() { return ncoins; }
+	int GetCoinCount();
 
-	void SetCoinCount(int n) { ncoins = n; }
+	void SetCoinCount(int n);
 
-	void SetCoinDenominations(vector<int> d) { denominations = d; }
+	void SetCoinDenominations(vector<int> d);
 
-	vector<int> GetCoinDenominations() { return denominations; }
+	vector<int> GetCoinDenominations();
 
-	vector<int> GetCoins() { return coins; }
+	vector<int> GetCoins();
+
+	void SetCoins();
 
 	int GetTotalAmount_A();
 
@@ -60,6 +62,7 @@ private:
 	vector<int> denominations;
 	vector<int> coins;
 	int ncoins;
+	const int MAX_RAND;
 };
 
 #endif // Piggybank_INCLUDED
