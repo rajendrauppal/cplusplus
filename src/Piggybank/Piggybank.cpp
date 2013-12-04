@@ -39,10 +39,8 @@ Piggybank::Piggybank() : MAX_RAND(10000)
 {
 	int d[4] = {1, 2, 5, 10};
 	denominations.assign(d, d + 4);
-
 	srand((unsigned int)time(NULL));
-	ncoins = rand() % MAX_RAND;
-	SetCoinCount(ncoins);
+	SetCoinCount(rand() % MAX_RAND);
 	SetCoins();
 }
 
@@ -145,11 +143,12 @@ void Test_ProgramDefined()
 
 void Test_UserInput()
 {
-	Piggybank pb;
-	pb.SetCoinCount(rand() % 10000);
 	int d[3] = {5, 10, 20};
 	vector<int> denom( d, d + 3 );
+
+	Piggybank pb;
 	pb.SetCoinDenominations( denom );
+	pb.SetCoinCount(rand() % 10000);
 	pb.SetCoins();
 
 	PrintResults( pb, "User Input:" );
