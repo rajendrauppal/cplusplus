@@ -46,14 +46,6 @@ int GcdLcm::GCD_Euclidean_Iterative(int m, int n)
 	return m;
 }
 
-/* pseudocode: Credit: en.wikipedia.org/wiki/Euclidean_algorithm
-function gcd(a, b)
-	while b != 0
-		t = b
-		b = a % b
-		a = t
-	return a
-*/
 int GcdLcm::GCD_Euclidean_Recursive(int m, int n)
 {
 	if ( (m < 0) || (n < 0) ) throw InvalidInputException();
@@ -64,15 +56,6 @@ int GcdLcm::GCD_Euclidean_Recursive(int m, int n)
 	return GCD_Euclidean_Recursive(n, m % n);
 }
 
-/* pseudocode: Credit: en.wikipedia.org/wiki/Euclidean_algorithm
-function gcd(a, b)
-	while a != b
-		if a > b
-			a = a - b
-		else
-			b = b - a
-	return a
-*/
 int GcdLcm::GCD_AlternateEuclidean_Iterative(int m, int n)
 {
 	if ( (m < 0) || (n < 0) ) throw InvalidInputException();
@@ -90,15 +73,6 @@ int GcdLcm::GCD_AlternateEuclidean_Iterative(int m, int n)
 	return m;
 }
 
-/* pseudocode: Credit: en.wikipedia.org/wiki/Euclidean_algorithm
-function gcd(a, b)
-	while a != b
-		if a > b
-			a = a - b
-		else
-			b = b - a
-	return a
-*/
 int GcdLcm::GCD_AlternateEuclidean_Recursive(int m, int n)
 {
 	if ( (m < 0) || (n < 0) ) throw InvalidInputException();
@@ -113,18 +87,6 @@ int GcdLcm::GCD_AlternateEuclidean_Recursive(int m, int n)
 		return GCD_AlternateEuclidean_Recursive(m, n - m);
 }
 
-/* Binary GCD algorithm - Iterative implementation
-(Credit: en.wikipedia.org/wiki/Binary_GCD_algorithm)
------------------------------------------------
-m       n       gcd
------------------------------------------------
-even    even    2 * gcd( m/2, n/2 )
-even    odd     gcd( m/2, n )
-odd     even    gcd( m, n/2 )
-odd     odd     m >= n then gcd( (m - n)/2, n )
-                m < n  then gcd( (n - m)/2, m )
------------------------------------------------
-*/
 int GcdLcm::GCD_Binary_Iterative(int m, int n)
 {
 	if ( (m < 0) || (n < 0) ) throw InvalidInputException();
@@ -156,18 +118,6 @@ int GcdLcm::GCD_Binary_Iterative(int m, int n)
 	return m << shift;
 }
 
-/* Binary GCD algorithm - Recursive implementation
-(Credit: en.wikipedia.org/wiki/Binary_GCD_algorithm)
------------------------------------------------
-m       n       gcd
------------------------------------------------
-even    even    2 * gcd( m/2, n/2 )
-even    odd     gcd( m/2, n )
-odd     even    gcd( m, n/2 )
-odd     odd     m >= n then gcd( (m - n)/2, n )
-                m < n  then gcd( (n - m)/2, m )
------------------------------------------------
-*/
 int GcdLcm::GCD_Binary_Recursive(int m, int n)
 {
 	if ( (m < 0) || (n < 0) ) throw InvalidInputException();
@@ -194,9 +144,6 @@ int GcdLcm::GCD_Binary_Recursive(int m, int n)
 		return GCD_Binary_Recursive( (n - m) >> 1, m );
 }
 
-/* Credit: en.wikipedia.org/wiki/Least_common_multiple
-LCM(a, b) = |a . b| / GCD(a, b)
-*/
 int GcdLcm::LCM_UsingGCD(int m, int n)
 {
 	if ( (m < 0) || (n < 0) ) throw InvalidInputException();
@@ -208,9 +155,6 @@ int GcdLcm::LCM_UsingGCD(int m, int n)
 	return (m * n) / GCD_Euclidean_Iterative(m, n);
 }
 
-/* Credit: en.wikipedia.org/wiki/Least_common_multiple
-GCD(a, b) = |a . b| / LCM(a, b)
-*/
 int GcdLcm::GCD_UsingLCM(int m, int n)
 {
 	if ( (m < 0) || (n < 0) ) throw InvalidInputException();
@@ -226,7 +170,7 @@ int GcdLcm::GCD_UsingLCM(int m, int n)
 		return (m * n) / lcm;
 }
 
-
+/// Driver program to test all the functions per GcdLcm class interface
 int main()
 {
 	GcdLcm gcdlcm;

@@ -50,20 +50,73 @@ public:
 		///		b = a % b
 		///		a = t
 		/// return a
+		///
+		/// throws InvalidInputException (defined in Exceptions.h)
+		/// if ( a < 0 or b < 0 ) or ( a == 0 and b == 0 )
 
 	int GCD_Euclidean_Recursive(int m, int n);
+		/// pseudocode: Credit: en.wikipedia.org/wiki/Euclidean_algorithm
+		/// function gcd(a, b)
+		///		if ( a and not b ) return a
+		///		if ( not a and b ) return b
+		///		return gcd(b, a % b)
+		///
+		/// throws InvalidInputException (defined in Exceptions.h)
+		/// if ( a < 0 or b < 0 ) or ( a == 0 and b == 0 )
 
 	int GCD_AlternateEuclidean_Iterative(int m, int n);
+		/// pseudocode: Credit: en.wikipedia.org/wiki/Euclidean_algorithm
+		/// function gcd(a, b)
+		/// while a != b
+		///		if a > b
+		///			a = a - b
+		///		else
+		///			b = b - a
+		///	return a
 
 	int GCD_AlternateEuclidean_Recursive(int m, int n);
+		/// pseudocode: Credit: en.wikipedia.org/wiki/Euclidean_algorithm
+		/// function gcd(a, b)
+		/// 	if ( m == n ) return m;
+		///		if ( m > n )
+		///			return gcd(m - n, n);
+		///		else
+		///			return gcd(m, n - m);
 
 	int GCD_Binary_Iterative(int m, int n);
+		/// Binary GCD algorithm - Iterative implementation
+		/// (Credit: en.wikipedia.org/wiki/Binary_GCD_algorithm)
+		/// -----------------------------------------------
+		/// m       n       gcd
+		/// -----------------------------------------------
+		/// even    even    2 * gcd( m/2, n/2 )
+		/// even    odd     gcd( m/2, n )
+		/// odd     even    gcd( m, n/2 )
+		/// odd     odd     m >= n then gcd( (m - n)/2, n )
+		///                 m < n  then gcd( (n - m)/2, m )
+		/// -----------------------------------------------
 
 	int GCD_Binary_Recursive(int m, int n);
+		/// Core algorithm:
+		/// function gcd(a, b):
+		///		if ( a_even && b_even ) 
+		/// 		return gcd( a >> 1, b >> 1 ) << 1;
+		///		if ( b_even && !b_even ) 
+		/// 		return gcd( a >> 1, b );
+		///		if ( !a_even && b_even ) 
+		/// 		return gcd( a, b >> 1 );
+		///		if ( a >= b ) 
+		/// 		return gcd( (a - b) >> 1, b );
+		///		else 
+		/// 		return gcd( (b - a) >> 1, a );
 
 	int LCM_UsingGCD(int m, int n);
+		/// Credit: en.wikipedia.org/wiki/Least_common_multiple
+		/// LCM(a, b) = |a . b| / GCD(a, b)
 
 	int GCD_UsingLCM(int m, int n);
+		/// Credit: en.wikipedia.org/wiki/Least_common_multiple
+		/// GCD(a, b) = |a . b| / LCM(a, b)
 };
 
 #endif // GcdLcm_INCLUDED
