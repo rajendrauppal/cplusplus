@@ -30,14 +30,6 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-/* pseudocode: Credit: en.wikipedia.org/wiki/Euclidean_algorithm
-function gcd(a, b)
-	while b != 0
-		t = b
-		b = a % b
-		a = t
-	return a
-*/
 int GcdLcm::GCD_Euclidean_Iterative(int m, int n)
 {
 	if ( (m < 0) || (n < 0) ) throw InvalidInputException();

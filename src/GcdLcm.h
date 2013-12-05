@@ -32,15 +32,24 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef GcdLcm_INCLUDED
 #define GcdLcm_INCLUDED
 
-/*
- * GCD/LCM combined class responsible for calculating GCD/LCM of n >= 2 positive integers.
- * Several algorithms of finding GCD are implemented in this class.
- * Iterative and Recursive versions are also implemented of each algorithm.
- */
 class GcdLcm
+	/// GCD/LCM combined class responsible for calculating GCD/LCM of 
+	/// n >= 2 positive integers.
+	///
+	/// Several algorithms of finding GCD are implemented in this class.
+	///
+	/// Iterative and Recursive versions are also implemented of each algorithm.
 {
 public:
 	int GCD_Euclidean_Iterative(int m, int n);
+		/// Basic Euclidean algorithm defined as:
+		/// pseudocode: Credit: en.wikipedia.org/wiki/Euclidean_algorithm
+		/// function gcd(a, b)
+		/// while b != 0
+		///		t = b
+		///		b = a % b
+		///		a = t
+		/// return a
 
 	int GCD_Euclidean_Recursive(int m, int n);
 
