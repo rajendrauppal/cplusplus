@@ -45,9 +45,9 @@ ULLONG Factorial_Iterative(int n)
 	/// f(n) = n * f(n-1), if n > 1
 {
 	if ( n < 0 ) 
-        throw InvalidInputException();
+		throw InvalidInputException();
 	if ( n <= 1 ) 
-        return 1;
+		return 1;
 	ULLONG f = 1;
 	ULLONG num = n;
 	while ( num != 1 ) {
@@ -66,11 +66,11 @@ ULLONG Factorial_Recursive(int n)
 	/// f(n) = n * f(n-1), if n > 1
 {
 	if ( n < 0 ) 
-        throw InvalidInputException();
+		throw InvalidInputException();
 	if ( n <= 1 ) 
-        return 1;
+		return 1;
 	else
-        return n * Factorial_Recursive( n - 1 );
+		return n * Factorial_Recursive( n - 1 );
 }
 
 
