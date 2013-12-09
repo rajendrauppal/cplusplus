@@ -23,10 +23,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 #include <iostream>
+
+
+#include "Factorial.h"
 #include "Exceptions.h"
-
-
-#define ULLONG unsigned long long
 
 
 using std::cout;
@@ -34,10 +34,20 @@ using std::cin;
 using std::endl;
 
 
-typedef ULLONG (*FactorialFunction)(int n);
+typedef UInt64 (Factorial::*FactorialFunction)( Int32 n );
 
 
-ULLONG Factorial_Iterative(int n)
+Factorial::Factorial() : _fact(1)
+{
+}
+
+
+Factorial::~Factorial()
+{
+}
+
+
+UInt64 Factorial::Iterative(Int32 n)
 	/// Iterative implementation of factorial finding function
 	/// Definition: 
 	/// f(n) = undefined,  if n < 0
@@ -48,17 +58,16 @@ ULLONG Factorial_Iterative(int n)
 		throw InvalidInputException();
 	if ( n <= 1 ) 
 		return 1;
-	ULLONG f = 1;
-	ULLONG num = n;
+	UInt64 num = n;
 	while ( num != 1 ) {
-		f *= num;
+		_fact *= num;
 		num -= 1;
 	}
-	return f;
+	return _fact;
 }
 
 
-ULLONG Factorial_Recursive(int n)
+UInt64 Factorial::Recursive(Int32 n)
 	/// Recursive implementation of factorial finding function
 	/// Definition: 
 	/// f(n) = undefined,  if n < 0
@@ -70,15 +79,16 @@ ULLONG Factorial_Recursive(int n)
 	if ( n <= 1 ) 
 		return 1;
 	else
-		return n * Factorial_Recursive( n - 1 );
+		return n * Recursive( n - 1 );
 }
 
 
-void Test_Factorial(FactorialFunction pFactfn, const int& size)
+void Test_Factorial(FactorialFunction pFactfn, const Int32& size)
 {
-	for ( int i = -1; i <= size; ++i ) {
+	for ( Int32 i = -1; i <= size; ++i ) {
 		try {
-			cout << "num = " << i << " " << pFactfn(i) << endl;
+			Factorial f;
+			cout << "num = " << i << " " << (f.*pFactfn)(i) << endl;
 		} 
 		catch (InvalidInputException e) {
 			cout << e.message() << endl;
@@ -90,13 +100,13 @@ void Test_Factorial(FactorialFunction pFactfn, const int& size)
 
 int main()
 {
-	const int SIZE = 20;
+	const Int32 SIZE = 20;
 
 	// Iterative factorial function tests
-	Test_Factorial(Factorial_Iterative, SIZE);
+	Test_Factorial(&Factorial::Iterative, SIZE);
 
 	// Recursive factorial function tests
-	Test_Factorial(Factorial_Recursive, SIZE);
+	Test_Factorial(&Factorial::Recursive, SIZE);
 
 	cout << "Press Enter to continue..." << endl;
 	cin.get();
