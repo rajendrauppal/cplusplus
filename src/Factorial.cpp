@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2013 rajendrauppal
+Copyright (c) 2013 Rajendra Kumar Uppal
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -34,13 +34,20 @@ using std::cin;
 using std::endl;
 
 
-/*
-* Iterative implementation of factorial finding function
-*/
+typedef ULLONG (*FactorialFunction)(int n);
+
+
 ULLONG Factorial_Iterative(int n)
+	/// Iterative implementation of factorial finding function
+	/// Definition: 
+	/// f(n) = undefined,  if n < 0
+	/// f(n) = 1,          if n = 0, 1
+	/// f(n) = n * f(n-1), if n > 1
 {
-	if ( n < 0 ) throw InvalidInputException();
-	if ( n <= 1 ) return 1;
+	if ( n < 0 ) 
+        throw InvalidInputException();
+	if ( n <= 1 ) 
+        return 1;
 	ULLONG f = 1;
 	ULLONG num = n;
 	while ( num != 1 ) {
@@ -51,16 +58,33 @@ ULLONG Factorial_Iterative(int n)
 }
 
 
-/*
-* Recursive implementation of factorial finding function
-*/
 ULLONG Factorial_Recursive(int n)
+	/// Recursive implementation of factorial finding function
+	/// Definition: 
+	/// f(n) = undefined,  if n < 0
+	/// f(n) = 1,          if n = 0, 1
+	/// f(n) = n * f(n-1), if n > 1
 {
-	if ( n < 0 ) throw InvalidInputException();
-	if ( n <= 1 ) return 1;
-	else {
-		return n * Factorial_Recursive( n - 1 );
+	if ( n < 0 ) 
+        throw InvalidInputException();
+	if ( n <= 1 ) 
+        return 1;
+	else
+        return n * Factorial_Recursive( n - 1 );
+}
+
+
+void Test_Factorial(FactorialFunction pFactfn, const int& size)
+{
+	for ( int i = -1; i <= size; ++i ) {
+		try {
+			cout << "num = " << i << " " << pFactfn(i) << endl;
+		} 
+		catch (InvalidInputException e) {
+			cout << e.message() << endl;
+		}
 	}
+	cout << endl;
 }
 
 
@@ -69,27 +93,10 @@ int main()
 	const int SIZE = 20;
 
 	// Iterative factorial function tests
-	for ( int i = -1; i <= SIZE; ++i ) {
-		try {
-			cout << "num = " << i << " " << Factorial_Iterative(i) << endl;
-		} 
-		catch (InvalidInputException e) {
-			cout << e.message() << endl;
-		}
-	}
-	cout << endl;
+	Test_Factorial(Factorial_Iterative, SIZE);
 
 	// Recursive factorial function tests
-	for ( int i = -1; i <= SIZE; ++i ) {
-		try {
-			cout << "num = " << i << " " << Factorial_Recursive(i) << endl;
-		}
-		catch (InvalidInputException e) {
-			cout << e.message() << endl;
-		}
-	}
-
-	cout << endl;
+	Test_Factorial(Factorial_Recursive, SIZE);
 
 	cout << "Press Enter to continue..." << endl;
 	cin.get();
