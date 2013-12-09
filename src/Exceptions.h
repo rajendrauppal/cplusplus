@@ -29,47 +29,74 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+
 #ifndef Exceptions_INCLUDED
 #define Exceptions_INCLUDED
 
+
 #include <string>
+
 
 using std::string;
 
+
 class CPPExceptions
+	/// Exceptions base class.
+	/// Implements generic exception
 {
 public:
-	virtual string message() { return ""; }
+	virtual string message()
+		/// Returns empty string
+		/// This method is to be overridden by derived
+		/// exception classes.
+	{ 
+		return ""; 
+	}
 };
 
+
 class InvalidInputException : public CPPExceptions
+	/// This exception is raised when caller provided
+	/// input is invalid, for e.g., invalid size.
 {
 public:
 	virtual string message() { return "Undefined"; }
 };
 
+
 class InvalidArrayException : public CPPExceptions
+	/// This exception is raised when input array pointer is NULL.
 {
 public:
 	virtual string message() { return "Invalid Array!"; }
 };
 
+
 class InvalidSizeException : public CPPExceptions
+	/// This exception is raised particularly when user
+	/// provided size is invalid.
 {
 public:
 	virtual string message() { return "Invalid Size!"; }
 };
 
+
 class InvalidInputExceptionFibonacci : public CPPExceptions
+	/// This exception is raised when negative number is
+	/// provided for generating Fibonacci series.
 {
 public:
 	virtual string message() { return "Factorial of negative number is undefined!"; }
 };
 
+
 class ZeroLCMException : public CPPExceptions
+	/// This exception is raised when LCM of a, b is zero and
+	/// GCD is being calculated.
 {
 public:
 	virtual string message() { return "LCM was zero!"; }
 };
+
 
 #endif // Exceptions_INCLUDED

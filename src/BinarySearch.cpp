@@ -21,29 +21,31 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+
 #include <iostream>
 
+
 #include "Exceptions.h"
+
 
 using std::cout;
 using std::cin;
 using std::endl;
 
+
 #define uint unsigned int
 #define cuint const unsigned int
 
+
 cuint MAX_SIZE = 10;
 
-/*
-* Iterative binary search function
 
-* Input: integer array, items, size of the array, size, key to search, key
-* Output: returns 0-based index of the integer found, -1 if not found
-
-* Throws InvalidArrayException (defined in BinarySearch.h) in case NULL is passed
-* Throws InvalidSizeException (defined in BinarySearch.h) in case size <= 0 OR size > MAX_SIZE
-*/
 int BinarySearch_Iterative(int * items, cuint size, int key)
+	/// Iterative binary search function
+	/// Input: integer array, items, size of the array, size, key to search, key
+	/// Output: returns 0-based index of the integer found, -1 if not found
+	/// Throws InvalidArrayException (defined in BinarySearch.h) in case NULL is passed
+	/// Throws InvalidSizeException (defined in BinarySearch.h) in case size <= 0 OR size > MAX_SIZE
 {
 	if ( !items ) throw InvalidArrayException();
 	if ( (size <= 0) || (size > MAX_SIZE) ) throw InvalidSizeException();
@@ -66,16 +68,13 @@ int BinarySearch_Iterative(int * items, cuint size, int key)
 	return -1;
 }
 
-/*
-* Recursive binary search function
 
-* Input: integer array, items, start index, end index, key to search, key
-* Output: returns 0-based index of the integer found, -1 if not found
-
-* Throws InvalidArrayException (defined in BinarySearch.h) in case NULL is passed
-* Throws InvalidSizeException (defined in BinarySearch.h) in case start < 0 OR (end + 1) > MAX_SIZE
-*/
 int BinarySearch_Recursive(int * items, cuint start, cuint end, int key)
+	/// Recursive binary search function
+	/// Input: integer array, items, start index, end index, key to search, key
+	/// Output: returns 0-based index of the integer found, -1 if not found
+	/// Throws InvalidArrayException (defined in BinarySearch.h) in case NULL is passed
+	/// Throws InvalidSizeException (defined in BinarySearch.h) in case start < 0 OR (end + 1) > MAX_SIZE
 {
 	if ( !items ) throw InvalidArrayException();
 	if ( (start < 0) || ((end + 1) > MAX_SIZE) ) throw InvalidSizeException();
@@ -92,14 +91,9 @@ int BinarySearch_Recursive(int * items, cuint start, cuint end, int key)
 		return BinarySearch_Recursive( items, mid + 1, end, key );
 }
 
-void Usage()
-{
-	cout << "Usage:" << endl;
-	cout << "BinarySearch.exe <key>" << endl;
-	cout << "Example: BinarySearch.exe" << endl;
-}
 
 void PrintArray(int * items, cuint size)
+	/// Displays the array items of size to the console.
 {
 	cout << "[ ";
 	for (uint i = 0; i < (size - 1); ++i)
@@ -107,14 +101,17 @@ void PrintArray(int * items, cuint size)
 	cout << items[size - 1] << " ]\n";
 }
 
+
 int compare(const void * first, const void * second)
+	/// compare predicate to qsort function.
 {
 	return ( *(const int*)first - *(const int *)second );
 }
 
+
 void Test_BinarySearch_Iterative(int * items)
+	/// Iterative binary search tests
 {
-	// Iterative binary search tests
 	for ( uint i = 0; i < MAX_SIZE; ++i ) {
 		int key = items[i];
 		cout << "Looking for... " << key;
@@ -127,9 +124,10 @@ void Test_BinarySearch_Iterative(int * items)
 	}
 }
 
+
 void Test_BinarySearch_Recursive(int * items)
+	/// Recursive binary search tests
 {
-	// Recursive binary search tests
 	for ( uint i = 0; i < MAX_SIZE; ++i ) {
 		int key = items[i];
 		cout << "Looking for... " << key;
@@ -142,13 +140,9 @@ void Test_BinarySearch_Recursive(int * items)
 	}
 }
 
+
 int main(int argc, char *argv[])
 {
-	if ( argc != 1 ) {
-		Usage();
-		exit(1);
-	}
-
 	int * items = new int[MAX_SIZE];
 	for ( uint i = 0; i < MAX_SIZE; ++i )
 		items[i] = rand() % 100;

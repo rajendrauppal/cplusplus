@@ -21,15 +21,18 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <iostream>
 
+#include <iostream>
 #include "Exceptions.h"
 
+
 #define ULLONG unsigned long long
+
 
 using std::cout;
 using std::cin;
 using std::endl;
+
 
 /*
 * Iterative implementation of factorial finding function
@@ -47,6 +50,7 @@ ULLONG Factorial_Iterative(int n)
 	return f;
 }
 
+
 /*
 * Recursive implementation of factorial finding function
 */
@@ -58,6 +62,7 @@ ULLONG Factorial_Recursive(int n)
 		return n * Factorial_Recursive( n - 1 );
 	}
 }
+
 
 int main()
 {
