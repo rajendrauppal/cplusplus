@@ -30,39 +30,39 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	//
 	// Windows/Visual C++
 	//
-	typedef signed char				Int8;
-	typedef unsigned char			UInt8;
-	typedef signed short			Int16;
-	typedef unsigned short			UInt16;
-	typedef signed int				Int32;
-	typedef unsigned int			UInt32;
-	typedef signed __int64			Int64;
-	typedef unsigned __int64		UInt64;
+	typedef signed char             Int8;
+	typedef unsigned char           UInt8;
+	typedef signed short            Int16;
+	typedef unsigned short          UInt16;
+	typedef signed int              Int32;
+	typedef unsigned int            UInt32;
+	typedef signed __int64          Int64;
+	typedef unsigned __int64        UInt64;
 	#if defined(_WIN64)
-		typedef signed __int64		IntPtr;
-		typedef unsigned __int64	UIntPtr;
+		typedef signed __int64      IntPtr;
+		typedef unsigned __int64    UIntPtr;
 	#else
-		typedef signed long			IntPtr;
-		typedef unsigned long		UIntPtr;
+		typedef signed long         IntPtr;
+		typedef unsigned long       UIntPtr;
 	#endif
 #elif defined(__GNUC__) || defined(__clang__)
 	//
 	// Unix/GCC/Clang
 	//
-	typedef signed char				Int8;
-	typedef unsigned char			UInt8;
-	typedef signed short			Int16;
-	typedef unsigned short			UInt16;
-	typedef signed int				Int32;
-	typedef unsigned int			UInt32;
-	typedef signed long				IntPtr;
-	typedef unsigned long			UIntPtr;
+	typedef signed char             Int8;
+	typedef unsigned char           UInt8;
+	typedef signed short            Int16;
+	typedef unsigned short          UInt16;
+	typedef signed int              Int32;
+	typedef unsigned int            UInt32;
+	typedef signed long             IntPtr;
+	typedef unsigned long           UIntPtr;
 	#if defined(__LP64__)
-		typedef signed long			Int64;
-		typedef unsigned long		UInt64;
+		typedef signed long         Int64;
+		typedef unsigned long       UInt64;
 	#else
-		typedef signed long long	Int64;
-		typedef unsigned long long	UInt64;
+		typedef signed long long    Int64;
+		typedef unsigned long long  UInt64;
 	#endif
 #endif
 
