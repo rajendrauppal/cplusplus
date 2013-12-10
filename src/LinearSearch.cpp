@@ -21,46 +21,53 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+
 #include <iostream>
 #include "Exceptions.h"
+#include "Types.h"
+
 
 using std::cout;
 using std::cin;
 using std::endl;
 
-const int MAX_SIZE = 100;
 
-bool LinearSearch(int * items, int size, int key)
+const Int32 MAX_SIZE = 100;
+
+
+bool LinearSearch(Int32 * items, Int32 size, Int32 key)
 {
 	if ( !items ) throw InvalidArrayException();
 	if ( (size < 0) || (size > MAX_SIZE) ) throw InvalidSizeException();
 
 	bool result = false;
-	for ( int i = 0; i < size; ++i ) {
+	for ( Int32 i = 0; i < size; ++i ) {
 		if ( key == items[i] ) result = true;
 	}
 	return result;
 }
 
-void PrintArray(int * items, int size)
+
+void PrintArray(Int32 * items, Int32 size)
 {
 	cout << "[ ";
-	for ( int i = 0; i < size-1; ++i ) {
+	for ( Int32 i = 0; i < size-1; ++i ) {
 		cout << items[i] << ", ";
 	}
 	cout << items[size-1] << " ]" << endl;
 }
 
-// Tests - LinearSearch
+
 void Test_LinearSearch()
+    /// Tests - LinearSearch
 {
-	int * items = new int[MAX_SIZE];
-	for ( int i = 0; i < MAX_SIZE; ++i ) {
+	Int32 * items = new Int32[MAX_SIZE];
+	for ( Int32 i = 0; i < MAX_SIZE; ++i ) {
 		items[i] = rand() % 100;
 	}
 	PrintArray(items, MAX_SIZE);
 
-	for ( int i = 0; i < MAX_SIZE; ++i ) {
+	for ( Int32 i = 0; i < MAX_SIZE; ++i ) {
 		if ( LinearSearch(items, MAX_SIZE, i) )
 			cout << i << " found!" << endl;
 		else
@@ -69,7 +76,9 @@ void Test_LinearSearch()
 	delete [] items;
 }
 
-int main()
+
+Int32 main()
+    /// Driver program to test LinearSearch API
 {
 	Test_LinearSearch();
 
