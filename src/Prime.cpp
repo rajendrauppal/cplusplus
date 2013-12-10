@@ -40,7 +40,7 @@ using std::sort;
 #include "Prime.h"
 
 
-bool Prime::IsPrime( UInt32 n )
+bool Prime::IsPrime( Int32 n )
     /// Prime number detection function
     /// Input: a natural number n > 1
     /// Output: true if prime, false otherwise
@@ -58,7 +58,7 @@ bool Prime::IsPrime( UInt32 n )
 }
 
 
-Prime::Primes Prime::GetPrimes( UInt32 n )
+Prime::Primes Prime::GetPrimes( Int32 n )
     /// Find first n prime numbers
     /// Input: a positive integer n > 0
     /// Output: a list of first n prime numbers
@@ -84,15 +84,15 @@ Prime::Primes Prime::GetPrimes( UInt32 n )
 }
 
 
-int main()
-    /// Driver program to test Prime class APIs
+void Test_Prime()
+    /// Find prime numbers among 2-1000 - tests
 {
-	const Int32 MAX = 1000;
+	const UInt32 MAX = 1000;
+	Prime p;
 
-	// Find prime numbers among 2-1000 - tests
-	for ( Int32 i = -1; i <= MAX; ++i ) {
+    for ( Int32 i = -1; i <= MAX; ++i ) {
 		try {
-			if ( Prime(i) ) {
+			if ( p.IsPrime(i) ) {
 				cout << i << endl;
 			}
 		}
@@ -100,13 +100,19 @@ int main()
 			cout << e.message() << endl;
 		}
 	}
+}
 
-	// Finding first n prime numbers - tests
-	const Int32 MAX_SIZE = 7;
+
+void Test_FirstNPrimes()
+    /// Finding first n prime numbers - tests
+{
+	const UInt32 MAX_SIZE = 7;
 	Int32 testlist[MAX_SIZE] = {-1, 0, 1, 5, 10, 15, 20};
-	for ( Int32 i = 0; i < MAX_SIZE; ++i ) {
+    Prime p;
+
+	for ( UInt32 i = 0; i < MAX_SIZE; ++i ) {
 		try {
-			vector<Int32> primes = PrimeFirstN(testlist[i]);
+			Prime::Primes primes = p.GetPrimes(testlist[i]);
 			for ( auto start = primes.begin(); start != primes.end(); ++start ) {
 				cout << *start << " ";
 			}
@@ -116,6 +122,17 @@ int main()
 			cout << e.message() << endl;
 		}
 	}
+}
+
+
+int main()
+    /// Driver program to test Prime class APIs
+{
+    // Find prime numbers among 2-1000 - tests
+    Test_Prime();
+
+	// Finding first n prime numbers - tests
+    Test_FirstNPrimes();
 
 	cout << "Press Enter to continue..." << endl;
 	cin.get();

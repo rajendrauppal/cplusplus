@@ -37,9 +37,9 @@ class Prime
 public:
     typedef vector<UInt32> Primes;
 
-    bool IsPrime( UInt32 n );
+    bool IsPrime( Int32 n );
 
-    Primes GetPrimes( UInt32 n );
+    Primes GetPrimes( Int32 n );
 
 private:
     Primes _primes;
