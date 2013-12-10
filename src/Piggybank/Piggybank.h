@@ -29,11 +29,17 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+
 #ifndef Piggybank_INCLUDED
 #define Piggybank_INCLUDED
 
+
 #include <vector>
+#include "Types.h"
+
+
 using std::vector;
+
 
 class Piggybank
 {
@@ -42,27 +48,27 @@ public:
 
 	~Piggybank();
 
-	int GetCoinCount();
+	Int32 GetCoinCount();
 
-	void SetCoinCount(int n);
+	void SetCoinCount(Int32 n);
 
-	void SetCoinDenominations(vector<int> d);
+	void SetCoinDenominations(vector<Int32> d);
 
-	vector<int> GetCoinDenominations();
+	vector<Int32> GetCoinDenominations();
 
-	vector<int> GetCoins();
+	vector<Int32> GetCoins();
 
 	void SetCoins();
 
-	int GetTotalAmount_A();
+	Int32 GetTotalAmount_A();
 
-	int GetTotalAmount_B();
+	Int32 GetTotalAmount_B();
 
 private:
-	vector<int> denominations;
-	vector<int> coins;
-	int ncoins;
-	const int MAX_RAND;
+	vector<Int32> denominations;
+	vector<Int32> coins;
+	Int32 ncoins;
+	const Int32 MAX_RAND;
 };
 
 #endif // Piggybank_INCLUDED

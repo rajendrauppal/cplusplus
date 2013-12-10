@@ -21,6 +21,7 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -28,26 +29,31 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <numeric>
 #include <string>
 
+
 #include "Piggybank.h"
+
 
 using std::cout;
 using std::cin;
 using std::endl;
 using std::string;
 
+
 Piggybank::Piggybank() : MAX_RAND(10000)
 {
-	int d[4] = {1, 2, 5, 10};
+	Int32 d[4] = {1, 2, 5, 10};
 	denominations.assign(d, d + 4);
-	srand((unsigned int)time(NULL));
+	srand((UInt32)time(NULL));
 	SetCoinCount(rand() % MAX_RAND);
 	SetCoins();
 }
+
 
 Piggybank::~Piggybank()
 {
 	
 }
+
 
 inline 
 int Piggybank::GetCoinCount() 
@@ -55,63 +61,71 @@ int Piggybank::GetCoinCount()
 	return ncoins; 
 }
 
+
 inline
-void Piggybank::SetCoinCount(int n) 
+void Piggybank::SetCoinCount(Int32 n) 
 {
 	ncoins = n; 
 }
 
+
 inline
-void Piggybank::SetCoinDenominations(vector<int> d) 
+void Piggybank::SetCoinDenominations(vector<Int32> d) 
 {
 	denominations.clear();
 	denominations = d; 
 }
 
+
 inline
-vector<int> Piggybank::GetCoinDenominations() 
+vector<Int32> Piggybank::GetCoinDenominations() 
 { 
 	return denominations; 
 }
 
+
 inline
-vector<int> Piggybank::GetCoins() 
+vector<Int32> Piggybank::GetCoins() 
 { 
 	return coins; 
 }
 
+
 void Piggybank::SetCoins()
 {
 	coins.clear();
-	for ( int i = 0; i < ncoins; ++i ) {
-		int rand_denom = denominations[rand() % denominations.size()];
+	for ( Int32 i = 0; i < ncoins; ++i ) {
+		Int32 rand_denom = denominations[rand() % denominations.size()];
 		coins.push_back(rand_denom);
 	}
 }
 
-// Algorithm 1:
-// 1. Count number of coins of each denomination
-// 2. Find denomination sum and keep updating global sum
-// TC: O(n * d), d = #denominations, n = #coins
-// SC: O(1)
-int Piggybank::GetTotalAmount_A()
+
+Int32 Piggybank::GetTotalAmount_A()
+    /// Algorithm 1:
+    /// 1. Count number of coins of each denomination
+    /// 2. Find denomination sum and keep updating global sum
+    /// TC: O(n * d), d = #denominations, n = #coins
+    /// SC: O(1)
 {
-	int total = 0;
+	Int32 total = 0;
 	for ( auto start = denominations.begin(); start != denominations.end(); ++start ) {
-		int cnt = std::count( coins.begin(), coins.end(), *start ); // O(n) algorithm
-		int sum = cnt * (*start);
+		Int32 cnt = std::count( coins.begin(), coins.end(), *start ); // O(n) algorithm
+		Int32 sum = cnt * (*start);
 		total += sum;
 	}
 
 	return total;
 }
 
-// Algorithm 2:
-// 1. Simply add all of them
-int Piggybank::GetTotalAmount_B()
+
+Int32 Piggybank::GetTotalAmount_B()
+    /// Algorithm 2:
+    /// 1. Simply add all of them
 {
 	return std::accumulate( coins.begin(), coins.end(), 0 );
 }
+
 
 void PrintResults(Piggybank pb, string input_method)
 {
@@ -120,13 +134,13 @@ void PrintResults(Piggybank pb, string input_method)
 	cout << "----------------------" << endl;
 	cout << "Total number of coins: " << pb.GetCoinCount() << endl;
 	cout << "Coin denominations: ";
-	vector<int> d = pb.GetCoinDenominations();
-	for ( size_t i = 0; i < d.size() - 1; ++i ) {
+	vector<Int32> d = pb.GetCoinDenominations();
+	for ( Int32 i = 0; i < d.size() - 1; ++i ) {
 		cout << d[i] << ", ";
 	}
 	cout << d[d.size() - 1] << endl << endl;
 
-	int total = pb.GetTotalAmount_A();
+	Int32 total = pb.GetTotalAmount_A();
 	cout << "Applying Method A: " << endl;
 	cout << "Savings: " << total << " INR" << endl << endl;
 
@@ -135,16 +149,18 @@ void PrintResults(Piggybank pb, string input_method)
 	cout << "Savings: " << total << " INR" << endl << endl;
 }
 
+
 void Test_ProgramDefined()
 {
 	Piggybank pb;
 	PrintResults( pb, "Program defined Input:" );
 }
 
+
 void Test_UserInput()
 {
-	int d[3] = {5, 10, 20};
-	vector<int> denom( d, d + 3 );
+	Int32 d[3] = {5, 10, 20};
+	vector<Int32> denom( d, d + 3 );
 
 	Piggybank pb;
 	pb.SetCoinDenominations( denom );
@@ -153,6 +169,7 @@ void Test_UserInput()
 
 	PrintResults( pb, "User Input:" );
 }
+
 
 int main()
 {
