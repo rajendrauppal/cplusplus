@@ -29,19 +29,24 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+
 #ifndef GcdLcm_INCLUDED
 #define GcdLcm_INCLUDED
 
+
+#include "Types.h"
+
+
 class GcdLcm
 	/// GCD/LCM combined class responsible for calculating GCD/LCM of 
-	/// n >= 2 positive integers.
+	/// n >= 2 positive Int32egers.
 	///
 	/// Several algorithms of finding GCD are implemented in this class.
 	///
 	/// Iterative and Recursive versions are also implemented of each algorithm.
 {
 public:
-	int GCD_Euclidean_Iterative(int m, int n);
+	Int32 GCD_Euclidean_Iterative(Int32 m, Int32 n);
 		/// Basic Euclidean algorithm defined as:
 		/// pseudocode: Credit: en.wikipedia.org/wiki/Euclidean_algorithm
 		/// function gcd(a, b)
@@ -54,7 +59,7 @@ public:
 		/// throws InvalidInputException (defined in Exceptions.h)
 		/// if ( a < 0 or b < 0 ) or ( a == 0 and b == 0 )
 
-	int GCD_Euclidean_Recursive(int m, int n);
+	Int32 GCD_Euclidean_Recursive(Int32 m, Int32 n);
 		/// pseudocode: Credit: en.wikipedia.org/wiki/Euclidean_algorithm
 		/// function gcd(a, b)
 		///		if ( a and not b ) return a
@@ -64,7 +69,7 @@ public:
 		/// throws InvalidInputException (defined in Exceptions.h)
 		/// if ( a < 0 or b < 0 ) or ( a == 0 and b == 0 )
 
-	int GCD_AlternateEuclidean_Iterative(int m, int n);
+	Int32 GCD_AlternateEuclidean_Iterative(Int32 m, Int32 n);
 		/// pseudocode: Credit: en.wikipedia.org/wiki/Euclidean_algorithm
 		/// function gcd(a, b)
 		/// while a != b
@@ -74,7 +79,7 @@ public:
 		///			b = b - a
 		///	return a
 
-	int GCD_AlternateEuclidean_Recursive(int m, int n);
+	Int32 GCD_AlternateEuclidean_Recursive(Int32 m, Int32 n);
 		/// pseudocode: Credit: en.wikipedia.org/wiki/Euclidean_algorithm
 		/// function gcd(a, b)
 		/// 	if ( m == n ) return m;
@@ -83,7 +88,7 @@ public:
 		///		else
 		///			return gcd(m, n - m);
 
-	int GCD_Binary_Iterative(int m, int n);
+	Int32 GCD_Binary_Iterative(Int32 m, Int32 n);
 		/// Binary GCD algorithm - Iterative implementation
 		/// (Credit: en.wikipedia.org/wiki/Binary_GCD_algorithm)
 		/// -----------------------------------------------
@@ -96,7 +101,7 @@ public:
 		///                 m < n  then gcd( (n - m)/2, m )
 		/// -----------------------------------------------
 
-	int GCD_Binary_Recursive(int m, int n);
+	Int32 GCD_Binary_Recursive(Int32 m, Int32 n);
 		/// Core algorithm:
 		/// function gcd(a, b):
 		///		if ( a_even && b_even ) 
@@ -110,13 +115,14 @@ public:
 		///		else 
 		/// 		return gcd( (b - a) >> 1, a );
 
-	int LCM_UsingGCD(int m, int n);
+	Int32 LCM_UsingGCD(Int32 m, Int32 n);
 		/// Credit: en.wikipedia.org/wiki/Least_common_multiple
 		/// LCM(a, b) = |a . b| / GCD(a, b)
 
-	int GCD_UsingLCM(int m, int n);
+	Int32 GCD_UsingLCM(Int32 m, Int32 n);
 		/// Credit: en.wikipedia.org/wiki/Least_common_multiple
 		/// GCD(a, b) = |a . b| / LCM(a, b)
 };
+
 
 #endif // GcdLcm_INCLUDED

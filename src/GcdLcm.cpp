@@ -21,16 +21,20 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+
 #include <iostream>
+
 
 #include "Exceptions.h"
 #include "GcdLcm.h"
+
 
 using std::cout;
 using std::cin;
 using std::endl;
 
-int GcdLcm::GCD_Euclidean_Iterative(int m, int n)
+
+Int32 GcdLcm::GCD_Euclidean_Iterative(Int32 m, Int32 n)
 {
 	if ( (m < 0) || (n < 0) ) throw InvalidInputException();
 	if ( !m && !n ) throw InvalidInputException();
@@ -38,7 +42,7 @@ int GcdLcm::GCD_Euclidean_Iterative(int m, int n)
 	if ( !m && n ) return n;	
 
 	while ( n ) {
-		int temp = n;
+		Int32 temp = n;
 		n = m % n;
 		m = temp;
 	}
@@ -46,7 +50,8 @@ int GcdLcm::GCD_Euclidean_Iterative(int m, int n)
 	return m;
 }
 
-int GcdLcm::GCD_Euclidean_Recursive(int m, int n)
+
+Int32 GcdLcm::GCD_Euclidean_Recursive(Int32 m, Int32 n)
 {
 	if ( (m < 0) || (n < 0) ) throw InvalidInputException();
 	if ( !m && !n ) throw InvalidInputException();
@@ -56,7 +61,8 @@ int GcdLcm::GCD_Euclidean_Recursive(int m, int n)
 	return GCD_Euclidean_Recursive(n, m % n);
 }
 
-int GcdLcm::GCD_AlternateEuclidean_Iterative(int m, int n)
+
+Int32 GcdLcm::GCD_AlternateEuclidean_Iterative(Int32 m, Int32 n)
 {
 	if ( (m < 0) || (n < 0) ) throw InvalidInputException();
 	if ( !m && !n ) throw InvalidInputException();
@@ -73,7 +79,8 @@ int GcdLcm::GCD_AlternateEuclidean_Iterative(int m, int n)
 	return m;
 }
 
-int GcdLcm::GCD_AlternateEuclidean_Recursive(int m, int n)
+
+Int32 GcdLcm::GCD_AlternateEuclidean_Recursive(Int32 m, Int32 n)
 {
 	if ( (m < 0) || (n < 0) ) throw InvalidInputException();
 	if ( !m && !n ) throw InvalidInputException();
@@ -87,14 +94,15 @@ int GcdLcm::GCD_AlternateEuclidean_Recursive(int m, int n)
 		return GCD_AlternateEuclidean_Recursive(m, n - m);
 }
 
-int GcdLcm::GCD_Binary_Iterative(int m, int n)
+
+Int32 GcdLcm::GCD_Binary_Iterative(Int32 m, Int32 n)
 {
 	if ( (m < 0) || (n < 0) ) throw InvalidInputException();
 	if ( !m && !n ) throw InvalidInputException();
 	if ( m && !n ) return m;
 	if ( !m && n ) return n;
 	
-	int shift = 0;
+	Int32 shift = 0;
 	while ( (~m & 1) && (~n & 1) ) { // while m and n both are even
 		m >>= 1;
 		n >>= 1;
@@ -118,7 +126,8 @@ int GcdLcm::GCD_Binary_Iterative(int m, int n)
 	return m << shift;
 }
 
-int GcdLcm::GCD_Binary_Recursive(int m, int n)
+
+Int32 GcdLcm::GCD_Binary_Recursive(Int32 m, Int32 n)
 {
 	if ( (m < 0) || (n < 0) ) throw InvalidInputException();
 	if ( !m && !n ) throw InvalidInputException();
@@ -144,7 +153,8 @@ int GcdLcm::GCD_Binary_Recursive(int m, int n)
 		return GCD_Binary_Recursive( (n - m) >> 1, m );
 }
 
-int GcdLcm::LCM_UsingGCD(int m, int n)
+
+Int32 GcdLcm::LCM_UsingGCD(Int32 m, Int32 n)
 {
 	if ( (m < 0) || (n < 0) ) throw InvalidInputException();
 	if ( !m && !n ) return 0;
@@ -155,7 +165,8 @@ int GcdLcm::LCM_UsingGCD(int m, int n)
 	return (m * n) / GCD_Euclidean_Iterative(m, n);
 }
 
-int GcdLcm::GCD_UsingLCM(int m, int n)
+
+Int32 GcdLcm::GCD_UsingLCM(Int32 m, Int32 n)
 {
 	if ( (m < 0) || (n < 0) ) throw InvalidInputException();
 	if ( !m && !n ) throw InvalidInputException();
@@ -163,23 +174,24 @@ int GcdLcm::GCD_UsingLCM(int m, int n)
 	if ( !m && n ) return n;
 	if ( m == n ) return m;
 
-	int lcm = LCM_UsingGCD(m, n);
+	Int32 lcm = LCM_UsingGCD(m, n);
 	if ( !lcm )
 		throw ZeroLCMException();
 	else
 		return (m * n) / lcm;
 }
 
-/// Driver program to test all the functions per GcdLcm class interface
-int main()
+
+Int32 main()
+    /// Driver program to test all the functions per GcdLcm class Int32erface
 {
 	GcdLcm gcdlcm;
-	int nums[13][2] = {{0,1}, {1,0}, {0,0}, {1,1}, {-1,1}, {1,-1}, {-1,-1}, {1,1}, {2,3}, {10,10}, {121,11}, {24,60}, {36253652,183728732}};
+	Int32 nums[13][2] = {{0,1}, {1,0}, {0,0}, {1,1}, {-1,1}, {1,-1}, {-1,-1}, {1,1}, {2,3}, {10,10}, {121,11}, {24,60}, {36253652,183728732}};
 	for ( size_t i = 0; i < 13; ++i ) {
 		try 
 		{
-			int m = nums[i][0];
-			int n = nums[i][1];
+			Int32 m = nums[i][0];
+			Int32 n = nums[i][1];
 
 			cout << gcdlcm.GCD_Euclidean_Iterative(m, n) << endl;
 			cout << gcdlcm.GCD_Euclidean_Recursive(m, n) << endl;
