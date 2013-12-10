@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2013 rajendrauppal
+Copyright (c) 2013 Rajendra Kumar Uppal
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -21,10 +21,12 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+
 #include <iostream>
 #include <math.h>
 #include <vector>
 #include <algorithm>
+
 
 using std::sqrt;
 using std::cout;
@@ -33,59 +35,62 @@ using std::endl;
 using std::vector;
 using std::sort;
 
+
 #include "Exceptions.h"
+#include "Prime.h"
 
-#define uint unsigned int
 
-/*
-* Prime number detection function
-* Input: a natural number n > 1
-* Output: true if prime, false otherwise
-*/
-bool Prime(int n)
+bool Prime::IsPrime( UInt32 n )
+    /// Prime number detection function
+    /// Input: a natural number n > 1
+    /// Output: true if prime, false otherwise
 {
-	if ( n <= 1 ) throw InvalidInputException();
+	if ( n <= 1 ) 
+        throw InvalidInputException();
 
-	double limit = uint( sqrt((double)n) );
-	for ( uint i = 2; i <= limit; ++i ) {
-		if ( n % i == 0 ) return false;
-	}
-	return true;
+    double limit = UInt32( sqrt((double)n) );
+
+    for ( UInt32 i = 2; i <= limit; ++i ) {
+        if ( n % i == 0 ) 
+            return false;
+    }
+    return true;
 }
 
-/*
-* Find first n prime numbers
-* Input: a positive integer n > 0
-* Output: a list of first n prime numbers
-*/
-vector<int> PrimeFirstN(int n)
+
+Prime::Primes Prime::GetPrimes( UInt32 n )
+    /// Find first n prime numbers
+    /// Input: a positive integer n > 0
+    /// Output: a list of first n prime numbers
 {
-	if ( n <= 0 ) throw InvalidInputException();
+	if ( n <= 0 ) 
+        throw InvalidInputException();
 	
-	vector<int> result;
 	if ( n == 1 ) {
-		result.push_back(2);
-		return result;
+		_primes.push_back(2);
+		return _primes;
 	}
 
-	int i = 2;
+	UInt32 i = 2;
 	while ( n != 0 ) {
-		if ( Prime(i) ) {
-			result.push_back(i);
+		if ( IsPrime(i) ) {
+			_primes.push_back(i);
 			n--;
 		}
 		i++;
 	}
 
-	return result;
+	return _primes;
 }
 
+
 int main()
+    /// Driver program to test Prime class APIs
 {
-	const int MAX = 1000;
+	const Int32 MAX = 1000;
 
 	// Find prime numbers among 2-1000 - tests
-	for ( int i = -1; i <= MAX; ++i ) {
+	for ( Int32 i = -1; i <= MAX; ++i ) {
 		try {
 			if ( Prime(i) ) {
 				cout << i << endl;
@@ -97,11 +102,11 @@ int main()
 	}
 
 	// Finding first n prime numbers - tests
-	const int MAX_SIZE = 7;
-	int testlist[MAX_SIZE] = {-1, 0, 1, 5, 10, 15, 20};
-	for ( int i = 0; i < MAX_SIZE; ++i ) {
+	const Int32 MAX_SIZE = 7;
+	Int32 testlist[MAX_SIZE] = {-1, 0, 1, 5, 10, 15, 20};
+	for ( Int32 i = 0; i < MAX_SIZE; ++i ) {
 		try {
-			vector<int> primes = PrimeFirstN(testlist[i]);
+			vector<Int32> primes = PrimeFirstN(testlist[i]);
 			for ( auto start = primes.begin(); start != primes.end(); ++start ) {
 				cout << *start << " ";
 			}
