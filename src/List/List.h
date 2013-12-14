@@ -223,6 +223,12 @@ T List<T>::peek_back() const
 template<typename T>
 T List<T>::peek_front() const
 {
+    if ( empty() ) {
+        throw EmptyListException("list empty");
+    }
+    else {
+        return _headnode->_next->_data;
+    }
 }
 
 
