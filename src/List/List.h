@@ -26,9 +26,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define List_INCLUDED
 
 
-#include "../Types.h"
-#include <list>
-
 template<typename T>
 class List
 {
@@ -41,17 +38,25 @@ public:
 
     List& operator = (const List& rhs);
 
-    void push(T data);
+    void push_back(T data);
 
-    T pop();
+    void push_front(T data);
 
-    T peek() const;
+    T pop_back();
 
-    Int32 length() const;
+    T pop_front();
+
+    T peek_back() const;
+
+    T peek_front() const;
+
+    size_t length() const;
 
     List& clone() const;
 
     List& reverse();
+
+    List reverse() const;
 
     bool empty() const;
 
@@ -59,7 +64,7 @@ public:
 
     bool equals(const List& other) const;
 
-    void resize(Int32 newsize, const T val);
+    void resize(size_t newsize, const T val);
 
 private:
     class Node
@@ -81,6 +86,22 @@ List<T>::List()
 template<typename T>
 List<T>::~List()
 {
+}
+
+
+template<typename T>
+List<T>::List(const List& other)
+{
+}
+
+
+template<typename T>
+List<T>& List<T>::operator = (const List& rhs)
+{
+    if ( this != &rhs )
+    {
+    }
+    return *this;
 }
 
 

@@ -33,6 +33,7 @@ using std::endl;
 void Test_List()
 {
     List<int> numbers;
+    numbers.operator=(List<int>());
 }
 
 
