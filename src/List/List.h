@@ -73,16 +73,11 @@ private:
         Node * _next;
         T _data;
         
-        Node()
-        {
-            _next = (Node*)0;
-        }
-
-        explicit Node(T data)
-        {
-            _data = data;
-            _next = (Node*)0;
-        }
+        Node() : _next((Node*)0) 
+        {}
+        
+        explicit Node(T data) : _data(data), _next((Node*)0) 
+        {}
     };
 
     Node * _headnode;
@@ -99,6 +94,7 @@ List<T>::List() : _headnode(new Node()), _length(0)
 template<typename T>
 List<T>::~List()
 {
+    clear();
 }
 
 
@@ -138,6 +134,10 @@ void List<T>::push_back(T data)
 template<typename T>
 void List<T>::push_front(T data)
 {
+    Node * newnode = new Node(data);
+    if ( !empty() )
+        newnode->_next = _headnode->_next;
+    _headnode->_next = newnode;
     _length++;
 }
 
@@ -145,7 +145,21 @@ void List<T>::push_front(T data)
 template<typename T>
 T List<T>::pop_back()
 {
-    _length--;
+    if ( empty() ) {
+        ; // throw empty list exception
+    }
+    else {
+
+        Node * current = _headnode;
+        while ( current->_next->_next ) {
+            current = current->_next;
+        }
+        T data = current->_data;
+        delete current;
+        current = (Node*)0;
+        _length--;
+        return data;
+    }
 }
 
 
