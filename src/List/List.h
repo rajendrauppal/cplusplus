@@ -207,6 +207,16 @@ T List<T>::pop_front()
 template<typename T>
 T List<T>::peek_back() const
 {
+    if ( empty() ) {
+        throw EmptyListException("list empty");
+    }
+    else {
+        Node * current = _headnode;
+        while ( current->_next ) {
+            current = current->_next;
+        }
+        return current->_data;
+    }
 }
 
 
