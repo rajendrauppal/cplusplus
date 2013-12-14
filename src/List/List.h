@@ -26,6 +26,30 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define List_INCLUDED
 
 
+#include <iostream>
+#include <string>
+
+
+using std::string;
+
+
+class ListException : public std::exception
+{
+public:
+    virtual string message() = 0;
+};
+
+
+class EmptyListException : public ListException
+{
+public:
+    EmptyListException(string msg) : _msg(msg) {}
+    string message() { return _msg; }
+private:
+    std::string _msg;
+};
+
+
 template<typename T>
 class List
 {
@@ -146,10 +170,9 @@ template<typename T>
 T List<T>::pop_back()
 {
     if ( empty() ) {
-        ; // throw empty list exception
+        throw EmptyListException("list empty");
     }
     else {
-
         Node * current = _headnode;
         while ( current->_next->_next ) {
             current = current->_next;
