@@ -267,6 +267,9 @@ bool List<T>::empty() const
 template<typename T>
 void List<T>::clear()
 {
+    while ( !empty() ) {
+        pop_front();
+    }
 }
 
 
