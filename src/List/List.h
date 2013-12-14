@@ -189,7 +189,18 @@ T List<T>::pop_back()
 template<typename T>
 T List<T>::pop_front()
 {
-    _length--;
+    if ( empty() ) {
+        throw EmptyListException("list empty");
+    }
+    else {
+        T data = _headnode->_next->_data;
+        Node * n = _headnode->_next;
+        _headnode->_next = _headnode->_next->_next;
+        delete n;
+        n = (Node*)0;
+        _length--;
+        return data;
+    }
 }
 
 
