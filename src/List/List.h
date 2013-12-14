@@ -56,29 +56,42 @@ public:
 
     List& reverse();
 
-    List reverse() const;
+    List& reverse() const;
 
     bool empty() const;
 
     void clear();
 
-    bool equals(const List& other) const;
+    bool equals(const List<T>& other) const;
 
     void resize(size_t newsize, const T val);
 
 private:
-    class Node
+    struct Node
     {
+    public:
         Node * _next;
         T _data;
+        
+        Node()
+        {
+            _next = (Node*)0;
+        }
+
+        explicit Node(T data)
+        {
+            _data = data;
+            _next = (Node*)0;
+        }
     };
 
-    Node _node;
+    Node * _headnode;
+    size_t _length;
 };
 
 
 template<typename T>
-List<T>::List()
+List<T>::List() : _headnode(new Node()), _length(0)
 {
 }
 
@@ -102,6 +115,119 @@ List<T>& List<T>::operator = (const List& rhs)
     {
     }
     return *this;
+}
+
+
+template<typename T>
+void List<T>::push_back(T data)
+{
+    if ( empty() ) {
+        _headnode->_next = new Node(data);
+    }
+    else {
+        Node * current = _headnode;
+        while ( current->_next ) {
+            current = current->_next;
+        }
+        current->_next = new Node(data);
+    }
+    _length++;
+}
+
+
+template<typename T>
+void List<T>::push_front(T data)
+{
+    _length++;
+}
+
+
+template<typename T>
+T List<T>::pop_back()
+{
+    _length--;
+}
+
+
+template<typename T>
+T List<T>::pop_front()
+{
+    _length--;
+}
+
+
+template<typename T>
+T List<T>::peek_back() const
+{
+}
+
+
+template<typename T>
+T List<T>::peek_front() const
+{
+}
+
+
+template<typename T>
+size_t List<T>::length() const
+{
+    return _length;
+}
+
+
+template<typename T>
+List<T>& List<T>::clone() const
+{
+}
+
+
+template<typename T>
+List<T>& List<T>::reverse()
+{
+}
+
+
+template<typename T>
+List<T>& List<T>::reverse() const
+{
+}
+
+
+template<typename T>
+bool List<T>::empty() const
+{
+    return (_length == 0);
+}
+
+
+template<typename T>
+void List<T>::clear()
+{
+}
+
+
+template<typename T>
+bool List<T>::equals(const List<T>& other) const
+{
+    if ( other.length() != this->length() )
+        return false;
+
+    Node * left = this->_headnode->_next;
+    Node * right = other._headnode->_next;
+    while ( left ) {
+        if ( left->_data != right->_data )
+            return false;
+        left = left->_next;
+        right = right->_next;
+    }
+
+    return true;
+}
+
+
+template<typename T>
+void List<T>::resize(size_t newsize, const T val)
+{
 }
 
 

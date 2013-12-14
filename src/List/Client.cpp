@@ -33,7 +33,21 @@ using std::endl;
 void Test_List()
 {
     List<int> numbers;
-    numbers.operator=(List<int>());
+    for ( int i = 0; i < 10; ++i ) {
+        numbers.push_back(rand() % 100);
+    }
+
+    List<int> marks;
+    for ( int i = 0; i < 10; ++i ) {
+        marks.push_back(rand() % 100);
+    }
+
+    if ( numbers.equals(marks) ) {
+        cout << "Equal" << endl;
+    }
+    else {
+        cout << "Not Equal" << endl;
+    }
 }
 
 
