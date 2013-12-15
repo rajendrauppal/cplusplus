@@ -78,7 +78,7 @@ public:
 
     List& clone() const;
 
-    List& reverse();
+    void reverse();
 
     List& reverse() const;
 
@@ -242,11 +242,18 @@ size_t List<T>::length() const
 template<typename T>
 List<T>& List<T>::clone() const
 {
+    List<T> cloned;
+    Node * current = _headnode->_next;
+    while ( current ) {
+        cloned.push_back( current->_data );
+        current = current->_next;
+    }
+    return cloned;
 }
 
 
 template<typename T>
-List<T>& List<T>::reverse()
+void List<T>::reverse()
 {
 }
 
