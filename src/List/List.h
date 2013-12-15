@@ -108,10 +108,19 @@ private:
     };
 
     Node * _headnode;
-    size_t _length;
-    
     Node * _current;
+    size_t _length;
+
+    //
+    // Private interface
+    //
     Node * next();
+
+    void reset();
+
+    Node * begin();
+
+    Node * end();
 };
 
 
@@ -202,13 +211,17 @@ T List<T>::pop_back()
         throw EmptyListException("list empty");
     }
     else {
-        Node * current = _headnode;
-        while ( current->_next->_next ) {
-            current = current->_next;
+        Node * prev = _headnode;
+        Node * curr = prev->_next;
+
+        while ( curr->_next ) {
+            prev = prev->_next;
+            curr = curr->_next;
         }
-        T data = current->_data;
-        delete current;
-        current = (Node*)0;
+        T data = curr->_data;
+        delete curr;
+        curr = (Node*)0;
+        prev->_next = (Node*)0;
         _length--;
         return data;
     }
@@ -375,12 +388,43 @@ void List<T>::resize(size_t newsize, const T val)
 }
 
 
-/// private interface
+//
+// Private interface
+//
+template<typename T>
+typename List<T>::Node * List<T>::begin()
+    /// Returns pointer to first node.
+{
+    return _headnode->_next;
+}
+
+
 template<typename T>
 typename List<T>::Node * List<T>::next()
+    /// Returns traversal pointer pointing to current node.
 {
     _current = _current->_next;
     return _current;
+}
+
+
+template<typename T>
+typename List<T>::Node * List<T>::end()
+    /// Returns pointer to last node.
+{
+    Node * curr = _headnode;
+    while ( curr->_next ) {
+        curr = curr->_next;
+    }
+    return curr;
+}
+
+
+template<typename T>
+void List<T>::reset()
+    /// Resets traversal pointer to head node.
+{
+    _current = _headnode;
 }
 
 

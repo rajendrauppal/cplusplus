@@ -37,7 +37,7 @@ void Test_List()
         numbers.push_back(rand() % 1000);
     }
 
-    numbers.resize( 5, 0 );
+    numbers.resize( 10, 0 );
 
     for ( size_t i = 0; i < (numbers.length() - 1); ++i ) {
         int * data = numbers.Iterator();
@@ -84,7 +84,17 @@ void Test_List()
 
 int main()
 {
-    Test_List();
+    //Test_List();
+
+    // experimenting with std::list
+    std::list<int> nums(10, 0);
+    std::list<int>::const_iterator start = nums.begin();
+    std::list<int>::const_iterator end = nums.end();
+    while ( start != end ) {
+        cout << *start << ",";
+        start++;
+    }
+    cout << endl;
 
     cout << "Press any key to continue..." << endl;
     cin.get();
