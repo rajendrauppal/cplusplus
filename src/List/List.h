@@ -261,6 +261,13 @@ void List<T>::reverse()
 template<typename T>
 List<T>& List<T>::reverse() const
 {
+    List<T> reversed;
+    Node * current = _headnode->_next;
+    while ( current ) {
+        reversed->push_front( current->_data );
+        current = current->_next;
+    }
+    return reversed;
 }
 
 
