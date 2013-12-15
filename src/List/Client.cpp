@@ -24,6 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <iostream>
 #include "List.h"
+#include <list>
 
 
 using std::cout;
@@ -51,10 +52,25 @@ void Test_List()
         List<int> numbers; // test default ctor
         size_t i;
         for ( i = 0; i < 10; ++i ) {
-            numbers.push_back(rand() % 1000); // test push_back()
+            //numbers.push_back(rand() % 1000); // test push_back()
             numbers.push_front(rand() % 1000); // test push_front()
         }
         PrintList(numbers); // test length(), at(), operator[]
+
+        numbers.reverse(); // test reverse() non-const
+        PrintList(numbers);
+
+        numbers.resize(-1, 0); // test resize non-const
+        PrintList(numbers);
+
+        numbers.resize(0, 0);
+        PrintList(numbers);
+
+        numbers.resize(4, 0);
+        PrintList(numbers);
+
+        numbers.resize(15, 0);
+        PrintList(numbers);
 
         cout << numbers.peek_back() << endl; // test peek_back()
         cout << numbers.peek_front() << endl; // test peek_front()
@@ -68,7 +84,7 @@ void Test_List()
         //cout << numbers.peek_back() << endl; // test peek_back()
         //cout << numbers.peek_front() << endl; // test peek_front()
 
-        List<int> series = numbers; // test copy ctor
+        /*List<int> series = numbers; // test copy ctor
         if ( series.equals(numbers) ) // test equals()
             cout << "Equal" << endl;
         if ( series == numbers ) // test operator==
@@ -80,7 +96,7 @@ void Test_List()
 
         List<int> cloned;
         cloned = series; // test operator=
-        PrintList( cloned );
+        PrintList( cloned );*/
     }
     catch ( ListException& e ) {
         cout << e.message() << endl;

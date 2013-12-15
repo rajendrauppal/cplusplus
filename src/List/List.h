@@ -71,15 +71,13 @@ public:
 
     void reverse();
 
-    List& reverse() const;
-
     bool empty() const;
 
     void clear();
 
     bool equals(const List& other) const;
 
-    void resize(size_t newsize, const T val);
+    void resize(int newsize, const T val);
 
     T at(size_t index) const;
 
@@ -276,20 +274,7 @@ void List<T>::reverse()
         prev = curr;
         curr = next;
     }
-    _headnode->_next = curr;
-}
-
-
-template<typename T>
-List<T>& List<T>::reverse() const
-{
-    List<T> reversed;
-    Node * current = _headnode->_next;
-    while ( current ) {
-        reversed->push_front( current->_data );
-        current = current->_next;
-    }
-    return reversed;
+    _headnode->_next = prev;
 }
 
 
@@ -334,20 +319,22 @@ bool List<T>::equals(const List& other) const
 /// else if newsize < current_size
 ///     remove (current_size - newsize) nodes from this list
 template<typename T>
-void List<T>::resize(size_t newsize, const T val)
+void List<T>::resize(int newsize, const T val)
 {
-    if ( empty() ) {
-        throw ListException("list empty");
+    if ( newsize < 0 )
+        throw ListException("Invalid size requested");
+
+    if ( 0 == newsize ) {
+        clear();
+        return;
     }
 
     int diff = newsize - this->length();
-    if ( diff > 0 ) 
-    {
+    if ( diff > 0 ) {
         while ( diff-- )
             this->push_back( val );
     }
-    else if ( diff < 0 ) 
-    {
+    else {
         diff = -diff;
         while ( diff-- )
             this->pop_back();
