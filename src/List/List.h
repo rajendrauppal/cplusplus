@@ -83,9 +83,13 @@ public:
 
     void resize(size_t newsize, const T val);
 
-    T at(size_t index);
+    T at(size_t index) const;
 
-    T operator [] (size_t pos);
+    T operator [] (size_t pos) const;
+
+    bool operator == (const List& other) const;
+
+    bool operator != (const List& other) const;
 
 private:
     struct Node
@@ -370,7 +374,7 @@ void List<T>::resize(size_t newsize, const T val)
 
 
 template<typename T>
-T List<T>::at(size_t index)
+T List<T>::at(size_t index) const
 {
     if ( empty() ) {
         throw ListException("list empty");
@@ -391,9 +395,23 @@ T List<T>::at(size_t index)
 
 
 template<typename T>
-T List<T>::operator [] (size_t pos)
+T List<T>::operator [] (size_t pos) const
 {
     return at(pos);
+}
+
+
+template<typename T>
+bool  List<T>::operator == (const List& other) const
+{
+    return this->equals(other);
+}
+
+
+template<typename T>
+bool  List<T>::operator != (const List& other) const
+{
+    return (!(*this == other));
 }
 
 

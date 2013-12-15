@@ -35,9 +35,9 @@ template<typename T>
 void PrintList(List<T>& list)
 {
     size_t i;
-    for ( i = 0; i < (list.length() - 1); ++i ) {
-        cout << list.at(i) << " -> ";
-        cout << list[i] << " -> ";
+    for ( i = 0; i < (list.length() - 1); ++i ) { // test length()
+        cout << list.at(i) << " -> "; // test at()
+        cout << list[i] << " -> "; // test operator[]
     }
     cout << list.at(i) << " -> [NULL]" << endl;
     cout << "Length = " << list.length() << endl << endl;
@@ -46,15 +46,21 @@ void PrintList(List<T>& list)
 
 void Test_List()
 {
-    List<int> numbers;
+    List<int> numbers; // test default ctor
     size_t i;
     for ( i = 0; i < 10; ++i ) {
-        numbers.push_back(rand() % 1000);
+        numbers.push_back(rand() % 1000); // test push_back()
     }
-    PrintList(numbers);
+    PrintList(numbers); // test length(), at(), operator[]
 
-    List<int> series = numbers;
-    if ( series.equals(numbers) )
+    List<int> series = numbers; // test copy ctor
+    if ( series.equals(numbers) ) // test equals()
+        cout << "Equal" << endl;
+    if ( series == numbers ) // test operator==
+        cout << "Equal" << endl;
+    if ( series != numbers ) // test operator!=
+        cout << "Not Equal" << endl;
+    else
         cout << "Equal" << endl;
 }
 
