@@ -28,7 +28,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <iostream>
 #include <string>
-#include <list>
 
 
 using std::string;
@@ -37,14 +36,7 @@ using std::string;
 class ListException : public std::exception
 {
 public:
-    virtual string message() = 0;
-};
-
-
-class EmptyListException : public ListException
-{
-public:
-    EmptyListException(string msg) : _msg(msg) {}
+    ListException(string msg) : _msg(msg) {}
     string message() { return _msg; }
 private:
     std::string _msg;
@@ -62,8 +54,6 @@ public:
     List(const List& other);
 
     List& operator = (const List& rhs);
-
-    T * Iterator();
 
     void push_back(T data);
 
@@ -93,6 +83,10 @@ public:
 
     void resize(size_t newsize, const T val);
 
+    T at(size_t index);
+
+    T operator [] (size_t pos);
+
 private:
     struct Node
     {
@@ -115,12 +109,7 @@ private:
     // Private interface
     //
     Node * next();
-
     void reset();
-
-    Node * begin();
-
-    Node * end();
 };
 
 
@@ -169,14 +158,6 @@ List<T>& List<T>::operator = (const List& rhs)
 
 
 template<typename T>
-T * List<T>::Iterator()
-{
-    T * pdata = &next()->_data;
-    return pdata;
-}
-
-
-template<typename T>
 void List<T>::push_back(T data)
 {
     if ( empty() ) {
@@ -208,7 +189,7 @@ template<typename T>
 T List<T>::pop_back()
 {
     if ( empty() ) {
-        throw EmptyListException("list empty");
+        throw ListException("list empty");
     }
     else {
         Node * prev = _headnode;
@@ -232,7 +213,7 @@ template<typename T>
 T List<T>::pop_front()
 {
     if ( empty() ) {
-        throw EmptyListException("list empty");
+        throw ListException("list empty");
     }
     else {
         T data = _headnode->_next->_data;
@@ -250,7 +231,7 @@ template<typename T>
 T List<T>::peek_back() const
 {
     if ( empty() ) {
-        throw EmptyListException("list empty");
+        throw ListException("list empty");
     }
     else {
         Node * current = _headnode;
@@ -266,7 +247,7 @@ template<typename T>
 T List<T>::peek_front() const
 {
     if ( empty() ) {
-        throw EmptyListException("list empty");
+        throw ListException("list empty");
     }
     else {
         return _headnode->_next->_data;
@@ -298,7 +279,7 @@ template<typename T>
 void List<T>::reverse()
 {
     if ( empty() ) {
-        throw EmptyListException("list empty");
+        throw ListException("list empty");
     }
     Node * prev = (Node*)0;
     Node * curr = _headnode->_next;
@@ -370,7 +351,7 @@ template<typename T>
 void List<T>::resize(size_t newsize, const T val)
 {
     if ( empty() ) {
-        throw EmptyListException("list empty");
+        throw ListException("list empty");
     }
 
     int diff = newsize - this->length();
@@ -388,35 +369,43 @@ void List<T>::resize(size_t newsize, const T val)
 }
 
 
-//
-// Private interface
-//
 template<typename T>
-typename List<T>::Node * List<T>::begin()
-    /// Returns pointer to first node.
+T List<T>::at(size_t index)
 {
-    return _headnode->_next;
+    if ( empty() ) {
+        throw ListException("list empty");
+    }
+
+    if ( index >= this->length() ) {
+        throw ListException("out of bound access");
+    }
+
+    size_t count = 0;
+    Node * curr = _headnode->_next;
+    while ( count != index ) {
+        curr = curr->_next;
+        count++;
+    }
+    return curr->_data;
 }
 
 
+template<typename T>
+T List<T>::operator [] (size_t pos)
+{
+    return at(pos);
+}
+
+
+//
+// Private interface
+//
 template<typename T>
 typename List<T>::Node * List<T>::next()
     /// Returns traversal pointer pointing to current node.
 {
     _current = _current->_next;
     return _current;
-}
-
-
-template<typename T>
-typename List<T>::Node * List<T>::end()
-    /// Returns pointer to last node.
-{
-    Node * curr = _headnode;
-    while ( curr->_next ) {
-        curr = curr->_next;
-    }
-    return curr;
 }
 
 

@@ -25,76 +25,43 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <iostream>
 #include "List.h"
 
+
 using std::cout;
 using std::cin;
 using std::endl;
 
 
+template<typename T>
+void PrintList(List<T>& list)
+{
+    size_t i;
+    for ( i = 0; i < (list.length() - 1); ++i ) {
+        cout << list.at(i) << " -> ";
+        cout << list[i] << " -> ";
+    }
+    cout << list.at(i) << " -> [NULL]" << endl;
+    cout << "Length = " << list.length() << endl << endl;
+}
+
+
 void Test_List()
 {
     List<int> numbers;
-    for ( int i = 0; i < 10; ++i ) {
+    size_t i;
+    for ( i = 0; i < 10; ++i ) {
         numbers.push_back(rand() % 1000);
     }
-
-    numbers.resize( 10, 0 );
-
-    for ( size_t i = 0; i < (numbers.length() - 1); ++i ) {
-        int * data = numbers.Iterator();
-        cout << *data << " -> ";
-    }
-    cout << *numbers.Iterator() << " -> [NULL]" << endl;
-    cout << "Length: " << numbers.length() << endl;
-
-    List<int> marks;
-    for ( int i = 0; i < 10; ++i ) {
-        marks.push_back(rand() % 1000);
-    }
-
-    for ( size_t i = 0; i < (marks.length() - 1); ++i ) {
-        int * data = marks.Iterator();
-        cout << *data << " -> ";
-    }
-    cout << *marks.Iterator() << " -> [NULL]" << endl;
-    cout << "Length: " << marks.length() << endl;
-
-    if ( numbers.equals(marks) ) {
-        cout << "Equal" << endl;
-    }
-    else {
-        cout << "Not Equal" << endl;
-    }
+    PrintList(numbers);
 
     List<int> series = numbers;
-    if ( series.equals(numbers) ) {
+    if ( series.equals(numbers) )
         cout << "Equal" << endl;
-    }
-    else {
-        cout << "Not Equal" << endl;
-    }
-
-    if ( numbers.equals(series) ) {
-        cout << "Equal" << endl;
-    }
-    else {
-        cout << "Not Equal" << endl;
-    }
 }
 
 
 int main()
 {
-    //Test_List();
-
-    // experimenting with std::list
-    std::list<int> nums(10, 0);
-    std::list<int>::const_iterator start = nums.begin();
-    std::list<int>::const_iterator end = nums.end();
-    while ( start != end ) {
-        cout << *start << ",";
-        start++;
-    }
-    cout << endl;
+    Test_List();
 
     cout << "Press any key to continue..." << endl;
     cin.get();
