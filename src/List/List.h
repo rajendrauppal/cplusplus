@@ -28,6 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <iostream>
 #include <string>
+#include <list>
 
 
 using std::string;
@@ -255,6 +256,19 @@ List<T>& List<T>::clone() const
 template<typename T>
 void List<T>::reverse()
 {
+    if ( empty() ) {
+        throw EmptyListException("list empty");
+    }
+    Node * prev = (Node*)0;
+    Node * curr = _headnode->_next;
+
+    while ( curr ) {
+        Node * next = curr->_next;
+        curr->_next = prev;
+        prev = curr;
+        curr = next;
+    }
+    _headnode->_next = curr;
 }
 
 
