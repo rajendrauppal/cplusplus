@@ -69,8 +69,6 @@ public:
 
     size_t length() const;
 
-    List& clone() const;
-
     void reverse();
 
     List& reverse() const;
@@ -79,7 +77,7 @@ public:
 
     void clear();
 
-    bool equals(const List<T>& other) const;
+    bool equals(const List& other) const;
 
     void resize(size_t newsize, const T val);
 
@@ -150,12 +148,9 @@ List<T>& List<T>::operator = (const List& rhs)
     if ( this != &rhs )
     {
         clear();
-
-        Node * iter = rhs.next();
-        while ( iter ) {
-            this->push_back( iter->_data );
-            iter = iter->_next;
-        }
+        int end = rhs.length() - 1;
+        for ( int i = (rhs.length() - 1); i >= 0 ; i-- )
+            this->push_front( rhs[i] );
     }
     return *this;
 }
@@ -263,19 +258,6 @@ template<typename T>
 size_t List<T>::length() const
 {
     return _length;
-}
-
-
-template<typename T>
-List<T>& List<T>::clone() const
-{
-    List<T> cloned;
-    Node * current = _headnode->_next;
-    while ( current ) {
-        cloned.push_back( current->_data );
-        current = current->_next;
-    }
-    return cloned;
 }
 
 
