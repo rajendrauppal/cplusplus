@@ -34,15 +34,46 @@ void Test_List()
 {
     List<int> numbers;
     for ( int i = 0; i < 10; ++i ) {
-        numbers.push_back(rand() % 100);
+        numbers.push_back(rand() % 1000);
     }
+
+    numbers.resize( 5, 0 );
+
+    for ( size_t i = 0; i < (numbers.length() - 1); ++i ) {
+        int * data = numbers.Iterator();
+        cout << *data << " -> ";
+    }
+    cout << *numbers.Iterator() << " -> [NULL]" << endl;
+    cout << "Length: " << numbers.length() << endl;
 
     List<int> marks;
     for ( int i = 0; i < 10; ++i ) {
-        marks.push_back(rand() % 100);
+        marks.push_back(rand() % 1000);
     }
 
+    for ( size_t i = 0; i < (marks.length() - 1); ++i ) {
+        int * data = marks.Iterator();
+        cout << *data << " -> ";
+    }
+    cout << *marks.Iterator() << " -> [NULL]" << endl;
+    cout << "Length: " << marks.length() << endl;
+
     if ( numbers.equals(marks) ) {
+        cout << "Equal" << endl;
+    }
+    else {
+        cout << "Not Equal" << endl;
+    }
+
+    List<int> series = numbers;
+    if ( series.equals(numbers) ) {
+        cout << "Equal" << endl;
+    }
+    else {
+        cout << "Not Equal" << endl;
+    }
+
+    if ( numbers.equals(series) ) {
         cout << "Equal" << endl;
     }
     else {

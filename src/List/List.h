@@ -63,6 +63,8 @@ public:
 
     List& operator = (const List& rhs);
 
+    T * Iterator();
+
     void push_back(T data);
 
     void push_front(T data);
@@ -107,13 +109,14 @@ private:
 
     Node * _headnode;
     size_t _length;
-
-    Node * next() const;
+    
+    Node * _current;
+    Node * next();
 };
 
 
 template<typename T>
-List<T>::List() : _headnode(new Node()), _length(0)
+List<T>::List() : _headnode(new Node()), _length(0), _current(_headnode)
 {
 }
 
@@ -130,7 +133,8 @@ List<T>::List(const List& other)
 {
     _headnode = new Node();
     _length = 0;
-    Node * iter = other.next();
+    _current = _headnode;
+    Node * iter = other._headnode->_next;
     while ( iter ) {
         this->push_back( iter->_data );
         iter = iter->_next;
@@ -152,6 +156,14 @@ List<T>& List<T>::operator = (const List& rhs)
         }
     }
     return *this;
+}
+
+
+template<typename T>
+T * List<T>::Iterator()
+{
+    T * pdata = &next()->_data;
+    return pdata;
 }
 
 
@@ -318,7 +330,7 @@ void List<T>::clear()
 
 
 template<typename T>
-bool List<T>::equals(const List<T>& other) const
+bool List<T>::equals(const List& other) const
 {
     if ( other.length() != this->length() )
         return false;
@@ -365,11 +377,10 @@ void List<T>::resize(size_t newsize, const T val)
 
 /// private interface
 template<typename T>
-typename List<T>::Node * List<T>::next() const
+typename List<T>::Node * List<T>::next()
 {
-    static Node * iter = _headnode;
-    iter = iter->_next;
-    return iter;
+    _current = _current->_next;
+    return _current;
 }
 
 
