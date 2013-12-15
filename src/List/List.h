@@ -128,16 +128,12 @@ List<T>::~List()
 template<typename T>
 List<T>::List(const List& other)
 {
-    if ( other.empty() ) {
-        _headnode = new Node();
-        _length = 0;
-    }
-    else {
-        Node * iter = other.next();
-        while ( iter ) {
-            this->push_back( iter->_data );
-            iter = iter->_next;
-        }
+    _headnode = new Node();
+    _length = 0;
+    Node * iter = other.next();
+    while ( iter ) {
+        this->push_back( iter->_data );
+        iter = iter->_next;
     }
 }
 
@@ -147,6 +143,13 @@ List<T>& List<T>::operator = (const List& rhs)
 {
     if ( this != &rhs )
     {
+        clear();
+
+        Node * iter = rhs.next();
+        while ( iter ) {
+            this->push_back( iter->_data );
+            iter = iter->_next;
+        }
     }
     return *this;
 }
