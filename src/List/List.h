@@ -320,9 +320,30 @@ bool List<T>::equals(const List<T>& other) const
 }
 
 
+/// Strategy:
+/// if newsize > current_size, 
+///     create (newsize - current_size) nodes with data as val
+/// else if newsize < current_size
+///     remove (current_size - newsize) nodes from this list
 template<typename T>
 void List<T>::resize(size_t newsize, const T val)
 {
+    if ( empty() ) {
+        throw EmptyListException("list empty");
+    }
+
+    int diff = newsize - this->length();
+    if ( diff > 0 ) 
+    {
+        while ( diff-- )
+            this->push_back( val );
+    }
+    else if ( diff < 0 ) 
+    {
+        diff = -diff;
+        while ( diff-- )
+            this->pop_back();
+    }
 }
 
 
