@@ -107,6 +107,8 @@ private:
 
     Node * _headnode;
     size_t _length;
+
+    Node * next() const;
 };
 
 
@@ -126,6 +128,17 @@ List<T>::~List()
 template<typename T>
 List<T>::List(const List& other)
 {
+    if ( other.empty() ) {
+        _headnode = new Node();
+        _length = 0;
+    }
+    else {
+        Node * iter = other.next();
+        while ( iter ) {
+            this->push_back( iter->_data );
+            iter = iter->_next;
+        }
+    }
 }
 
 
@@ -344,6 +357,16 @@ void List<T>::resize(size_t newsize, const T val)
         while ( diff-- )
             this->pop_back();
     }
+}
+
+
+/// private interface
+template<typename T>
+typename List<T>::Node * List<T>::next() const
+{
+    static Node * iter = _headnode;
+    iter = iter->_next;
+    return iter;
 }
 
 
