@@ -34,3 +34,26 @@ This repo contains following programs:
 7. GCD & LCM: 
    - Finding GCD and LCM of n numbers (n >= 2)
    - Binary GCD algorithm implementation
+
+8. List: Implemented basic list operations to handle sinlgy linked list of generic data.
+Following functions are implemented:
+   - Default constructor
+   - Copy constructor
+   - Assignment operator
+   - Destructor
+   - operator ==
+   - operator !=
+   - operator []
+   - length
+   - empty
+   - push_back
+   - push_front
+   - pop_back
+   - pop_front
+   - peek_back
+   - peek_front
+   - reverse
+   - clear
+   - equals
+   - resize
+   - at
