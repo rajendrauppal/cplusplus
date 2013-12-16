@@ -49,11 +49,15 @@ class List
 public:
     List();
 
+    List(int count, const T& value);
+
     ~List();
 
     List(const List& other);
 
     List& operator = (const List& rhs);
+
+    void assign(int count, const T& value);
 
     void push_back(T data);
 
@@ -77,7 +81,7 @@ public:
 
     bool equals(const List& other) const;
 
-    void resize(int newsize, const T val);
+    void resize(int newsize, const T& val);
 
     T at(size_t index) const;
 
@@ -114,8 +118,15 @@ private:
 
 
 template<typename T>
-List<T>::List() : _headnode(new Node()), _length(0), _current(_headnode)
+List<T>::List(): _headnode(new Node()), _length(0), _current(_headnode)
 {
+}
+
+
+template<typename T>
+List<T>::List(int count, const T& value): _headnode(new Node()), _length(0), _current(_headnode)
+{
+    resize( count, value );
 }
 
 
@@ -151,6 +162,13 @@ List<T>& List<T>::operator = (const List& rhs)
             this->push_front( rhs[i] );
     }
     return *this;
+}
+
+
+template<typename T>
+void List<T>::assign(int count, const T& value)
+{
+    resize( count, value );
 }
 
 
@@ -321,7 +339,7 @@ bool List<T>::equals(const List& other) const
 /// else if newsize < current_size
 ///     remove (current_size - newsize) nodes from this list
 template<typename T>
-void List<T>::resize(int newsize, const T val)
+void List<T>::resize(int newsize, const T& val)
 {
     if ( newsize < 0 )
         throw ListException("Invalid size requested");

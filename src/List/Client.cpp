@@ -63,17 +63,17 @@ void Test_List()
         if ( reversed.reverse().reverse().equals(numbers) ) // test method chaining
             cout << "reverse worked fine" << endl;
 
-        numbers.resize(-1, 0); // test resize non-const
-        PrintList(numbers);
+        //numbers.resize(-1, 0); // test resize non-const
+        //PrintList(numbers);
 
-        numbers.resize(0, 0);
-        PrintList(numbers);
+        //numbers.resize(0, 0);
+        //PrintList(numbers);
 
-        numbers.resize(4, 0);
-        PrintList(numbers);
+        //numbers.resize(4, 0);
+        //PrintList(numbers);
 
-        numbers.resize(15, 0);
-        PrintList(numbers);
+        //numbers.resize(15, 0);
+        //PrintList(numbers);
 
         cout << numbers.peek_back() << endl; // test peek_back()
         cout << numbers.peek_front() << endl; // test peek_front()
@@ -100,6 +100,25 @@ void Test_List()
         List<int> cloned;
         cloned = series; // test operator=
         PrintList( cloned );*/
+
+        // test resize to make larger with 0 values
+        List<string> names;
+        cout << "start pushing..." << endl;
+        for ( int i = 0; i < 50; ++i ) {
+            names.push_front("push_front() is way faster than push_back()!");
+        }
+        //names.reverse();
+        cout << "done pushing..." << endl;
+        PrintList( names );
+
+        // test parametrized constructor
+        List<float> temperatures(100, 37.5f);
+        PrintList( temperatures );
+
+        // test assign function ( same as parameterized constructor )
+        List<bool> status;
+        status.assign( names.length(), true );
+        PrintList( status );
     }
     catch ( ListException& e ) {
         cout << e.message() << endl;
