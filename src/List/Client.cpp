@@ -57,8 +57,11 @@ void Test_List()
         }
         PrintList(numbers); // test length(), at(), operator[]
 
-        numbers.reverse(); // test reverse() non-const
+        List<int> reversed = numbers.reverse(); // test reverse() non-const
         PrintList(numbers);
+        
+        if ( reversed.reverse().reverse().equals(numbers) ) // test method chaining
+            cout << "reverse worked fine" << endl;
 
         numbers.resize(-1, 0); // test resize non-const
         PrintList(numbers);

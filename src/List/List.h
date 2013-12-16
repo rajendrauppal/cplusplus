@@ -69,7 +69,7 @@ public:
 
     size_t length() const;
 
-    void reverse();
+    List<T>& reverse();
 
     bool empty() const;
 
@@ -260,11 +260,11 @@ size_t List<T>::length() const
 
 
 template<typename T>
-void List<T>::reverse()
+List<T>& List<T>::reverse()
 {
-    if ( empty() ) {
+    if ( empty() )
         throw ListException("list empty");
-    }
+
     Node * prev = (Node*)0;
     Node * curr = _headnode->_next;
 
@@ -275,6 +275,8 @@ void List<T>::reverse()
         curr = next;
     }
     _headnode->_next = prev;
+
+    return *this;
 }
 
 
