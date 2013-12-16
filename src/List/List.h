@@ -91,6 +91,9 @@ public:
 
     bool operator != (const List& other) const;
 
+    template<typename Condition>
+    bool find(const T& key, Condition c) const;
+
 private:
     struct Node
     {
@@ -391,16 +394,33 @@ T List<T>::operator [] (size_t pos) const
 
 
 template<typename T>
-bool  List<T>::operator == (const List& other) const
+bool List<T>::operator == (const List& other) const
 {
     return this->equals(other);
 }
 
 
 template<typename T>
-bool  List<T>::operator != (const List& other) const
+bool List<T>::operator != (const List& other) const
 {
     return (!(*this == other));
+}
+
+
+template<typename T>
+template<class Condition>
+bool List<T>::find(const T& key, Condition c) const
+{
+    if ( empty() )
+        return false;
+
+    Node * curr = _headnode->_next;
+    while ( curr ) {
+        if ( c(key, curr->_data) )
+            return true;
+        curr = curr->_next;
+    }
+    return false;
 }
 
 

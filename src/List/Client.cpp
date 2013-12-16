@@ -126,9 +126,25 @@ void Test_List()
 }
 
 
+bool cond(char * first, char * second) 
+{
+    return !_strcmpi(first, second);
+}
+
+
 int main()
 {
     Test_List();
+    
+    char * tokens[5] = {"comment","keyword","identifier","user-type","method"};
+    List<char*> someids;
+    for ( int i = 0; i < 5; ++i )
+        someids.push_front( tokens[i] );
+
+    for ( int i = 0; i < 5; ++i )
+        cout << someids.find( tokens[i], cond ) << endl; // test find function
+
+    cout << someids.find("Identifier", cond) << endl;
 
     cout << "Press any key to continue..." << endl;
     cin.get();
