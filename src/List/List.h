@@ -47,50 +47,39 @@ template<typename T>
 class List
 {
 public:
+    // Constructors
     List();
-
     List(int count, const T& value);
-
+    List(const List& other);
+    List& operator = (const List& rhs);
     ~List();
 
-    List(const List& other);
-
-    List& operator = (const List& rhs);
-
+    // Modifiers
     void assign(int count, const T& value);
-
     void push_back(T data);
-
     void push_front(T data);
-
     T pop_back();
-
     T pop_front();
-
-    T peek_back() const;
-
-    T peek_front() const;
-
-    size_t length() const;
-
-    List<T>& reverse();
-
-    bool empty() const;
-
     void clear();
-
-    bool equals(const List& other) const;
-
     void resize(int newsize, const T& val);
+    void insert(const T& key, const T& val);
+    void insert(int n, const T& key, const T& val);
 
+    // Element access
+    T peek_back() const;
+    T peek_front() const;
     T at(size_t index) const;
-
     T operator [] (size_t pos) const;
 
+    // Capacity/Queries
+    size_t length() const;
+    bool empty() const;
     bool operator == (const List& other) const;
-
     bool operator != (const List& other) const;
+    bool equals(const List& other) const;
 
+    // Operations
+    List<T>& reverse();
     template<typename Condition>
     bool find(const T& key, Condition c) const;
 
@@ -100,26 +89,19 @@ private:
     public:
         Node * _next;
         T _data;
-        
-        Node() : _next((Node*)0) 
+        Node() : _next((Node*)0)
         {}
-        
-        explicit Node(T data) : _data(data), _next((Node*)0) 
+        explicit Node(T data) : _data(data), _next((Node*)0)
         {}
     };
 
     Node * _headnode;
     Node * _current;
     size_t _length;
-
-    //
-    // Private interface
-    //
-    Node * next();
-    void reset();
 };
 
 
+// Constructors
 template<typename T>
 List<T>::List(): _headnode(new Node()), _length(0), _current(_headnode)
 {
@@ -130,13 +112,6 @@ template<typename T>
 List<T>::List(int count, const T& value): _headnode(new Node()), _length(0), _current(_headnode)
 {
     resize( count, value );
-}
-
-
-template<typename T>
-List<T>::~List()
-{
-    clear();
 }
 
 
@@ -168,6 +143,14 @@ List<T>& List<T>::operator = (const List& rhs)
 }
 
 
+template<typename T>
+List<T>::~List()
+{
+    clear();
+}
+
+
+// Modifiers
 template<typename T>
 void List<T>::assign(int count, const T& value)
 {
@@ -246,93 +229,11 @@ T List<T>::pop_front()
 
 
 template<typename T>
-T List<T>::peek_back() const
-{
-    if ( empty() ) {
-        throw ListException("list empty");
-    }
-    else {
-        Node * current = _headnode;
-        while ( current->_next ) {
-            current = current->_next;
-        }
-        return current->_data;
-    }
-}
-
-
-template<typename T>
-T List<T>::peek_front() const
-{
-    if ( empty() ) {
-        throw ListException("list empty");
-    }
-    else {
-        return _headnode->_next->_data;
-    }
-}
-
-
-template<typename T>
-size_t List<T>::length() const
-{
-    return _length;
-}
-
-
-template<typename T>
-List<T>& List<T>::reverse()
-{
-    if ( empty() )
-        throw ListException("list empty");
-
-    Node * prev = (Node*)0;
-    Node * curr = _headnode->_next;
-
-    while ( curr ) {
-        Node * next = curr->_next;
-        curr->_next = prev;
-        prev = curr;
-        curr = next;
-    }
-    _headnode->_next = prev;
-
-    return *this;
-}
-
-
-template<typename T>
-bool List<T>::empty() const
-{
-    return (_length == 0);
-}
-
-
-template<typename T>
 void List<T>::clear()
 {
     while ( !empty() ) {
         pop_front();
     }
-}
-
-
-template<typename T>
-bool List<T>::equals(const List& other) const
-{
-    if ( other.length() != this->length() )
-        return false;
-
-    Node * left = this->_headnode->_next;
-    Node * right = other._headnode->_next;
-    while ( left ) {
-        if ( left->_data != right->_data )
-            return false;
-        left = left->_next;
-        right = right->_next;
-    }
-
-    return true;
 }
 
 
@@ -366,6 +267,51 @@ void List<T>::resize(int newsize, const T& val)
 
 
 template<typename T>
+void List<T>::insert(const T& key, const T& val)
+    /// inserts val into list just before key.
+    /// throws exception if list is empty or if key not found.
+{
+    if ( empty() )
+        throw ListException("list empty");
+}
+
+
+template<typename T>
+void List<T>::insert(int n, const T& key, const T& val)
+    /// inserts val n times into list just before key.
+    /// throws exception if list is empty or if key not found.
+{
+    if ( empty() )
+        throw ListException("list empty");
+}
+
+
+// Element access
+template<typename T>
+T List<T>::peek_back() const
+{
+    if ( empty() )
+        throw ListException("list empty");
+
+    Node * current = _headnode;
+    while ( current->_next )
+        current = current->_next;
+
+    return current->_data;
+}
+
+
+template<typename T>
+T List<T>::peek_front() const
+{
+    if ( empty() )
+        throw ListException("list empty");
+    
+    return _headnode->_next->_data;
+}
+
+
+template<typename T>
 T List<T>::at(size_t index) const
 {
     if ( empty() ) {
@@ -393,6 +339,21 @@ T List<T>::operator [] (size_t pos) const
 }
 
 
+// Capacity/Queries
+template<typename T>
+size_t List<T>::length() const
+{
+    return _length;
+}
+
+
+template<typename T>
+bool List<T>::empty() const
+{
+    return (_length == 0);
+}
+
+
 template<typename T>
 bool List<T>::operator == (const List& other) const
 {
@@ -404,6 +365,47 @@ template<typename T>
 bool List<T>::operator != (const List& other) const
 {
     return (!(*this == other));
+}
+
+
+template<typename T>
+bool List<T>::equals(const List& other) const
+{
+    if ( other.length() != this->length() )
+        return false;
+
+    Node * left = this->_headnode->_next;
+    Node * right = other._headnode->_next;
+    while ( left ) {
+        if ( left->_data != right->_data )
+            return false;
+        left = left->_next;
+        right = right->_next;
+    }
+
+    return true;
+}
+
+
+// Operations
+template<typename T>
+List<T>& List<T>::reverse()
+{
+    if ( empty() )
+        throw ListException("list empty");
+
+    Node * prev = (Node*)0;
+    Node * curr = _headnode->_next;
+
+    while ( curr ) {
+        Node * next = curr->_next;
+        curr->_next = prev;
+        prev = curr;
+        curr = next;
+    }
+    _headnode->_next = prev;
+
+    return *this;
 }
 
 
@@ -421,26 +423,6 @@ bool List<T>::find(const T& key, Condition c) const
         curr = curr->_next;
     }
     return false;
-}
-
-
-//
-// Private interface
-//
-template<typename T>
-typename List<T>::Node * List<T>::next()
-    /// Returns traversal pointer pointing to current node.
-{
-    _current = _current->_next;
-    return _current;
-}
-
-
-template<typename T>
-void List<T>::reset()
-    /// Resets traversal pointer to head node.
-{
-    _current = _headnode;
 }
 
 
