@@ -147,6 +147,25 @@ int main()
 
     cout << someids.find("Identifier", cond) << endl;
 
+    /// test insert(key, val) function
+    List<int> token_ids;
+    for ( int i = 0; i < 5; ++i ) {
+        token_ids.push_front( i + 1 );
+    }
+    PrintList( token_ids );
+
+    token_ids.insert(1, 1, 555);
+    PrintList( token_ids );
+
+    token_ids.insert(0, 555);
+    PrintList( token_ids );
+
+    token_ids.insert(41, 555);
+    PrintList( token_ids );
+
+    token_ids.insert(444, 555);
+    PrintList( token_ids );
+    
     cout << "Press any key to continue..." << endl;
     cin.get();
     return 0;

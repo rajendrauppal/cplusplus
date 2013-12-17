@@ -273,16 +273,62 @@ void List<T>::insert(const T& key, const T& val)
 {
     if ( empty() )
         throw ListException("list empty");
+
+    Node * prev = _headnode;
+    Node * curr = _headnode->_next;
+
+    while ( curr && (curr->_data != key) ) {
+        prev = prev->_next;
+        curr = curr->_next;
+    }
+
+    if ( !curr ) // key not found
+        throw ListException("key not found");
+
+    // key found at curr
+    Node * n = new Node(val);
+    prev->_next = n;
+    n->_next = curr;
+    _length++;
 }
 
 
 template<typename T>
 void List<T>::insert(int n, const T& key, const T& val)
-    /// inserts val n times into list just before key.
+    /// inserts val n ( >= 1 ) times into list just before key.
     /// throws exception if list is empty or if key not found.
 {
+    if ( n <= 0 )
+        return;
+
+    if ( n == 1 ) {
+        insert( key, val );
+        return;
+    }
+
     if ( empty() )
         throw ListException("list empty");
+
+    Node * prev = _headnode;
+    Node * curr = _headnode->_next;
+
+    while ( curr && (curr->_data != key) ) {
+        prev = prev->_next;
+        curr = curr->_next;
+    }
+
+    if ( !curr ) // key not found
+        throw ListException("key not found");
+
+    // key found at curr
+    Node * node = (Node*)0;
+    while ( n-- ) {
+        node = new Node(val);
+        prev->_next = node;
+        prev = prev->_next;
+        _length++;
+    }
+    prev->_next = curr;
 }
 
 
