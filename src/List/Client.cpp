@@ -127,6 +127,16 @@ void Test_List()
 }
 
 
+void Test_swap()
+{
+    List<int> first;
+    List<int> second(4, 200);
+    first.swap( second );
+    PrintList( first );
+    PrintList( second );
+}
+
+
 bool cond(char * first, char * second) 
 {
     return !_strcmpi(first, second);
@@ -135,6 +145,9 @@ bool cond(char * first, char * second)
 
 int main()
 {
+    Test_swap();
+    cin.get();
+
     Test_List();
     
     char * tokens[5] = {"comment","keyword","identifier","user-type","method"};

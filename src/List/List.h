@@ -64,6 +64,7 @@ public:
     void resize(int newsize, const T& val);
     void insert(const T& key, const T& val);
     void insert(int n, const T& key, const T& val);
+    void swap(List& other);
 
     // Element access
     T peek_back() const;
@@ -78,10 +79,11 @@ public:
     bool operator != (const List& other) const;
     bool equals(const List& other) const;
 
-    // Operations
-    List<T>& reverse();
     template<typename Condition>
     bool find(const T& key, Condition c) const;
+
+    // Operations
+    List<T>& reverse();
 
 private:
     struct Node
@@ -332,6 +334,14 @@ void List<T>::insert(int n, const T& key, const T& val)
 }
 
 
+template<typename T>
+void List<T>::swap(List& other)
+{
+    std::swap( this->_headnode, other._headnode );
+    std::swap( this->_length, other._length );
+}
+
+
 // Element access
 template<typename T>
 T List<T>::peek_back() const
@@ -433,6 +443,23 @@ bool List<T>::equals(const List& other) const
 }
 
 
+template<typename T>
+template<class Condition>
+bool List<T>::find(const T& key, Condition c) const
+{
+    if ( empty() )
+        return false;
+
+    Node * curr = _headnode->_next;
+    while ( curr ) {
+        if ( c(key, curr->_data) )
+            return true;
+        curr = curr->_next;
+    }
+    return false;
+}
+
+
 // Operations
 template<typename T>
 List<T>& List<T>::reverse()
@@ -452,23 +479,6 @@ List<T>& List<T>::reverse()
     _headnode->_next = prev;
 
     return *this;
-}
-
-
-template<typename T>
-template<class Condition>
-bool List<T>::find(const T& key, Condition c) const
-{
-    if ( empty() )
-        return false;
-
-    Node * curr = _headnode->_next;
-    while ( curr ) {
-        if ( c(key, curr->_data) )
-            return true;
-        curr = curr->_next;
-    }
-    return false;
 }
 
 
