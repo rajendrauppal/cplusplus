@@ -85,6 +85,7 @@ public:
     // Operations
     List<T>& reverse();
     void splice(const T& key, List& other);
+    void remove(const T& val);
 
 private:
     struct Node
@@ -99,20 +100,19 @@ private:
     };
 
     Node * _headnode;
-    Node * _current;
     size_t _length;
 };
 
 
 // Constructors
 template<typename T>
-List<T>::List(): _headnode(new Node()), _length(0), _current(_headnode)
+List<T>::List(): _headnode(new Node()), _length(0)
 {
 }
 
 
 template<typename T>
-List<T>::List(int count, const T& value): _headnode(new Node()), _length(0), _current(_headnode)
+List<T>::List(int count, const T& value): _headnode(new Node()), _length(0)
 {
     resize( count, value );
 }
@@ -123,7 +123,6 @@ List<T>::List(const List& other)
 {
     _headnode = new Node();
     _length = 0;
-    _current = _headnode;
     Node * iter = other._headnode->_next;
     while ( iter ) {
         this->push_back( iter->_data );
@@ -513,6 +512,14 @@ void List<T>::splice(const T& key, List& other)
         _length++;
     }
     prev->_next = curr;
+}
+
+
+template<typename T>
+void List<T>::remove(const T& val)
+{
+    /// removes all elements equal to val from the list.
+
 }
 
 
