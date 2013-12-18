@@ -78,14 +78,15 @@ public:
     bool operator == (const List& other) const;
     bool operator != (const List& other) const;
     bool equals(const List& other) const;
-
-    template<typename Condition>
+    template<typename Condition> 
     bool find(const T& key, Condition c) const;
 
     // Operations
     List<T>& reverse();
     void splice(const T& key, List& other);
     void remove(const T& val);
+    template<typename Condition> 
+    void remove_if(Condition c);
 
 private:
     struct Node
@@ -520,6 +521,14 @@ void List<T>::remove(const T& val)
 {
     /// removes all elements equal to val from the list.
 
+}
+
+
+template<typename T>
+template<typename Condition>
+void List<T>::remove_if(Condition c)
+{
+    /// removes all elements satisfying condition c
 }
 
 
