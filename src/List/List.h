@@ -84,6 +84,7 @@ public:
 
     // Operations
     List<T>& reverse();
+    void splice(const T& key, List& other);
 
 private:
     struct Node
@@ -479,6 +480,39 @@ List<T>& List<T>::reverse()
     _headnode->_next = prev;
 
     return *this;
+}
+
+
+template<typename T>
+void List<T>::splice(const T& key, List& other)
+{
+    /// split the list at position where key is found
+    /// and insert items from the other list.
+    /// other list is destroyed.
+    if ( empty() )
+        throw ListException("list empty");
+
+    Node * prev = _headnode;
+    Node * curr = _headnode->_next;
+
+    while ( curr && (curr->_data != key) ) {
+        prev = prev->_next;
+        curr = curr->_next;
+    }
+
+    if ( !curr ) // key not found
+        throw ListException("key not found");
+
+    // key found at curr, split here and 
+    // insert elements from other list
+    while ( !other.empty() ) {
+        T val = other.pop_front();
+        Node * n = new Node(val);
+        prev->_next = n;
+        prev = prev->_next;
+        _length++;
+    }
+    prev->_next = curr;
 }
 
 

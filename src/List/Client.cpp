@@ -137,6 +137,16 @@ void Test_swap()
 }
 
 
+void Test_splice()
+{
+    List<int> first(3, 100);
+    List<int> second(4, 200);
+    first.splice( 100, second );
+    PrintList( first );
+    PrintList( second );
+}
+
+
 bool cond(char * first, char * second) 
 {
     return !_strcmpi(first, second);
@@ -145,6 +155,9 @@ bool cond(char * first, char * second)
 
 int main()
 {
+    Test_splice();
+    cin.get();
+
     Test_swap();
     cin.get();
 
