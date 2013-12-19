@@ -518,17 +518,64 @@ void List<T>::splice(const T& key, List& other)
 
 template<typename T>
 void List<T>::remove(const T& val)
-{
     /// removes all elements equal to val from the list.
+    /// traverse from first to last node
+    /// if val is found, remove that node, go to next node
+    /// if val not found, go to next node
+{
+    if ( empty() ) 
+        return;
 
+    Node * prev = _headnode;
+    Node * curr = _headnode->_next;
+
+    while ( curr ) {
+        if ( curr->_data == val ) {
+            Node * erase = curr;
+            prev->_next = curr->_next;
+            curr = prev->_next;
+
+            delete erase;
+            erase = (Node*)0;
+            --_length;
+        }
+        else {
+            prev = prev->_next;
+            curr = curr->_next;
+        }
+    }
 }
 
 
 template<typename T>
 template<typename Condition>
 void List<T>::remove_if(Condition c)
+    /// removes all elements meeting the condition c.
+    /// traverse from first to last node
+    /// if val is found, remove that node, go to next node
+    /// if val not found, go to next node
 {
-    /// removes all elements satisfying condition c
+    if ( empty() )
+        return;
+
+    Node * prev = _headnode;
+    Node * curr = _headnode->_next;
+
+    while ( curr ) {
+        if ( c( curr->_data ) ) {
+            Node * erase = curr;
+            prev->_next = curr->_next;
+            curr = prev->_next;
+
+            delete erase;
+            erase = (Node*)0;
+            --_length;
+        }
+        else {
+            prev = prev->_next;
+            curr = curr->_next;
+        }
+    }
 }
 
 

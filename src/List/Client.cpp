@@ -147,6 +147,25 @@ void Test_splice()
 }
 
 
+bool even( const int& val )
+{
+    return ( (val % 2) == 0 );
+}
+
+
+void Test_Remove()
+{
+    List<int> first(3, 100);
+    List<int> second(4, 200);
+    
+    first.remove( 100 );
+    second.remove_if( even );
+
+    PrintList( first );
+    PrintList( second );
+}
+
+
 bool cond(char * first, char * second) 
 {
     return !_strcmpi(first, second);
@@ -155,6 +174,9 @@ bool cond(char * first, char * second)
 
 int main()
 {
+    Test_Remove();
+    cin.get();
+
     Test_splice();
     cin.get();
 
