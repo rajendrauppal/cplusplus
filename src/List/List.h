@@ -87,6 +87,9 @@ public:
     void remove(const T& val);
     template<typename Condition> 
     void remove_if(Condition c);
+    void unique();
+    template<typename Condition>
+    void unique(Condition c);
 
 private:
     struct Node
@@ -576,6 +579,23 @@ void List<T>::remove_if(Condition c)
             curr = curr->_next;
         }
     }
+}
+
+
+template<typename T>
+void List<T>::unique()
+    /// remove duplicate elements from the list, based on equality (==).
+{
+
+}
+
+
+template<typename T>
+template<typename Condition>
+void List<T>::unique(Condition c)
+    /// remove duplicate elements from the list, based on condition c.
+{
+
 }
 
 
