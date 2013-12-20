@@ -132,18 +132,23 @@ private:
 
     Node * _headnode;
     size_t _length;
+    bool _sorted;
+
+    bool _issorted();
+    void _unique_sorted();
+    void _unique_unsorted();
 };
 
 
 // Constructors
 template<typename T>
-List<T>::List(): _headnode(new Node()), _length(0)
+List<T>::List(): _headnode(new Node()), _length(0), _sorted(false)
 {
 }
 
 
 template<typename T>
-List<T>::List(int count, const T& value): _headnode(new Node()), _length(0)
+List<T>::List(int count, const T& value): _headnode(new Node()), _length(0), _sorted(false)
 {
     resize( count, value );
 }
@@ -154,6 +159,7 @@ List<T>::List(const List& other)
 {
     _headnode = new Node();
     _length = 0;
+    _sorted = false;
     Node * iter = other._headnode->_next;
     while ( iter ) {
         this->push_back( iter->_data );
@@ -613,7 +619,12 @@ template<typename T>
 void List<T>::unique()
     /// remove duplicate elements from the list, based on equality (==).
 {
-
+    if ( 1 < length() ) { // worth sorting, do it!
+        if ( _issorted() )
+            _unique_sorted();
+        else
+            _unique_unsorted();
+    }
 }
 
 
@@ -644,7 +655,7 @@ void List<T>::merge(List& other, Condition c)
 template<typename T>
 void List<T>::sort()
 {
-
+    _sorted = true;
 }
 
 
@@ -652,7 +663,26 @@ template<typename T>
 template<typename Condition>
 void List<T>::sort(Condition c)
 {
+    _sorted = true;
+}
 
+
+template<typename T>
+bool List<T>::_issorted()
+{
+    return true;
+}
+
+
+template<typename T>
+void List<T>::_unique_sorted()
+{
+}
+
+
+template<typename T>
+void List<T>::_unique_unsorted()
+{
 }
 
 
