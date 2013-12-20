@@ -47,14 +47,14 @@ template<typename T>
 class List
 {
 public:
-    // Constructors
+    /// Constructors
     List();
     List(int count, const T& value);
     List(const List& other);
     List& operator = (const List& rhs);
     ~List();
 
-    // Modifiers
+    /// Modifiers
     void assign(int count, const T& value);
     void push_back(T data);
     void push_front(T data);
@@ -66,13 +66,13 @@ public:
     void insert(int n, const T& key, const T& val);
     void swap(List& other);
 
-    // Element access
+    /// Element access
     T peek_back() const;
     T peek_front() const;
     T at(size_t index) const;
     T operator [] (size_t pos) const;
 
-    // Capacity/Queries
+    /// Capacity/Queries
     size_t length() const;
     bool empty() const;
     bool operator == (const List& other) const;
@@ -81,15 +81,42 @@ public:
     template<typename Condition> 
     bool find(const T& key, Condition c) const;
 
-    // Operations
+    /// Operations
     List<T>& reverse();
+        /// reverse this list and returns a reference to it.
+
     void splice(const T& key, List& other);
+        /// split the list at position where key is found
+        /// and insert items from the other list.
+        /// other list is destroyed.
+
     void remove(const T& val);
+        /// Removes from this list all the elements 
+        /// that compare equal to val.
+    
     template<typename Condition> 
     void remove_if(Condition c);
+        /// Removes from this list all the elements 
+        /// for which Condition c returns true.
+    
     void unique();
+        /// Removes all but the first element from every 
+        /// consecutive group of equal elements in this list.
+    
     template<typename Condition>
     void unique(Condition c);
+        /// Takes as argument a specific comparison function 
+        /// that determine the "uniqueness" of an element.
+    
+    void merge(List& other);
+    
+    template<typename Condition>
+    void merge(List& other, Condition c);
+
+    void sort();
+
+    template<typename Condition>
+    void sort(Condition c);
 
 private:
     struct Node
@@ -594,6 +621,36 @@ template<typename T>
 template<typename Condition>
 void List<T>::unique(Condition c)
     /// remove duplicate elements from the list, based on condition c.
+{
+
+}
+
+
+template<typename T>
+void List<T>::merge(List& other)
+{
+
+}
+
+
+template<typename T>
+template<typename Condition>
+void List<T>::merge(List& other, Condition c)
+{
+
+}
+
+
+template<typename T>
+void List<T>::sort()
+{
+
+}
+
+
+template<typename T>
+template<typename Condition>
+void List<T>::sort(Condition c)
 {
 
 }
