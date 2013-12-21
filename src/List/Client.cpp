@@ -26,12 +26,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "List.h"
 #include <list>
 #include <algorithm>
-
+#include <functional>
+#include <stdlib.h>
 
 using std::cout;
 using std::cin;
 using std::endl;
-
 
 template<typename T>
 void PrintList(List<T>& list)
@@ -153,6 +153,18 @@ bool even( const int& val )
 }
 
 
+bool cond(char * first, char * second) 
+{
+    return !_strcmpi(first, second);
+}
+
+
+bool unique_pred(const int first, const int second)
+{
+    return (first <= second);
+}
+
+
 void Test_Remove()
 {
     List<int> first(3, 100);
@@ -166,14 +178,23 @@ void Test_Remove()
 }
 
 
-bool cond(char * first, char * second) 
+void Test_Unique()
 {
-    return !_strcmpi(first, second);
-}
+    List<int> nums;
+    for ( int i = 0; i < 500; ++i )
+        nums.push_back(1);
+    for ( int i = 0; i < 500; ++i )
+        nums.push_back(i+1);
 
+    nums.unique();
+    PrintList( nums );
+}
 
 int main()
 {
+    Test_Unique();
+    return 0;
+
     Test_Remove();
     cin.get();
 

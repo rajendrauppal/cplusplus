@@ -98,11 +98,11 @@ public:
     void remove_if(Condition c);
         /// Removes from this list all the elements 
         /// for which Condition c returns true.
-    
+
     void unique();
-        /// Removes all but the first element from every 
-        /// consecutive group of equal elements in this list.
-    
+        /// Removes duplicate elements from this list
+        /// based on equality (==) condition by default.
+
     template<typename Condition>
     void unique(Condition c);
         /// Takes as argument a specific comparison function 
@@ -132,23 +132,20 @@ private:
 
     Node * _headnode;
     size_t _length;
-    bool _sorted;
 
     bool _issorted();
-    void _unique_sorted();
-    void _unique_unsorted();
-};
+ };
 
 
 // Constructors
 template<typename T>
-List<T>::List(): _headnode(new Node()), _length(0), _sorted(false)
+List<T>::List(): _headnode(new Node()), _length(0)
 {
 }
 
 
 template<typename T>
-List<T>::List(int count, const T& value): _headnode(new Node()), _length(0), _sorted(false)
+List<T>::List(int count, const T& value): _headnode(new Node()), _length(0)
 {
     resize( count, value );
 }
@@ -159,7 +156,6 @@ List<T>::List(const List& other)
 {
     _headnode = new Node();
     _length = 0;
-    _sorted = false;
     Node * iter = other._headnode->_next;
     while ( iter ) {
         this->push_back( iter->_data );
@@ -617,13 +613,36 @@ void List<T>::remove_if(Condition c)
 
 template<typename T>
 void List<T>::unique()
-    /// remove duplicate elements from the list, based on equality (==).
+    /// remove duplicate elements from the list, based on equality.
 {
-    if ( 1 < length() ) { // worth sorting, do it!
-        if ( _issorted() )
-            _unique_sorted();
-        else
-            _unique_unsorted();
+    // list is empty or contains one element
+    // not worth removing duplicates!
+    if ( 1 >= length() )
+        return;
+
+    if ( _issorted() ) {
+        // sorted list, run O(n) algorithm
+        Node * prev = _headnode;
+        Node * curr = _headnode->_next;
+
+        while ( curr ) {
+            if ( curr->_data == prev->_data ) {
+                Node * erase = curr;
+                prev->_next = curr->_next;
+                curr = prev->_next;
+
+                delete erase;
+                erase = (Node*)0;
+                --_length;
+            }
+            else {
+                prev = prev->_next;
+                curr = curr->_next;
+            }
+        }
+    }
+    else {
+        // unsorted list, run O(n^2) algorithm
     }
 }
 
@@ -633,7 +652,6 @@ template<typename Condition>
 void List<T>::unique(Condition c)
     /// remove duplicate elements from the list, based on condition c.
 {
-
 }
 
 
@@ -655,7 +673,6 @@ void List<T>::merge(List& other, Condition c)
 template<typename T>
 void List<T>::sort()
 {
-    _sorted = true;
 }
 
 
@@ -663,26 +680,26 @@ template<typename T>
 template<typename Condition>
 void List<T>::sort(Condition c)
 {
-    _sorted = true;
 }
 
 
 template<typename T>
 bool List<T>::_issorted()
 {
+    if ( 1 >= length() )
+        return true;
+
+    Node * prev = _headnode->_next;
+    Node * curr = prev->_next;
+
+    while ( curr ) {
+        if ( prev->_data > curr->_data )
+            return false;
+        prev = prev->_next;
+        curr = curr->_next;
+    }
+
     return true;
-}
-
-
-template<typename T>
-void List<T>::_unique_sorted()
-{
-}
-
-
-template<typename T>
-void List<T>::_unique_unsorted()
-{
 }
 
 
