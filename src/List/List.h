@@ -134,6 +134,16 @@ private:
     size_t _length;
 
     bool _issorted();
+
+    void _unique_sorted();
+    
+    void _unique_unsorted();
+    
+    template<typename Condition>
+    void _unique_sorted(Condition c);
+    
+    template<typename Condition>
+    void _unique_unsorted(Condition c);
  };
 
 
@@ -620,30 +630,10 @@ void List<T>::unique()
     if ( 1 >= length() )
         return;
 
-    if ( _issorted() ) {
-        // sorted list, run O(n) algorithm
-        Node * prev = _headnode;
-        Node * curr = _headnode->_next;
-
-        while ( curr ) {
-            if ( curr->_data == prev->_data ) {
-                Node * erase = curr;
-                prev->_next = curr->_next;
-                curr = prev->_next;
-
-                delete erase;
-                erase = (Node*)0;
-                --_length;
-            }
-            else {
-                prev = prev->_next;
-                curr = curr->_next;
-            }
-        }
-    }
-    else {
-        // unsorted list, run O(n^2) algorithm
-    }
+    if ( _issorted() )
+        _unique_sorted();
+    else
+        _unique_unsorted();
 }
 
 
@@ -652,6 +642,15 @@ template<typename Condition>
 void List<T>::unique(Condition c)
     /// remove duplicate elements from the list, based on condition c.
 {
+    // list is empty or contains one element
+    // not worth removing duplicates!
+    if ( 1 >= length() )
+        return;
+
+    if ( _issorted() )
+        _unique_sorted();
+    else
+        _unique_unsorted();
 }
 
 
@@ -683,6 +682,9 @@ void List<T>::sort(Condition c)
 }
 
 
+//
+// Private methods
+//
 template<typename T>
 bool List<T>::_issorted()
 {
@@ -700,6 +702,72 @@ bool List<T>::_issorted()
     }
 
     return true;
+}
+
+
+template<typename T>
+void List<T>::_unique_sorted()
+{
+    // sorted list, run O(n) algorithm
+    Node * prev = _headnode;
+    Node * curr = _headnode->_next;
+
+    while ( curr ) {
+        if ( curr->_data == prev->_data ) {
+            Node * erase = curr;
+            prev->_next = curr->_next;
+            curr = prev->_next;
+
+            delete erase;
+            erase = (Node*)0;
+            --_length;
+        }
+        else {
+            prev = prev->_next;
+            curr = curr->_next;
+        }
+    }
+}
+
+    
+template<typename T>
+void List<T>::_unique_unsorted()
+{
+    // unsorted list, run O(n^2) algorithm
+}
+
+    
+template<typename T>
+template<typename Condition>
+void List<T>::_unique_sorted(Condition c)
+{
+    // sorted list, run O(n) algorithm
+    Node * prev = _headnode;
+    Node * curr = _headnode->_next;
+
+    while ( curr ) {
+        if ( c(curr->_data, prev->_data) ) {
+            Node * erase = curr;
+            prev->_next = curr->_next;
+            curr = prev->_next;
+
+            delete erase;
+            erase = (Node*)0;
+            --_length;
+        }
+        else {
+            prev = prev->_next;
+            curr = curr->_next;
+        }
+    }
+}
+
+
+template<typename T>    
+template<typename Condition>
+void List<T>::_unique_unsorted(Condition c)
+{
+    // unsorted list, run O(n^2) algorithm
 }
 
 
