@@ -24,10 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <iostream>
 #include "List.h"
-#include <list>
-#include <algorithm>
-#include <functional>
-#include <stdlib.h>
+
 
 using std::cout;
 using std::cin;
@@ -37,8 +34,12 @@ using std::endl;
 template<typename T>
 void PrintList(List<T>& list)
 {
-    int i;
-    int len = list.length();
+    if ( list.empty() ) {
+        cout << "list empty!" << endl;
+        return;
+    }
+    
+    int i, len = list.length();
     for ( i = 0; i < (len - 1); ++i ) { // test length()
         //cout << list.at(i) << " -> "; // test at()
         cout << list[i] << " -> "; // test operator[]
@@ -48,9 +49,34 @@ void PrintList(List<T>& list)
 }
 
 
-void Test_List()
+//
+// Predicates
+//
+bool even( const int& val )
 {
-    try {
+    return ( (val % 2) == 0 );
+}
+
+
+bool cond(char * first, char * second) 
+{
+    return !_strcmpi(first, second);
+}
+
+
+bool unique_pred(const int first, const int second)
+{
+    return (first <= second);
+}
+
+
+//
+// Test functions
+//
+void Test_modifiers()
+{
+    try 
+    {
         List<int> numbers; // test default ctor
         size_t i;
         for ( i = 0; i < 10; ++i ) {
@@ -122,7 +148,8 @@ void Test_List()
         status.assign( names.length(), true );
         PrintList( status );
     }
-    catch ( ListException& e ) {
+    catch ( const ListException& e ) 
+    {
         cout << e.message() << endl;
     }
 }
@@ -130,112 +157,117 @@ void Test_List()
 
 void Test_swap()
 {
-    List<int> first;
-    List<int> second(4, 200);
-    first.swap( second );
-    PrintList( first );
-    PrintList( second );
+    try {
+        List<int> first;
+        List<int> second(4, 200);
+        first.swap( second );
+        PrintList( first );
+        PrintList( second );
+    }
+    catch (const ListException& e) {
+        cout << e.message() << endl;
+    }
 }
 
 
 void Test_splice()
 {
-    List<int> first(3, 100);
-    List<int> second(4, 200);
-    first.splice( 100, second );
-    PrintList( first );
-    PrintList( second );
+    try {
+        List<int> first(3, 100);
+        List<int> second(4, 200);
+        first.splice( 100, second );
+        PrintList( first );
+        PrintList( second );
+    }
+    catch (const ListException& e) {
+        cout << e.message() << endl;
+    }
 }
 
 
-bool even( const int& val )
+void Test_remove()
 {
-    return ( (val % 2) == 0 );
-}
-
-
-bool cond(char * first, char * second) 
-{
-    return !_strcmpi(first, second);
-}
-
-
-bool unique_pred(const int first, const int second)
-{
-    return (first <= second);
-}
-
-
-void Test_Remove()
-{
-    List<int> first(3, 100);
-    List<int> second(4, 200);
+    try {
+        List<int> first(3, 100);
+        List<int> second(4, 200);
     
-    first.remove( 100 );
-    second.remove_if( even );
+        first.remove( 100 );
+        second.remove_if( even );
 
-    PrintList( first );
-    PrintList( second );
+        PrintList( first );
+        PrintList( second );
+    }
+    catch (const ListException& e) {
+        cout << e.message() << endl;
+    }
 }
 
 
-void Test_Unique()
+void Test_unique()
 {
-    List<int> nums;
-    for ( int i = 0; i < 500; ++i )
-        nums.push_back(1);
-    for ( int i = 0; i < 500; ++i )
-        nums.push_back(i+1);
-
-    nums.unique();
-    PrintList( nums );
+    try {
+        List<int> nums;
+        for ( int i = 0; i < 2; ++i ) {
+            nums.push_back(1);
+            nums.push_back(1);
+        }
+        PrintList( nums );
+        nums.unique();
+        PrintList( nums );
+    }
+    catch (const ListException& e) {
+        cout << e.message() << endl;
+    }
 }
+
+
+void Test_find()
+{
+    try {
+        char * tokens[5] = {"comment","keyword","identifier","user-type","method"};
+        List<char*> someids;
+        for ( int i = 0; i < 5; ++i )
+            someids.push_front( tokens[i] );
+
+        for ( int i = 0; i < 5; ++i )
+            cout << someids.find( tokens[i], cond ) << endl; // test find function
+
+        cout << someids.find("Identifier", cond) << endl;
+
+        /// test insert(key, val) function
+        List<int> token_ids;
+        for ( int i = 0; i < 5; ++i ) {
+            token_ids.push_front( i + 1 );
+        }
+        PrintList( token_ids );
+
+        token_ids.insert(1, 1, 555);
+        PrintList( token_ids );
+
+        token_ids.insert(0, 555);
+        PrintList( token_ids );
+
+        token_ids.insert(41, 555);
+        PrintList( token_ids );
+
+        token_ids.insert(444, 555);
+        PrintList( token_ids );
+    }
+    catch (const ListException& e) {
+        cout << e.message() << endl;
+    }
+}
+
 
 int main()
 {
-    Test_Unique();
-    return 0;
-
-    Test_Remove();
-    cin.get();
-
+    Test_modifiers();
+    Test_remove();
     Test_splice();
-    cin.get();
-
     Test_swap();
-    cin.get();
+    Test_find();
+    Test_unique();
 
-    Test_List();
-    
-    char * tokens[5] = {"comment","keyword","identifier","user-type","method"};
-    List<char*> someids;
-    for ( int i = 0; i < 5; ++i )
-        someids.push_front( tokens[i] );
-
-    for ( int i = 0; i < 5; ++i )
-        cout << someids.find( tokens[i], cond ) << endl; // test find function
-
-    cout << someids.find("Identifier", cond) << endl;
-
-    /// test insert(key, val) function
-    List<int> token_ids;
-    for ( int i = 0; i < 5; ++i ) {
-        token_ids.push_front( i + 1 );
-    }
-    PrintList( token_ids );
-
-    token_ids.insert(1, 1, 555);
-    PrintList( token_ids );
-
-    token_ids.insert(0, 555);
-    PrintList( token_ids );
-
-    token_ids.insert(41, 555);
-    PrintList( token_ids );
-
-    token_ids.insert(444, 555);
-    PrintList( token_ids );
-    
     cout << "Press any key to continue..." << endl;
     cin.get();
     return 0;

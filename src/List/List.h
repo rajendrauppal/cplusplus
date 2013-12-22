@@ -37,7 +37,7 @@ class ListException : public std::exception
 {
 public:
     ListException(string msg) : _msg(msg) {}
-    string message() { return _msg; }
+    string message() const { return _msg; }
 private:
     std::string _msg;
 };
@@ -648,9 +648,9 @@ void List<T>::unique(Condition c)
         return;
 
     if ( _issorted() )
-        _unique_sorted();
+        _unique_sorted(c);
     else
-        _unique_unsorted();
+        _unique_unsorted(c);
 }
 
 
@@ -734,6 +734,32 @@ template<typename T>
 void List<T>::_unique_unsorted()
 {
     // unsorted list, run O(n^2) algorithm
+    Node * first = _headnode->_next;
+    Node * prev = first;
+    Node * curr = prev->_next;
+
+    while (first->_next) {
+        while ( curr ) {
+            if ( curr->_data == first->_data ) {
+                Node * erase = curr;
+                prev->_next = curr->_next;
+                curr = prev->_next;
+
+                delete erase;
+                erase = (Node*)0;
+                --_length;
+            }
+            else {
+                prev = prev->_next;
+                curr = curr->_next;
+            }
+        }
+        if ( first->_next ) {
+            prev = first->_next;
+            curr = prev->_next;
+            first = prev;
+        }
+    }
 }
 
     
@@ -768,6 +794,32 @@ template<typename Condition>
 void List<T>::_unique_unsorted(Condition c)
 {
     // unsorted list, run O(n^2) algorithm
+    Node * first = _headnode->_next;
+    Node * prev = first;
+    Node * curr = prev->_next;
+
+    while (first->_next) {
+        while ( curr ) {
+            if ( c( curr->_data, first->_data ) ) {
+                Node * erase = curr;
+                prev->_next = curr->_next;
+                curr = prev->_next;
+
+                delete erase;
+                erase = (Node*)0;
+                --_length;
+            }
+            else {
+                prev = prev->_next;
+                curr = curr->_next;
+            }
+        }
+        if ( first->_next ) {
+            prev = first->_next;
+            curr = prev->_next;
+            first = prev;
+        }
+    }
 }
 
 
