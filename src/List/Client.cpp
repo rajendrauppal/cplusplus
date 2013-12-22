@@ -70,6 +70,12 @@ bool unique_pred(const int first, const int second)
 }
 
 
+bool sort_cond(const int first, const int second)
+{
+    return (first >= second);
+}
+
+
 //
 // Test functions
 //
@@ -259,8 +265,20 @@ void Test_find()
 }
 
 
+void Test_sort()
+{
+    List<int> ids;
+    for ( int i = 0; i < 10; ++i )
+        ids.push_front( rand() % 100 );
+    PrintList(ids);
+    ids.sort( sort_cond );
+    PrintList(ids);
+}
+
+
 int main()
 {
+    Test_sort();
     Test_modifiers();
     Test_remove();
     Test_splice();

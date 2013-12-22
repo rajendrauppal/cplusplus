@@ -144,6 +144,11 @@ private:
     
     template<typename Condition>
     void _unique_unsorted(Condition c);
+
+    typename Node * _min(Node * node);
+
+    template<typename Condition>
+    typename Node * _min(Node * node, Condition c);
  };
 
 
@@ -656,8 +661,19 @@ void List<T>::unique(Condition c)
 
 template<typename T>
 void List<T>::merge(List& other)
+    /// merges two sorted lists.
+    /// if lists aren't sorted, behaviour is undefined.
+    /// puts all elements of other list into this list
+    /// in sorted order, other list is destroyed.
 {
-
+    if ( this->empty() || other.empty() )
+        return;
+    if ( this != &other ) {
+        while( !other.empty() ) {
+            this->push_front( other.pop_front() );
+        }
+        this->sort();
+    }
 }
 
 
@@ -665,13 +681,30 @@ template<typename T>
 template<typename Condition>
 void List<T>::merge(List& other, Condition c)
 {
-
+    if ( this->empty() || other.empty() )
+        return;
+    if ( this != &other ) {
+        while( !other.empty() ) {
+            this->push_front( other.pop_front() );
+        }
+        this->sort(c);
+    }
 }
 
 
 template<typename T>
 void List<T>::sort()
 {
+    if ( 1 >= length() )
+        return;
+    if ( !_issorted() ) {
+        Node * curr = _headnode->_next;
+        while ( curr ) {
+            Node * minnode = _min( curr );
+            std::swap( curr->_data, minnode->_data );
+            curr = curr->_next;
+        }
+    }
 }
 
 
@@ -679,6 +712,16 @@ template<typename T>
 template<typename Condition>
 void List<T>::sort(Condition c)
 {
+    if ( 1 >= length() )
+        return;
+    if ( !_issorted() ) {
+        Node * curr = _headnode->_next;
+        while ( curr ) {
+            Node * minnode = _min( curr, c );
+            std::swap( curr->_data, minnode->_data );
+            curr = curr->_next;
+        }
+    }
 }
 
 
@@ -820,6 +863,41 @@ void List<T>::_unique_unsorted(Condition c)
             first = prev;
         }
     }
+}
+
+
+template<typename T>
+typename List<T>::Node * List<T>::_min(Node * node)
+{
+    Node * minnode = (Node*)0;
+    if ( node ) {
+        minnode = node;
+        Node * curr = node->_next;
+        while ( curr ) {
+            if ( curr->_data < minnode->_data )
+                minnode = curr;
+            curr = curr->_next;
+        }
+    }
+    return minnode;
+}
+
+
+template<typename T>
+template<typename Condition>
+typename List<T>::Node * List<T>::_min(Node * node, Condition c)
+{
+    Node * minnode = (Node*)0;
+    if ( node ) {
+        minnode = node;
+        Node * curr = node->_next;
+        while ( curr ) {
+            if ( c( curr->_data, minnode->_data ) )
+                minnode = curr;
+            curr = curr->_next;
+        }
+    }
+    return minnode;
 }
 
 
