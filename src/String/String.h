@@ -166,13 +166,19 @@ String::String(const char* s)
 {
     size_t newlen = strlen(s);
     _str = new char[newlen + 1];
-    strcpy( _str, s );
+    strcpy_s( _str, newlen, s );
+    _str[newlen + 1] = '\0';
     _length = newlen + 1;
 }
 
 
 String::String(const String& other)
 {
+    size_t newlen = other.length();
+    _str = new char[newlen + 1];
+    strcpy_s( _str, newlen, other.c_str() );
+    _str[newlen + 1] = '\0';
+    _length = newlen + 1;
 }
 
 
@@ -180,6 +186,12 @@ String& String::operator=(const String& rhs)
 {
     if ( this != &rhs )
     {
+        clear();
+        size_t newlen = rhs.length();
+        _str = new char[newlen + 1];
+        strcpy_s( _str, newlen, rhs.c_str() );
+        _str[newlen + 1] = '\0';
+        _length = newlen + 1;
     }
     return *this;
 }
@@ -187,6 +199,9 @@ String& String::operator=(const String& rhs)
 
 String::~String()
 {
+    delete [] _str;
+    _str = (char*)0;
+    _length = 0;
 }
 	
 
@@ -198,6 +213,9 @@ String& String::operator+(const String& right)
 
 void String::clear()
 {
+    delete [] _str;
+    _str = (char*)0;
+    _length = 0;
 }
 
 
@@ -209,7 +227,7 @@ size_t String::length() const
 
 bool String::empty() const
 {
-    return true;
+    return (_length == 0);
 }
 
 
