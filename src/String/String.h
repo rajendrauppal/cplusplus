@@ -37,56 +37,56 @@ using std::vector;
 
 
 class String
-	/// definition of the String class.
-	/// gives same functionality as std::String
-	/// plus some additional features.
+    /// definition of the String class.
+    /// gives same functionality as std::String
+    /// plus some additional features.
 {
 public:
 	String();
-		/// creates an empty String.
+        /// creates an empty String.
 
 	explicit String(const char* s);
-		/// creates a String object from user provided
-		/// read-only String.
+        /// creates a String object from user provided
+        /// read-only String.
 
 	String(const String& other);
-		/// creates a copy of other String.
+        /// creates a copy of other String.
 
 	String& operator = (const String& rhs);
-		/// assignes rhs String to this String.
+        /// assignes rhs String to this String.
 
 	virtual ~String();
-		/// destroys this String.
+        /// destroys this String.
 	
 	String& operator + (const String& right);
-		/// concatenates this string and right string and returns
-		/// a reference to this string.
+        /// concatenates this string and right string and returns
+        /// a reference to this string.    
 
 	void clear();
-		/// empties this String.
+        /// empties this String.
 
 	size_t length() const;
-		/// returns length of this String.
+        /// returns length of this String.
 
 	bool empty() const;
-		/// returns true if String is empty false otherwise.
+        /// returns true if String is empty false otherwise.
 
 	void reverse();
-		/// reverses this String.
+        /// reverses this String.
 
 	String reverse() const;
-		/// creates a new String with this String reversed.
+        /// creates a new String with this String reversed.
 
 	String clone() const;
-		/// creates a new String, exact copy of this String.
-		/// same as copy constructor.
+        /// creates a new String, exact copy of this String.
+        /// same as copy constructor.
 
 	vector<String> split(char c);
-		/// splits this String on c and returns a vector of Strings.
+        /// splits this String on c and returns a vector of Strings.
 
 	const char * c_str() const;
-		/// returns const char pointer to raw String representation
-		/// of this String.
+        /// returns const char pointer to raw String representation
+        /// of this String.
 		
 	void trim(const char * pattern = " ");
         /// trims this String from left and right based on characters
@@ -131,14 +131,14 @@ public:
         /// converts this String to uppercase.
 	
 	String upper() const;
-	    /// converts this String to uppercase and return a new
+        /// converts this String to uppercase and return a new
         /// String, this String is not changed.
 
 	void lower();
         /// converts this String to lowercase.
 	
 	String lower() const;
-	    /// converts this String to lowercase and return a new
+        /// converts this String to lowercase and return a new
         /// String, this String is not changed.
 
 	void append(const String& s);
