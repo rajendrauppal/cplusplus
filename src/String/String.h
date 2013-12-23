@@ -42,106 +42,106 @@ class String
     /// plus some additional features.
 {
 public:
-	String();
+    String();
         /// creates an empty String.
 
-	explicit String(const char* s);
+    explicit String(const char* s);
         /// creates a String object from user provided
         /// read-only String.
 
-	String(const String& other);
+    String(const String& other);
         /// creates a copy of other String.
 
-	String& operator = (const String& rhs);
+    String& operator = (const String& rhs);
         /// assignes rhs String to this String.
 
-	virtual ~String();
+    virtual ~String();
         /// destroys this String.
 	
-	String& operator + (const String& right);
+    String& operator + (const String& right);
         /// concatenates this string and right string and returns
         /// a reference to this string.    
 
-	void clear();
+    void clear();
         /// empties this String.
 
-	size_t length() const;
+    size_t length() const;
         /// returns length of this String.
 
-	bool empty() const;
+    bool empty() const;
         /// returns true if String is empty false otherwise.
 
-	void reverse();
+    void reverse();
         /// reverses this String.
 
-	String reverse() const;
+    String reverse() const;
         /// creates a new String with this String reversed.
 
-	String clone() const;
+    String clone() const;
         /// creates a new String, exact copy of this String.
         /// same as copy constructor.
 
-	vector<String> split(char c);
+    vector<String> split(char c);
         /// splits this String on c and returns a vector of Strings.
 
-	const char * c_str() const;
+    const char * c_str() const;
         /// returns const char pointer to raw String representation
         /// of this String.
 		
-	void trim(const char * pattern = " ");
+    void trim(const char * pattern = " ");
         /// trims this String from left and right based on characters
         /// given in pattern, default is whitespace.
 	
-	String trim(const char * pattern = " ") const;
+    String trim(const char * pattern = " ") const;
         /// trims this String from left and right based on characters
         /// given in pattern, default is whitespace. returns a new
         /// String, this String is not changed.
 	
-	void ltrim(const char * pattern = " ");
+    void ltrim(const char * pattern = " ");
         /// trims this String from left based on characters
         /// given in pattern, default is whitespace.
 	
-	String ltrim(const char * pattern = " ") const;
+    String ltrim(const char * pattern = " ") const;
         /// trims this String from left based on characters
         /// given in pattern, default is whitespace. returns a new
         /// String, this String is not changed.
 
-	void rtrim(const char * pattern = " ");
+    void rtrim(const char * pattern = " ");
         /// trims this String from right based on characters
         /// given in pattern, default is whitespace.
 	
-	String rtrim(const char * pattern = " ") const;
+    String rtrim(const char * pattern = " ") const;
         /// trims this String from right based on characters
         /// given in pattern, default is whitespace. returns a new
         /// String, this String is not changed.
 	
-	int compare(String& s) const;
+    int compare(String& s) const;
         /// case-sensitive compares this String to s
         /// returns: 0 on success, 
         /// 1 if this String is lexicographically greater than s, 
         /// -1 if this String is lexicographically less than s
 	
-	int icompare(String& s) const;
+    int icompare(String& s) const;
         /// case-insensitive compares this String to s
         /// returns: 0 on success, 
         /// 1 if this String is lexicographically greater than s, 
         /// -1 if this String is lexicographically less than s
 	
-	void upper();
+    void upper();
         /// converts this String to uppercase.
 	
-	String upper() const;
+    String upper() const;
         /// converts this String to uppercase and return a new
         /// String, this String is not changed.
 
-	void lower();
+    void lower();
         /// converts this String to lowercase.
 	
-	String lower() const;
+    String lower() const;
         /// converts this String to lowercase and return a new
         /// String, this String is not changed.
 
-	void append(const String& s);
+    void append(const String& s);
         /// appends String s at the end of this String
 
     String append(const String& s) const;
