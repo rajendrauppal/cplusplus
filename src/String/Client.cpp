@@ -38,6 +38,9 @@ void Test_construction()
 
     String scopy("Rajendra");
     cout << scopy.c_str() << endl;
+
+    scopy.reverse();
+    cout << scopy.c_str() << endl;
 }
 
 

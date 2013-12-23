@@ -52,13 +52,13 @@ public:
 	String(const String& other);
 		/// creates a copy of other String.
 
-	String& operator=(const String& rhs);
+	String& operator = (const String& rhs);
 		/// assignes rhs String to this String.
 
 	virtual ~String();
 		/// destroys this String.
 	
-	String& operator+(const String& right);
+	String& operator + (const String& right);
 		/// concatenates this string and right string and returns
 		/// a reference to this string.
 
@@ -74,10 +74,10 @@ public:
 	void reverse();
 		/// reverses this String.
 
-	String& reverse() const;
+	String reverse() const;
 		/// creates a new String with this String reversed.
 
-	String& clone() const;
+	String clone() const;
 		/// creates a new String, exact copy of this String.
 		/// same as copy constructor.
 
@@ -92,7 +92,7 @@ public:
         /// trims this String from left and right based on characters
         /// given in pattern, default is whitespace.
 	
-	String& trim(const char * pattern = " ") const;
+	String trim(const char * pattern = " ") const;
         /// trims this String from left and right based on characters
         /// given in pattern, default is whitespace. returns a new
         /// String, this String is not changed.
@@ -101,7 +101,7 @@ public:
         /// trims this String from left based on characters
         /// given in pattern, default is whitespace.
 	
-	String& ltrim(const char * pattern = " ") const;
+	String ltrim(const char * pattern = " ") const;
         /// trims this String from left based on characters
         /// given in pattern, default is whitespace. returns a new
         /// String, this String is not changed.
@@ -110,7 +110,7 @@ public:
         /// trims this String from right based on characters
         /// given in pattern, default is whitespace.
 	
-	String& rtrim(const char * pattern = " ") const;
+	String rtrim(const char * pattern = " ") const;
         /// trims this String from right based on characters
         /// given in pattern, default is whitespace. returns a new
         /// String, this String is not changed.
@@ -130,27 +130,29 @@ public:
 	void upper();
         /// converts this String to uppercase.
 	
-	String& upper() const;
+	String upper() const;
 	    /// converts this String to uppercase and return a new
         /// String, this String is not changed.
 
 	void lower();
         /// converts this String to lowercase.
 	
-	String& lower() const;
+	String lower() const;
 	    /// converts this String to lowercase and return a new
         /// String, this String is not changed.
 
 	void append(const String& s);
         /// appends String s at the end of this String
 
-    String& append(const String& s) const;
+    String append(const String& s) const;
         /// appends String s at the end of this String
         /// returns a new String, this String is not changed.
 
 private:
     char * _str;
-    int _length;
+    size_t _length;
+
+    size_t _size(const char * s) const;
 };
 
 
@@ -164,34 +166,31 @@ String::String()
 
 String::String(const char* s)
 {
-    size_t newlen = strlen(s);
-    _str = new char[newlen + 1];
+    size_t newlen = _size(s) + 1;
+    _str = new char[newlen];
     strcpy_s( _str, newlen, s );
-    _str[newlen + 1] = '\0';
-    _length = newlen + 1;
+    _length = newlen - 1;
 }
 
 
 String::String(const String& other)
 {
-    size_t newlen = other.length();
-    _str = new char[newlen + 1];
+    size_t newlen = other.length() + 1;
+    _str = new char[newlen];
     strcpy_s( _str, newlen, other.c_str() );
-    _str[newlen + 1] = '\0';
-    _length = newlen + 1;
+    _length = newlen - 1;
 }
 
 
-String& String::operator=(const String& rhs)
+String& String::operator = (const String& rhs)
 {
     if ( this != &rhs )
     {
         clear();
-        size_t newlen = rhs.length();
-        _str = new char[newlen + 1];
+        size_t newlen = rhs.length() + 1;
+        _str = new char[newlen];
         strcpy_s( _str, newlen, rhs.c_str() );
-        _str[newlen + 1] = '\0';
-        _length = newlen + 1;
+        _length = newlen - 1;
     }
     return *this;
 }
@@ -199,13 +198,11 @@ String& String::operator=(const String& rhs)
 
 String::~String()
 {
-    delete [] _str;
-    _str = (char*)0;
-    _length = 0;
+    clear();
 }
 	
 
-String& String::operator+(const String& right)
+String& String::operator + (const String& right)
 {
     return *this;
 }
@@ -213,9 +210,11 @@ String& String::operator+(const String& right)
 
 void String::clear()
 {
-    delete [] _str;
-    _str = (char*)0;
-    _length = 0;
+    if ( length() ) {
+        delete [] _str;
+        _str = 0x0;
+        _length = 0;
+    }
 }
 
 
@@ -233,20 +232,29 @@ bool String::empty() const
 
 void String::reverse()
 {
+    if ( 1 >= length() )
+        return;
+    size_t start = 0, end = length() - 1;
+    while ( start < end ) {
+        std::swap( _str[start], _str[end] );
+        start++;
+        end--;
+    }
 }
 
 
-String& String::reverse() const
+String String::reverse() const
 {
+    if ( 1 >= length() )
+        return String(*this);
     String reversed;
     return reversed;
 }
 
 
-String& String::clone() const
+String String::clone() const
 {
-    String cloned;
-    return cloned;
+    return String(*this);
 }
 
 
@@ -268,7 +276,7 @@ void String::trim(const char * pattern)
 }
 
 
-String& String::trim(const char * pattern) const
+String String::trim(const char * pattern) const
 {
     String trimmed;
     return trimmed;
@@ -280,7 +288,7 @@ void String::ltrim(const char * pattern)
 }
 
 
-String& String::ltrim(const char * pattern) const
+String String::ltrim(const char * pattern) const
 {
     String ltrimmed;
     return ltrimmed;
@@ -292,7 +300,7 @@ void String::rtrim(const char * pattern)
 }
 
 
-String& String::rtrim(const char * pattern) const
+String String::rtrim(const char * pattern) const
 {
     String rtrimmed;
     return rtrimmed;
@@ -316,7 +324,7 @@ void String::upper()
 }
 
 
-String& String::upper() const
+String String::upper() const
 {
     String uppercase;
     return uppercase;
@@ -328,7 +336,7 @@ void String::lower()
 }
 
 
-String& String::lower() const
+String String::lower() const
 {
     String lowercase;
     return lowercase;
@@ -340,10 +348,20 @@ void String::append(const String& s)
 }
 
 
-String& String::append(const String& s) const
+String String::append(const String& s) const
 {
     String bigger;
     return bigger;
+}
+
+
+size_t String::_size(const char * s) const
+{
+    if ( !s ) return 0;
+    size_t length = 0;
+    while ( *s++ )
+        length++;
+    return length;
 }
 
 
