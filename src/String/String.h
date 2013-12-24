@@ -45,7 +45,7 @@ public:
     String();
         /// creates an empty String.
 
-    explicit String(const char* s);
+    String(const char* s);
         /// creates a String object from user provided
         /// read-only String.
 
@@ -74,7 +74,7 @@ public:
     void reverse();
         /// reverses this String.
 
-    String reverse() const;
+    void reverse(String& r) const;
         /// creates a new String with this String reversed.
 
     String clone() const;
@@ -153,6 +153,7 @@ private:
     size_t _length;
 
     size_t _size(const char * s) const;
+    void _construct(const char * right);
 };
 
 
@@ -166,19 +167,13 @@ String::String()
 
 String::String(const char* s)
 {
-    size_t newlen = _size(s) + 1;
-    _str = new char[newlen];
-    strcpy_s( _str, newlen, s );
-    _length = newlen - 1;
+    _construct( s );
 }
 
 
 String::String(const String& other)
 {
-    size_t newlen = other.length() + 1;
-    _str = new char[newlen];
-    strcpy_s( _str, newlen, other.c_str() );
-    _length = newlen - 1;
+    _construct( other.c_str() );
 }
 
 
@@ -187,10 +182,7 @@ String& String::operator = (const String& rhs)
     if ( this != &rhs )
     {
         clear();
-        size_t newlen = rhs.length() + 1;
-        _str = new char[newlen];
-        strcpy_s( _str, newlen, rhs.c_str() );
-        _length = newlen - 1;
+        _construct( rhs.c_str() );
     }
     return *this;
 }
@@ -243,12 +235,10 @@ void String::reverse()
 }
 
 
-String String::reverse() const
+void String::reverse(String& r) const
 {
-    if ( 1 >= length() )
-        return String(*this);
-    String reversed;
-    return reversed;
+    r = *this;
+    r.reverse();
 }
 
 
@@ -355,6 +345,9 @@ String String::append(const String& s) const
 }
 
 
+//
+// Private methods
+//
 size_t String::_size(const char * s) const
 {
     if ( !s ) return 0;
@@ -362,6 +355,15 @@ size_t String::_size(const char * s) const
     while ( *s++ )
         length++;
     return length;
+}
+
+
+void String::_construct(const char * right)
+{
+    size_t newlen = _size( right ) + 1;
+    _str = new char[newlen];
+    strcpy_s( _str, newlen, right );
+    _length = newlen - 1;
 }
 
 

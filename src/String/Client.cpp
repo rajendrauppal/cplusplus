@@ -32,24 +32,50 @@ using std::cin;
 using std::endl;
 
 
-void Test_construction()
+void print(const char * str)
 {
+    cout << str << endl;
+}
+
+
+void Test_construction()
+{    
     String s;
-    cout << s.c_str() << endl;
+    print(s.c_str());
 
-    String scopy("Rajendra");
-    cout << scopy.c_str() << endl;
+    String scopy("radar");
+    print(scopy.c_str());
+}
 
-    scopy.reverse();
-    cout << scopy.c_str() << endl;
+
+void Test_reverse()
+{
+    String s = "IP Address: 10.xx.xxx.x";
+    s.reverse();
+    print(s.c_str());
+
+    String reversed;
+    s.reverse(reversed);
+    print(reversed.c_str());
+}
+
+
+void Test_clone()
+{
+    String s = "     This is a large  string \b\t\n to be cloned     .yeah!";
+    String name = s.clone();
+    print(s.c_str());
+    print(name.c_str());
 }
 
 
 int main()
 {
     Test_construction();
+    Test_reverse();
+    Test_clone();
 
-    cout << "Press any key to continue..." << endl;
+    print("Press any key to continue...");
     cin.get();
     return 0;
 }
