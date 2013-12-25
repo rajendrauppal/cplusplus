@@ -66,11 +66,24 @@ void Test_clone()
 }
 
 
+void Test_upperlower()
+{
+    String s("tHis is goNNa be all uPPercase StrinG!");
+    s.upper();
+    print(s.c_str());
+
+    String s1("tHis is goNNa be all LoWeRcase StrinG!");
+    s1.lower();
+    print(s1.c_str());
+}
+
+
 int main()
 {
     Test_construction();
     Test_reverse();
     Test_clone();
+    Test_upperlower();
 
     print("Press any key to continue...");
     cin.get();

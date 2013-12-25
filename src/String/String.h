@@ -312,24 +312,38 @@ int String::icompare(String& s) const
 
 void String::upper()
 {
+    char * temp = _str;
+    while ( *temp ) {
+        if (*temp >= 'a' && *temp <= 'z')
+            *temp -= 32;
+        temp++;
+    }
 }
 
 
 String String::upper() const
 {
-    String uppercase;
+    String uppercase(*this);
+    uppercase.upper();
     return uppercase;
 }
 
 
 void String::lower()
 {
+    char * temp = _str;
+    while ( *temp ) {
+        if (*temp >= 'A' && *temp <= 'Z')
+            *temp += 32;
+        temp++;
+    }
 }
 
 
 String String::lower() const
 {
-    String lowercase;
+    String lowercase(*this);
+    lowercase.lower();
     return lowercase;
 }
 
