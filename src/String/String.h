@@ -81,8 +81,9 @@ public:
         /// creates a new String, exact copy of this String.
         /// same as copy constructor.
 
-    vector<String> split(char c);
+    vector<String> split(char c) const;
         /// splits this String on c and returns a vector of Strings.
+        /// this string is unchanged.
 
     const char * c_str() const;
         /// returns const char pointer to raw String representation
@@ -248,7 +249,7 @@ String String::clone() const
 }
 
 
-vector<String> String::split(char c)
+vector<String> String::split(char c) const
 {
     vector<String> parts;
     return parts;

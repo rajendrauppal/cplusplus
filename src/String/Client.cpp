@@ -32,10 +32,7 @@ using std::cin;
 using std::endl;
 
 
-void print(const char * str)
-{
-    cout << str << endl;
-}
+#define print(s) cout<<endl<<(s)<<endl
 
 
 void Test_construction()
