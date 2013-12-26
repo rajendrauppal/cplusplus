@@ -127,13 +127,13 @@ public:
         /// String, this String is not changed.
 	
     int compare(const String& s) const;
-        /// case-sensitive compares this String to s
+        /// case-sensitive comparison of this String and s
         /// returns: 0 on success, 
         /// 1 if this String is lexicographically greater than s, 
         /// -1 if this String is lexicographically less than s
 	
     int compare_i(const String& s) const;
-        /// case-insensitive compares this String to s
+        /// case-insensitive comparison of this String and s
         /// returns: 0 on success, 
         /// 1 if this String is lexicographically greater than s, 
         /// -1 if this String is lexicographically less than s
@@ -180,6 +180,7 @@ private:
     void _construct(const char * right);
     bool _in_string(const char * s, char c) const;
     String _trim(TrimSide ts, const char * pattern = " ") const;
+    char _upper(char c) const;
 };
 
 
@@ -401,12 +402,44 @@ void String::trimright(String& t, const char * pattern) const
 	
 int String::compare(const String& s) const
 {
+    const char * left = _str;
+    const char * right = s.c_str();
+    
+    while ( *left && *right ) {
+        if ( *left > *right )
+            return 1;
+        else if ( *left < *right )
+            return -1;
+        left++;
+        right++;
+    }
+
+    if ( *left ) return 1;
+    if ( *right ) return -1;
     return 0;
 }
 
 
 int String::compare_i(const String& s) const
 {
+    const char * left = _str;
+    const char * right = s.c_str();
+    
+    while ( *left && *right ) {
+
+        char f = _upper( *left );
+        char l = _upper( *right );
+
+        if ( f > l )
+            return 1;
+        else if ( f < l )
+            return -1;
+        left++;
+        right++;
+    }
+
+    if ( *left ) return 1;
+    if ( *right ) return -1;
     return 0;
 }
 
@@ -516,6 +549,14 @@ String String::_trim(TrimSide ts, const char * pattern) const
             end--;
 
     return String( start, ++end );
+}
+
+
+char String::_upper(char c) const
+{
+    if (c >= 'a' && c <= 'z')
+            c -= 32;
+    return c;
 }
 
 

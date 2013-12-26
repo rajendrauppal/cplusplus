@@ -123,6 +123,24 @@ void Test_trim()
 }
 
 
+void Test_compare()
+{
+    String s = "application";
+    String t = "Apply";
+    int result = s.compare_i( t );
+    if ( result == -1 ) 
+        print( s.c_str() );
+    else if ( result == 1 )
+        print( t.c_str() );
+
+    result = s.compare( t );
+    if ( result == -1 ) 
+        print( s.c_str() );
+    else if ( result == 1 )
+        print( t.c_str() );
+}
+
+
 int main()
 {
     Test_construction();
@@ -136,6 +154,8 @@ int main()
     Test_split();
 
     Test_trim();
+
+    Test_compare();
 
     print("Press any key to continue...");
     cin.get();
