@@ -87,13 +87,28 @@ void Test_split()
 }
 
 
+void Test_trim()
+{
+    String text = "!@#$%^&*()~~function=trim;mode=test;pattern=!@#$%^&*()~~";
+    String pattern = "!@#$%^&*()~";
+    text.trim( pattern.c_str() );
+    print( text.c_str() );
+}
+
+
 int main()
 {
     Test_construction();
+
     Test_reverse();
+    
     Test_clone();
+    
     Test_upperlower();
+    
     Test_split();
+
+    Test_trim();
 
     print("Press any key to continue...");
     cin.get();

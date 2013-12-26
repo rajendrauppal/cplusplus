@@ -173,6 +173,7 @@ private:
 
     size_t _size(const char * s) const;
     void _construct(const char * right);
+    bool _in_string(const char * s, char c);
 };
 
 
@@ -358,6 +359,15 @@ const char * String::c_str() const
 
 void String::trim(const char * pattern)
 {
+    const char * start = &_str[0];
+    const char * end = &_str[_length - 1];
+
+    while ( _in_string( pattern, *start ) )
+        start++;
+    while ( _in_string( pattern, *end ) )
+        end--;
+
+    *this = String( start, ++end );
 }
 
 
@@ -477,6 +487,15 @@ void String::_construct(const char * right)
     _str = new char[newlen];
     strcpy_s( _str, newlen, right );
     _length = newlen - 1;
+}
+
+
+bool String::_in_string(const char * s, char c)
+{
+    while (*s)
+        if (*s++ == c)
+            return true;
+    return false;
 }
 
 
