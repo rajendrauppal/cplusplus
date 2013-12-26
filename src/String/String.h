@@ -336,12 +336,14 @@ vector<String> String::split(char c) const
     const char * part_end = start;
 
     while ( start != end ) {
-        while ( (part_end != end) && (*part_end != c) ) {
+        while ( *part_end && (*part_end != c) ) {
             part_end++;
         }
         String part( start, part_end );
         parts.push_back( part );
-        start = part_end++;
+        if ( !*++part_end )
+            break;
+        start = part_end;
     }
 
     return parts;
