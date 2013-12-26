@@ -341,9 +341,9 @@ vector<String> String::split(char c) const
         }
         String part( start, part_end );
         parts.push_back( part );
-        if ( !*++part_end )
+        if ( !*part_end )
             break;
-        start = part_end;
+        start = ++part_end;
     }
 
     return parts;

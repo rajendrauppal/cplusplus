@@ -80,8 +80,8 @@ void Test_upperlower()
 
 void Test_split()
 {
-    String name = "Rajendra Kumar Uppal";
-    vector<String> parts = name.split();
+    String name = "function=split;mode=test;separator=semi-colon";
+    vector<String> parts = name.split(';');
     for ( auto start = parts.begin(); start != parts.end(); ++start )
         print( (*start).c_str() );
 }
