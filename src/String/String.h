@@ -58,10 +58,16 @@ public:
     virtual ~String();
         /// destroys this String.
 	
-    String& operator + (const String& right);
-        /// concatenates this string and right string and returns
-        /// a reference to this string.    
+    bool operator == (const String& right) const;
+    bool operator != (const String& right) const;
+    bool operator >  (const String& right) const;
+    bool operator >= (const String& right) const;
+    bool operator <  (const String& right) const;
+    bool operator <= (const String& right) const;
 
+    String operator +  (const String& right) const;
+    String operator += (const String& right);
+    
     void clear();
         /// empties this String.
 
@@ -81,7 +87,7 @@ public:
         /// creates a new String, exact copy of this String.
         /// same as copy constructor.
 
-    vector<String> split(char c) const;
+    vector<String> split(char c = ' ') const;
         /// splits this String on c and returns a vector of Strings.
         /// this string is unchanged.
 
@@ -93,36 +99,36 @@ public:
         /// trims this String from left and right based on characters
         /// given in pattern, default is whitespace.
 	
-    String trim(const char * pattern = " ") const;
+    void trim(String& t, const char * pattern = " ") const;
         /// trims this String from left and right based on characters
         /// given in pattern, default is whitespace. returns a new
-        /// String, this String is not changed.
+        /// String t, 'this' String is not changed.
 	
-    void ltrim(const char * pattern = " ");
+    void trimleft(const char * pattern = " ");
         /// trims this String from left based on characters
         /// given in pattern, default is whitespace.
 	
-    String ltrim(const char * pattern = " ") const;
+    void trimleft(String& t, const char * pattern = " ") const;
         /// trims this String from left based on characters
         /// given in pattern, default is whitespace. returns a new
         /// String, this String is not changed.
 
-    void rtrim(const char * pattern = " ");
+    void trimright(const char * pattern = " ");
         /// trims this String from right based on characters
         /// given in pattern, default is whitespace.
 	
-    String rtrim(const char * pattern = " ") const;
+    void trimright(String& t, const char * pattern = " ") const;
         /// trims this String from right based on characters
         /// given in pattern, default is whitespace. returns a new
         /// String, this String is not changed.
 	
-    int compare(String& s) const;
+    int compare(const String& s) const;
         /// case-sensitive compares this String to s
         /// returns: 0 on success, 
         /// 1 if this String is lexicographically greater than s, 
         /// -1 if this String is lexicographically less than s
 	
-    int icompare(String& s) const;
+    int compare_i(const String& s) const;
         /// case-insensitive compares this String to s
         /// returns: 0 on success, 
         /// 1 if this String is lexicographically greater than s, 
@@ -131,21 +137,29 @@ public:
     void upper();
         /// converts this String to uppercase.
 	
-    String upper() const;
+    void upper(String& u) const;
         /// converts this String to uppercase and return a new
         /// String, this String is not changed.
 
     void lower();
         /// converts this String to lowercase.
 	
-    String lower() const;
+    void lower(String& l) const;
         /// converts this String to lowercase and return a new
         /// String, this String is not changed.
+
+    void capitalize();
+        /// Capitalizes this string.
+        /// e.g., input: "this is a string"
+        /// output: "This Is A String"
+
+    void capitalize(String& c) const;
+        /// Returns a copy of capitalized string.
 
     void append(const String& s);
         /// appends String s at the end of this String
 
-    String append(const String& s) const;
+    void append(const String& s, String& r) const;
         /// appends String s at the end of this String
         /// returns a new String, this String is not changed.
 
@@ -195,7 +209,49 @@ String::~String()
 }
 	
 
-String& String::operator + (const String& right)
+bool String::operator == (const String& right) const
+{
+    return ( compare(right) == 0 );
+}
+
+
+bool String::operator != (const String& right) const
+{
+    return ( compare(right) == 0 );
+}
+
+
+bool String::operator >  (const String& right) const
+{
+    return ( compare(right) == 1 );
+}
+
+
+bool String::operator >= (const String& right) const
+{
+    return ( compare(right) >= 0 );
+}
+
+
+bool String::operator <  (const String& right) const
+{
+    return ( compare(right) == -1 );
+}
+
+
+bool String::operator <= (const String& right) const
+{
+    return ( compare(right) <= 0 );
+}
+
+
+String String::operator + (const String& right) const
+{
+    return *this;
+}
+
+
+String String::operator += (const String& right)
 {
     return *this;
 }
@@ -267,44 +323,38 @@ void String::trim(const char * pattern)
 }
 
 
-String String::trim(const char * pattern) const
-{
-    String trimmed;
-    return trimmed;
-}
-
-
-void String::ltrim(const char * pattern)
+void String::trim(String& t, const char * pattern) const
 {
 }
 
 
-String String::ltrim(const char * pattern) const
-{
-    String ltrimmed;
-    return ltrimmed;
-}
-
-
-void String::rtrim(const char * pattern)
+void String::trimleft(const char * pattern)
 {
 }
 
 
-String String::rtrim(const char * pattern) const
+void String::trimleft(String& t, const char * pattern) const
 {
-    String rtrimmed;
-    return rtrimmed;
+}
+
+
+void String::trimright(const char * pattern)
+{
+}
+
+
+void String::trimright(String& t, const char * pattern) const
+{
 }
 
 	
-int String::compare(String& s) const
+int String::compare(const String& s) const
 {
     return 0;
 }
 
 
-int String::icompare(String& s) const
+int String::compare_i(const String& s) const
 {
     return 0;
 }
@@ -321,11 +371,10 @@ void String::upper()
 }
 
 
-String String::upper() const
+void String::upper(String& u) const
 {
-    String uppercase(*this);
-    uppercase.upper();
-    return uppercase;
+    u = *this;
+    u.upper();
 }
 
 
@@ -340,11 +389,20 @@ void String::lower()
 }
 
 
-String String::lower() const
+void String::lower(String& l) const
 {
-    String lowercase(*this);
-    lowercase.lower();
-    return lowercase;
+    l = *this;
+    l.lower();
+}
+
+
+void String::capitalize()
+{
+}
+
+
+void String::capitalize(String& c) const
+{
 }
 
 
@@ -353,10 +411,8 @@ void String::append(const String& s)
 }
 
 
-String String::append(const String& s) const
+void String::append(const String& s, String& r) const
 {
-    String bigger;
-    return bigger;
 }
 
 
