@@ -78,12 +78,22 @@ void Test_upperlower()
 }
 
 
+void Test_split()
+{
+    String name = "Rajendra Kumar Uppal";
+    vector<String> parts = name.split();
+    for ( auto start = parts.begin(); start != parts.end(); ++start )
+        print( (*start).c_str() );
+}
+
+
 int main()
 {
     Test_construction();
     Test_reverse();
     Test_clone();
     Test_upperlower();
+    Test_split();
 
     print("Press any key to continue...");
     cin.get();

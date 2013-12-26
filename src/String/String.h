@@ -49,6 +49,10 @@ public:
         /// creates a String object from user provided
         /// read-only String.
 
+    String(const char * start, const char * end);
+        /// creates a String object copying characters
+        /// from start to end.
+
     String(const String& other);
         /// creates a copy of other String.
 
@@ -186,6 +190,25 @@ String::String(const char* s)
 }
 
 
+String::String(const char * start, const char * end)
+{
+    size_t newlen = 1;
+    const char * temp = start;
+    while ( temp != end ) {
+        temp++;
+        newlen++;
+    }
+    _str = new char[newlen];
+    temp = start;
+    size_t i = 0;
+    while ( temp != end ) {
+        _str[i++] = *temp++;
+    }
+    _str[i] = '\0';
+    _length = newlen - 1;
+}
+
+
 String::String(const String& other)
 {
     _construct( other.c_str() );
@@ -261,7 +284,7 @@ void String::clear()
 {
     if ( length() ) {
         delete [] _str;
-        _str = 0x0;
+        _str = 0;
         _length = 0;
     }
 }
@@ -281,8 +304,6 @@ bool String::empty() const
 
 void String::reverse()
 {
-    if ( 1 >= length() )
-        return;
     size_t start = 0, end = length() - 1;
     while ( start < end ) {
         std::swap( _str[start], _str[end] );
@@ -308,6 +329,21 @@ String String::clone() const
 vector<String> String::split(char c) const
 {
     vector<String> parts;
+
+    size_t len = length();
+    const char * start = &_str[0];
+    const char * end = &_str[len];
+    const char * part_end = start;
+
+    while ( start != end ) {
+        while ( (part_end != end) && (*part_end != c) ) {
+            part_end++;
+        }
+        String part( start, part_end );
+        parts.push_back( part );
+        start = part_end++;
+    }
+
     return parts;
 }
 
@@ -398,7 +434,7 @@ void String::lower(String& l) const
 
 void String::capitalize()
 {
-    if ( empty() ) 
+    if ( empty() )
         return;
 }
 
