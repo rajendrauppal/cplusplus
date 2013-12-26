@@ -91,7 +91,34 @@ void Test_trim()
 {
     String text = "!@#$%^&*()~~function=trim;mode=test;pattern=!@#$%^&*()~~";
     String pattern = "!@#$%^&*()~";
+
+    // get copy of trimmed string, text is unchanged
+    String trimmed;
+    text.trim( trimmed, pattern.c_str() );
+    print( trimmed.c_str() );
+
+    // trim text in-place
     text.trim( pattern.c_str() );
+    print( text.c_str() );
+    
+    // trim from left, get a copy
+    text = "!@#$%^&*()~~function=trim;mode=test;pattern=!@#$%^&*()~~";
+    text.trimleft( trimmed, pattern.c_str() );
+    print( trimmed.c_str() );
+
+    // trim from right, get a copy
+    text = "!@#$%^&*()~~function=trim;mode=test;pattern=!@#$%^&*()~~";
+    text.trimright( trimmed, pattern.c_str() );
+    print( trimmed.c_str() );
+
+    // trim from left, in-place
+    text = "!@#$%^&*()~~function=trim;mode=test;pattern=!@#$%^&*()~~";
+    text.trimleft( pattern.c_str() );
+    print( text.c_str() );
+
+    // trim from right, in-place
+    text = "!@#$%^&*()~~function=trim;mode=test;pattern=!@#$%^&*()~~";
+    text.trimright( pattern.c_str() );
     print( text.c_str() );
 }
 

@@ -168,12 +168,18 @@ public:
         /// returns a new String, this String is not changed.
 
 private:
+    enum TrimSide {
+        BOTH,
+        LEFT,
+        RIGHT
+    };
     char * _str;
     size_t _length;
 
     size_t _size(const char * s) const;
     void _construct(const char * right);
-    bool _in_string(const char * s, char c);
+    bool _in_string(const char * s, char c) const;
+    String _trim(TrimSide ts, const char * pattern = " ") const;
 };
 
 
@@ -359,40 +365,37 @@ const char * String::c_str() const
 
 void String::trim(const char * pattern)
 {
-    const char * start = &_str[0];
-    const char * end = &_str[_length - 1];
-
-    while ( _in_string( pattern, *start ) )
-        start++;
-    while ( _in_string( pattern, *end ) )
-        end--;
-
-    *this = String( start, ++end );
+    *this = _trim(BOTH, pattern);
 }
 
 
 void String::trim(String& t, const char * pattern) const
 {
+    t = _trim(BOTH, pattern);
 }
 
 
 void String::trimleft(const char * pattern)
 {
+    *this = _trim(LEFT, pattern);
 }
 
 
 void String::trimleft(String& t, const char * pattern) const
 {
+    t = _trim(LEFT, pattern);
 }
 
 
 void String::trimright(const char * pattern)
 {
+    *this = _trim(RIGHT, pattern);
 }
 
 
 void String::trimright(String& t, const char * pattern) const
 {
+    t = _trim(RIGHT, pattern);
 }
 
 	
@@ -490,12 +493,29 @@ void String::_construct(const char * right)
 }
 
 
-bool String::_in_string(const char * s, char c)
+bool String::_in_string(const char * s, char c) const
 {
     while (*s)
         if (*s++ == c)
             return true;
     return false;
+}
+
+
+String String::_trim(TrimSide ts, const char * pattern) const
+{
+    const char * start = &_str[0];
+    const char * end = &_str[_length - 1];
+
+    if ( ts == LEFT || ts == BOTH )
+        while ( _in_string( pattern, *start ) )
+            start++;
+
+    if ( ts == RIGHT || ts == BOTH )
+        while ( _in_string( pattern, *end ) )
+            end--;
+
+    return String( start, ++end );
 }
 
 
