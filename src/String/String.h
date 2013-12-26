@@ -398,6 +398,8 @@ void String::lower(String& l) const
 
 void String::capitalize()
 {
+    if ( empty() ) 
+        return;
 }
 
 
