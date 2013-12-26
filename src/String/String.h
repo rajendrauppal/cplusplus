@@ -408,11 +408,13 @@ void String::capitalize(String& c) const
 
 void String::append(const String& s)
 {
+    *this += s;
 }
 
 
 void String::append(const String& s, String& r) const
 {
+    r = *this + s;
 }
 
 
