@@ -141,6 +141,20 @@ void Test_compare()
 }
 
 
+void Test_operators()
+{
+    String s = "C:\\Program Files\\Chrome";
+    for ( int i = 0; i < s.length(); ++i )
+        cout << s[i] << " ";
+    cout << endl;
+    cout << s.c_str() << endl;
+    s[0] = 'D';
+    char c = s[-1];
+    cout << c << endl;
+    cout << s.c_str() << endl;
+}
+
+
 int main()
 {
     Test_construction();
@@ -156,6 +170,8 @@ int main()
     Test_trim();
 
     Test_compare();
+    
+    Test_operators();
 
     print("Press any key to continue...");
     cin.get();

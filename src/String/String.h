@@ -71,6 +71,8 @@ public:
 
     String operator +  (const String& right) const;
     String operator += (const String& right);
+
+    char& operator [] (int index) const;
     
     void clear();
         /// empties this String.
@@ -278,6 +280,14 @@ bool String::operator <= (const String& right) const
 
 String String::operator + (const String& right) const
 {
+    if ( empty() )
+        return right;
+    
+    if ( right.empty() )
+        return *this;
+
+    String result;
+
     return *this;
 }
 
@@ -285,6 +295,14 @@ String String::operator + (const String& right) const
 String String::operator += (const String& right)
 {
     return *this;
+}
+
+
+char& String::operator [] (int index) const
+{
+    if ( 0 > index < length() )
+        return _str[_length + 1];
+    return _str[index];
 }
 
 
