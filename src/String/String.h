@@ -72,7 +72,7 @@ public:
     String operator +  (const String& right) const;
     String operator += (const String& right);
 
-    char& operator [] (int index) const;
+    char const& operator [] (size_t index) const;
     
     void clear();
         /// empties this String.
@@ -298,10 +298,10 @@ String String::operator += (const String& right)
 }
 
 
-char& String::operator [] (int index) const
+char const& String::operator [] (size_t index) const
 {
-    if ( 0 > index < length() )
-        return _str[_length + 1];
+    if ( (index + 1) > length() )
+        return _str[_length];
     return _str[index];
 }
 

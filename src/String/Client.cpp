@@ -144,14 +144,12 @@ void Test_compare()
 void Test_operators()
 {
     String s = "C:\\Program Files\\Chrome";
-    for ( int i = 0; i < s.length(); ++i )
+    for ( size_t i = 0; i < s.length(); ++i )
         cout << s[i] << " ";
     cout << endl;
     cout << s.c_str() << endl;
-    s[0] = 'D';
-    char c = s[-1];
+    char c = s[s.length()];
     cout << c << endl;
-    cout << s.c_str() << endl;
 }
 
 
