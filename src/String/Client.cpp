@@ -24,7 +24,7 @@
 
 #include <iostream>
 #include "String.h"
-//#include <string>
+#include <string>
 
 
 using std::cout;
@@ -143,13 +143,46 @@ void Test_compare()
 
 void Test_operators()
 {
-    String s = "C:\\Program Files\\Chrome";
+    String s = "C:\\Program Files\\Chrome\\";
     for ( size_t i = 0; i < s.length(); ++i )
         cout << s[i] << " ";
     cout << endl;
     cout << s.c_str() << endl;
     char c = s[s.length()];
     cout << c << endl;
+
+    String filename = "setup.bin";
+    String fullpath = s + filename;
+    print( fullpath.c_str() );
+
+    String name = "First";
+    name += " Middle";
+    name += " Last";
+    print( name.c_str() );
+}
+
+
+void Test_append()
+{
+    String name = "John";
+    name.append(" Doe"); // non-const version
+    print( name.c_str() );
+
+    name = "John";
+    String result;
+    name.append( " Doe", result); // const version
+    print( result.c_str() );
+    print( name.c_str() );
+}
+
+
+void Test_capitalize()
+{
+    String name = "    philip Andrew marshall    ";
+    name.capitalize();
+    print( name.c_str() );
+    name.trim();
+    print( name.c_str() );
 }
 
 
@@ -170,6 +203,10 @@ int main()
     Test_compare();
     
     Test_operators();
+
+    Test_append();
+
+    Test_capitalize();
 
     print("Press any key to continue...");
     cin.get();

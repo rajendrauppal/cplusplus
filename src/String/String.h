@@ -70,9 +70,11 @@ public:
     bool operator <= (const String& right) const;
 
     String operator +  (const String& right) const;
-    String operator += (const String& right);
+    String& operator += (const String& right);
 
     char const& operator [] (size_t index) const;
+    char const& at(size_t index) const;
+    void at(size_t index, char c);
     
     void clear();
         /// empties this String.
@@ -183,6 +185,10 @@ private:
     bool _in_string(const char * s, char c) const;
     String _trim(TrimSide ts, const char * pattern = " ") const;
     char _upper(char c) const;
+    char _lower(char c) const;
+    bool _isupper(char c) const;
+    bool _islower(char c) const;
+    bool _isalpha(char c) const;
 };
 
 
@@ -286,23 +292,48 @@ String String::operator + (const String& right) const
     if ( right.empty() )
         return *this;
 
-    String result;
+    size_t newlen = this->length() + right.length() + 1;
+    char * _p = new char[newlen];
 
-    return *this;
+    size_t i = 0;
+    for ( ; i < this->length(); ++i ) 
+        _p[i] = this->at(i);
+    for ( size_t j = 0; j < right.length(); ++j ) 
+        _p[i++] = right.at(j);
+    _p[i] = '\0';
+
+    String result = String(_p);
+    delete [] _p;
+    return result;
 }
 
 
-String String::operator += (const String& right)
+String& String::operator += (const String& right)
 {
+    *this = *this + right;
     return *this;
 }
 
 
 char const& String::operator [] (size_t index) const
 {
+    return at(index);
+}
+
+
+char const& String::at(size_t index) const
+{
     if ( (index + 1) > length() )
         return _str[_length];
     return _str[index];
+}
+
+
+void String::at(size_t index, char c)
+{
+    if ( (index + 1) < length() ) {
+        _str[index] = c;
+    }
 }
 
 
@@ -361,14 +392,17 @@ vector<String> String::split(char c) const
     const char * end = &_str[len];
     const char * part_end = start;
 
-    while ( start != end ) {
-        while ( *part_end && (*part_end != c) ) {
+    while ( start != end ) 
+    {
+        while ( *part_end && (*part_end != c) )
             part_end++;
-        }
+        
         String part( start, part_end );
         parts.push_back( part );
+        
         if ( !*part_end )
             break;
+        
         start = ++part_end;
     }
 
@@ -500,8 +534,20 @@ void String::lower(String& l) const
 
 void String::capitalize()
 {
-    if ( empty() )
-        return;
+    bool cap = true;
+
+    for ( size_t i = 0; i < length(); ++i ) 
+    {
+        if ( _isalpha(_str[i]) && cap ) 
+        {
+            this->at(i, _upper( _str[i] ) );
+            cap = false;
+        }
+        else if ( _str[i] == ' ' )
+            cap = true;
+        else
+            ;
+    }
 }
 
 
@@ -575,6 +621,32 @@ char String::_upper(char c) const
     if (c >= 'a' && c <= 'z')
             c -= 32;
     return c;
+}
+
+char String::_lower(char c) const
+{
+    if (c >= 'A' && c <= 'Z')
+            c += 32;
+    return c;
+}
+
+
+bool String::_isupper(char c) const
+{
+    return ( (c >= 'A') && (c <= 'Z') );
+}
+
+
+bool String::_islower(char c) const
+{
+    return ( (c >= 'a') && (c <= 'z') );
+}
+
+
+bool String::_isalpha(char c) const
+{
+    return ( (c >= 'A') && (c <= 'Z') ) || 
+           ( (c >= 'a') && (c <= 'z') );
 }
 
 
