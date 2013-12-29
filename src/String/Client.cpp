@@ -179,9 +179,17 @@ void Test_append()
 void Test_capitalize()
 {
     String name = "    philip Andrew marshall    ";
-    name.capitalize();
+    name.capitalize(); // non-const version
     print( name.c_str() );
     name.trim();
+    print( name.c_str() );
+
+    name = "    philip Andrew marshall    ";
+    String Name;
+    name.capitalize( Name ); // const version
+    print( Name.c_str() );
+    Name.trim();
+    print( Name.c_str() );
     print( name.c_str() );
 }
 

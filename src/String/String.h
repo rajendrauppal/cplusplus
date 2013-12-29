@@ -553,6 +553,9 @@ void String::capitalize()
 
 void String::capitalize(String& c) const
 {
+    c.clear();
+    c = this->clone();
+    c.capitalize();
 }
 
 
