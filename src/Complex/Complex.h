@@ -57,10 +57,6 @@ public:
 
     bool operator == (const Complex& right) const;
     bool operator != (const Complex& right) const;
-    bool operator >  (const Complex& right) const;
-    bool operator >= (const Complex& right) const;
-    bool operator <  (const Complex& right) const;
-    bool operator <= (const Complex& right) const;
 
     Complex operator + (const Complex& right) const;
     Complex& operator += (const Complex& right);
@@ -132,30 +128,40 @@ void Complex<T>::add(const Complex& right)
 template<typename T>
 void Complex<T>::add(const Complex& right, Complex& out) const
 {
+    out._real = this->_real + right._real;
+    out._imag = this->_imag + right._imag;
 }
 
 
 template<typename T>
 void Complex<T>::sub(const Complex& right)
 {
+    _real -= right._real;
+    _imag -= right._imag;
 }
 
 
 template<typename T>
 void Complex<T>::sub(const Complex& right, Complex& out) const
 {
+    out._real = this->_real - right._real;
+    out._imag = this->_imag - right._imag;
 }
 
 
 template<typename T>
 void Complex<T>::mul(const Complex& right)
 {
+    _real = _real * right._real + _imag * right._imag;
+    _imag = _real * right._imag + _imag * right._real;
 }
 
 
 template<typename T>
 void Complex<T>::mul(const Complex& right, Complex& out) const
 {
+    mul( right );
+    out = *this;
 }
 
 
@@ -174,108 +180,110 @@ void Complex<T>::div(const Complex& right, Complex& out) const
 template<typename T>
 T Complex<T>::real() const
 {
+    return _real;
 }
 
 
 template<typename T>
 void Complex<T>::real(T re)
 {
+    _real = re;
 }
 
 
 template<typename T>
 T Complex<T>::imag() const
 {
+    return _imag;
 }
 
 
 template<typename T>
 void Complex<T>::imag(T im)
 {
+    _imag = im;
 }
 
 
 template<typename T>
 bool Complex<T>::operator == (const Complex& right) const
 {
+    return ( (_real == right._real) && (_imag == right._imag) );
 }
 
 
 template<typename T>
 bool Complex<T>::operator != (const Complex& right) const
 {
-}
-
-
-template<typename T>
-bool Complex<T>::operator >  (const Complex& right) const
-{
-}
-
-
-template<typename T>
-bool Complex<T>::operator >= (const Complex& right) const
-{
-}
-
-
-template<typename T>
-bool Complex<T>::operator <  (const Complex& right) const
-{
-}
-
-
-template<typename T>
-bool Complex<T>::operator <= (const Complex& right) const
-{
+    return ( !(*this == right) );
 }
 
 
 template<typename T>
 Complex<T> Complex<T>::operator + (const Complex& right) const
 {
+    Complex<T> result;
+    add( right, result );
+    return result;
 }
 
 
 template<typename T>
 Complex<T>& Complex<T>::operator += (const Complex& right)
 {
+    add( right );
+    return *this;
 }
 
 
 template<typename T>
 Complex<T> Complex<T>::operator - (const Complex& right) const
 {
+    Complex<T> result;
+    sub( right, result );
+    return result;
 }
 
 
 template<typename T>
 Complex<T>& Complex<T>::operator -= (const Complex& right)
 {
+    sub( right );
+    return *this;
 }
 
 
 template<typename T>
 Complex<T> Complex<T>::operator * (const Complex& right) const
 {
+    Complex<T> result;
+    mul( right, result );
+    return result;
 }
 
 
 template<typename T>
 Complex<T>& Complex<T>::operator *= (const Complex& right)
 {
+    mul( right );
+    return *this;
 }
 
 
 template<typename T>
 Complex<T> Complex<T>::operator / (const Complex& right) const
 {
+    Complex<T> result;
+    div( right, result );
+    return result;
 }
 
 
 template<typename T>
 Complex<T>& Complex<T>::operator /= (const Complex& right)
 {
+    div( right );
+    return *this;
 }
 
 
