@@ -34,8 +34,16 @@ using std::endl;
 #define print(s) cout<<endl<<(s)<<endl
 
 
+void Test_Complex()
+{
+    Complex<int> comp;
+}
+
+
 int main()
 {
+    Test_Complex();
+
     print("Press any key to continue...");
     cin.get();
     return 0;
