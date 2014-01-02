@@ -238,6 +238,7 @@ void Complex<T>::conjugate()
 template<typename T>
 void Complex<T>::conjugate(Complex& out) const
 {
+    out = *this;
     out._imag = -out._imag;
 }
 
