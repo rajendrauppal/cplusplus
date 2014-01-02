@@ -55,6 +55,9 @@ public:
     T imag() const;
     void imag(T im);
 
+    void conjugate();
+    void conjugate(Complex& out) const;
+
     bool operator == (const Complex& right) const;
     bool operator != (const Complex& right) const;
 
@@ -100,7 +103,7 @@ Complex<T>::~Complex()
 
 template<typename T>
 Complex<T>::Complex(const Complex& other):
-    _real(other._real)
+    _real(other._real),
     _imag(other._imag)
 {
 }
@@ -160,20 +163,32 @@ void Complex<T>::mul(const Complex& right)
 template<typename T>
 void Complex<T>::mul(const Complex& right, Complex& out) const
 {
-    mul( right );
-    out = *this;
+    out.real( _real * right._real + _imag * right._imag );
+    out.imag( _real * right._imag + _imag * right._real );
 }
 
 
 template<typename T>
 void Complex<T>::div(const Complex& right)
 {
+    T numerator_real = ( _real * right._real - _imag * right._imag );
+    T numerator_imag = ( _imag * right._real - _real * right._imag );
+    T denominator = ( right._real * right._real - right._imag * right._imag );
+
+    real( numerator_real / (T)denominator );
+    imag( numerator_imag / (T)denominator );
 }
 
 
 template<typename T>
 void Complex<T>::div(const Complex& right, Complex& out) const
 {
+    T numerator_real = ( _real * right._real - _imag * right._imag );
+    T numerator_imag = ( _imag * right._real - _real * right._imag );
+    T denominator = ( right._real * right._real - right._imag * right._imag );
+
+    out.real( numerator_real / (T)denominator );
+    out.imag( numerator_imag / (T)denominator );
 }
 
 
@@ -202,6 +217,20 @@ template<typename T>
 void Complex<T>::imag(T im)
 {
     _imag = im;
+}
+
+
+template<typename T>
+void Complex<T>::conjugate()
+{
+    _imag = -_imag;
+}
+
+
+template<typename T>
+void Complex<T>::conjugate(Complex& out) const
+{
+    out._imag = -out._imag;
 }
 
 

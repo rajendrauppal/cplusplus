@@ -34,15 +34,45 @@ using std::endl;
 #define print(s) cout<<endl<<(s)<<endl
 
 
-void Test_Complex()
+template<typename T>
+void printc(const Complex<T>& c)
 {
-    Complex<int> comp;
+    cout << c.real() << "\t" << c.imag() << endl;
+}
+
+
+void Test_Construction()
+{
+    Complex<float> c1; // default ctor
+    printc( c1 );
+    
+    Complex<float> c2( 3.45f, -6.2f ); // parametrized ctor
+    printc( c2 );
+
+    c1 = c2; // assignment operator
+    printc( c1 );
+
+    Complex<double> c3(-2.3, 4.5);
+    Complex<double> c4(c3); // copy ctor
+    printc( c3 );
+    printc( c4 );
+}
+
+
+void Test_APIs()
+{
+    Complex<long double> c1(3.4, -1.2);
+    Complex<long double> c2(-1.4, 4.25);
+
+    c1.add( c2 ); // add non-const
+    printc( c1 );
+    printc( c2 );
 }
 
 
 int main()
 {
-    Test_Complex();
+    Test_Construction();
 
     print("Press any key to continue...");
     cin.get();
