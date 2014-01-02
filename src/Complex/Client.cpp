@@ -41,7 +41,7 @@ void printc(const Complex<T>& c)
 }
 
 
-void Test_Construction()
+void Test_construction()
 {
     Complex<float> c1; // default ctor
     printc( c1 );
@@ -66,13 +66,78 @@ void Test_APIs()
 
     c1.add( c2 ); // add non-const
     printc( c1 );
-    printc( c2 );
+
+    Complex<long double> out;
+    c1.add( c2, out ); // add const
+    printc( out );
+
+    c1.sub( c2 ); // sub non-const
+    printc( c1 );
+    c1.sub( c2, out ); // sub const
+    printc( out );
+
+    c1.mul( c2 ); // mul non-const
+    printc( c1 );
+    c1.mul( c2, out ); // mul const
+    printc( out );
+
+    c1.div( c2 ); // div non-const
+    printc( c1 );
+    c1.div( c2, out ); // div const
+    printc( out );
+
+    c1.conjugate(); // conjugate non-const
+    printc( c1 );
+    c1.conjugate( out ); // conjugate const
+    printc( out );
+
+    // get, set underlying real/imag values
+    long double re = out.real();
+    long double im = out.imag();
+
+    out.real( 4.44 );
+    out.imag( 5.55 );
+    printc( out );
+}
+
+
+void Test_operators()
+{
+    Complex<float> c1( 2.3f, -3.999f );
+    Complex<float> c2( 2.3f, -3.999f );
+
+    cout << (c1 == c2) << endl;
+    cout << (c1 != c2) << endl;
+
+    Complex<float> c3 = c1 + c2;
+    printc( c3 );
+    c3 += c1;
+    printc( c3 );
+
+    c3 = c1 - c2;
+    printc( c3 );
+    c3 -= c1;
+    printc( c3 );
+
+    c3 = c1 * c2;
+    printc( c3 );
+    c3 *= c1;
+    printc( c3 );
+
+    c3 = c1 / c2;
+    printc( c3 );
+    c3 /= c1;
+    printc( c3 );
 }
 
 
 int main()
 {
-    Test_Construction();
+    Test_construction();
+    
+    Test_APIs();
+
+    Test_operators();
 
     print("Press any key to continue...");
     cin.get();
