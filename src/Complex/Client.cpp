@@ -98,6 +98,19 @@ void Test_APIs()
     out.real( 4.44 );
     out.imag( 5.55 );
     printc( out );
+
+    Complex<float> c(-19.14, 13.25);
+    float mod = c.modulus(); // modulus const
+    printc( c );
+    cout << mod << endl;
+    
+    c.reciprocal(); // reciprocal non-const
+    printc( c );
+
+    Complex<float> rec;
+    c.reciprocal( rec ); // reciprocal const
+    printc( c );
+    printc( rec );
 }
 
 

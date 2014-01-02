@@ -26,6 +26,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define Complex_INCLUDED
 
 
+#include <cmath>
+
+
 template<typename T>
 class Complex
 {
@@ -57,6 +60,11 @@ public:
 
     void conjugate();
     void conjugate(Complex& out) const;
+
+    void reciprocal();
+    void reciprocal(Complex& out) const;
+
+    T modulus() const;
 
     bool operator == (const Complex& right) const;
     bool operator != (const Complex& right) const;
@@ -173,7 +181,7 @@ void Complex<T>::div(const Complex& right)
 {
     T numerator_real = ( _real * right._real - _imag * right._imag );
     T numerator_imag = ( _imag * right._real - _real * right._imag );
-    T denominator = ( right._real * right._real - right._imag * right._imag );
+    T denominator = ( right._real * right._real + right._imag * right._imag );
 
     real( numerator_real / (T)denominator );
     imag( numerator_imag / (T)denominator );
@@ -185,7 +193,7 @@ void Complex<T>::div(const Complex& right, Complex& out) const
 {
     T numerator_real = ( _real * right._real - _imag * right._imag );
     T numerator_imag = ( _imag * right._real - _real * right._imag );
-    T denominator = ( right._real * right._real - right._imag * right._imag );
+    T denominator = ( right._real * right._real + right._imag * right._imag );
 
     out.real( numerator_real / (T)denominator );
     out.imag( numerator_imag / (T)denominator );
@@ -231,6 +239,32 @@ template<typename T>
 void Complex<T>::conjugate(Complex& out) const
 {
     out._imag = -out._imag;
+}
+
+
+template<typename T>
+void Complex<T>::reciprocal()
+{
+    Complex<T> c;
+    conjugate( c );
+    T denominator = ( _real * _real + _imag * _imag );
+    _real = c.real() / (T)denominator;
+    _imag = c.imag() / (T)denominator;
+}
+
+
+template<typename T>
+void Complex<T>::reciprocal(Complex& out) const
+{
+    out = *this;
+    out.reciprocal();
+}
+
+
+template<typename T>
+T Complex<T>::modulus() const
+{
+    return ( std::sqrt( _real * _real + _imag * _imag ) );
 }
 
 
